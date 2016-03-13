@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using System;
+using System.Reflection;
 using System.Data;
 using Mono.Data.Sqlite;
 
@@ -15,44 +16,25 @@ public class DbTest : MonoBehaviour
     void Start()
     {
         Gacha myGacha = new Gacha();
-        myGacha.name = "FooBar";
-        myGacha.prefab = myPrefab;
+        myGacha.name = "Ethan";
 
-        string gachaString = JsonUtility.ToJson(myGacha);
-
-
-        string conn = "URI=file:" + Application.dataPath + "/Database/TestDB1.db";//path to database
-        IDbConnection dbConn = (IDbConnection)new SqliteConnection(conn);
-        dbConn.Open();//open connection to database
-        IDbCommand dbCmd = dbConn.CreateCommand();
-
-        string query = string.Format("UPDATE User SET Gacha='{0}' WHERE Name='Foo'", gachaString);
-        dbCmd.CommandText = query;
-        dbCmd.ExecuteNonQuery();
-        query = "SELECT ID, Name, Gacha FROM User WHERE Gacha NOT NULL";
-        dbCmd.CommandText = query;
-        IDataReader reader = dbCmd.ExecuteReader();
-
-        while (reader.Read())
+        //bool b = Database.AddGacha(myGacha);
+        //Debug.Log(b);
+        List<Gacha> gachas = Database.GetGachas();
+        foreach (Gacha gacha in gachas)
         {
-            int id = reader.GetInt32(0);
-            string name = reader.GetString(1);
-            string gacha = "";
-            gacha = reader.GetString(2);
+            Debug.Log(gacha.name);
+            for(int i = 0; i < 5; i++)
+            {
+                GameObject newObject = Instantiate<GameObject>(Resources.Load<GameObject>(gacha.name));
+                newObject.transform.Translate(Vector3.forward * i);
+            }
             
-
-
-            Debug.Log(string.Format("ID: {0}\nName: {1}\nGacha: {2}", id, name, gachaString));
         }
-        reader.Close();
-        reader = null;
-        dbCmd.Dispose();
-        dbCmd = null;
-        dbConn.Close();
-        dbConn = null;
-
-        Gacha myNewGacha = JsonUtility.FromJson<Gacha>(gachaString);
-
-        Instantiate<GameObject>(myNewGacha.prefab);
+        
     }
+
+
+
+
 }
