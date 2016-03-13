@@ -65,11 +65,11 @@ public class GachaToyAI : MonoBehaviour
     }
     void Seek()
     {
-        npcPos = new Vector3( tr.transform.position.x, 0, tr.transform.position.z);       
-        targetPos = new Vector3(target.transform.position.x, 0, target.transform.position.z);
-        tr.transform.Translate((Vector3.Normalize(npcPos-targetPos) *speed));
-      //tr.transform.rotation = Quaternion.Euler(fu);
-        
+       // npcPos = new Vector3( tr.transform.position.x, 0, tr.transform.position.z);       
+        //targetPos = new Vector3(target.transform.position.x, 0, target.transform.position.z);
+        tr.transform.Translate((Vector3.Normalize(tr.transform.position-target.transform.position) *speed));
+        //tr.transform.rotation = Quaternion.Euler(fu);
+        Debug.Log(target.transform.position);
        //tr.transform.LookAt(target,Vector3.up);
 
     }
