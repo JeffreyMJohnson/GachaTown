@@ -191,7 +191,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
@@ -249,7 +249,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
@@ -307,7 +307,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
@@ -440,7 +440,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
@@ -498,7 +498,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
@@ -642,7 +642,7 @@ Prefab:
       objectReference: {fileID: 2009618177}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isWandering
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11424840, guid: 83100b659a865964abfa7cffa6cabe0e, type: 2}
       propertyPath: isSeeking
