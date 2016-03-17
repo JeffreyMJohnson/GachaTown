@@ -4,4 +4,16 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SPLASH.unity
+  - enabled: 1
+    path: Assets/Scenes/MAIN.unity
+  - enabled: 1
+    path: Assets/Scenes/GACHA.unity
+  - enabled: 1
+    path: Assets/Scenes/TOWN.unity
+  - enabled: 1
+    path: Assets/Scenes/COLLECTION.unity
+  - enabled: 1
+    path: Assets/Scenes/SETTINGS.unity
