@@ -10,6 +10,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MAIN.unity
   - enabled: 1
+    path: Assets/brysonscenes/Buy Gachas.unity
+  - enabled: 0
     path: Assets/Scenes/GACHA.unity
   - enabled: 1
     path: Assets/Scenes/TOWN.unity
