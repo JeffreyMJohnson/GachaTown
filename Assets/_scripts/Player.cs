@@ -5,13 +5,16 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     public int TotalCoins = 0;
-    public List<GameObject> GachaCollection = null;
+    public List<string> GachaCollection = null;
 
-    public void AddGachaToList(GameObject gacha)
+
+    
+
+    public void AddGachaToList(string gacha)
     {
         if(GachaCollection == null)
         {
-            GachaCollection = new List<GameObject>();
+            GachaCollection = new List<string>();
         }
         GachaCollection.Add(gacha);
     }
