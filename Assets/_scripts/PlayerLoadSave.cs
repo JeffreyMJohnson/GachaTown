@@ -40,13 +40,18 @@ class PlayerLoadSave : MonoBehaviour
         Transform playerTransform = playerScript.transform;
         foreach (string path in playerScript.GachaCollection)
         {
-            string modifiedPath = "Gachas/" + path;
-            modifiedPath = modifiedPath.Remove(modifiedPath.LastIndexOf('.'));
-
-            Object obj = Resources.Load(modifiedPath);
-            GameObject gacha = Instantiate<GameObject>((GameObject)obj) as GameObject;
-
-            gacha.transform.SetParent(playerTransform);
+            LoadGacha(path, playerTransform);
         }
+    }
+
+    public static void LoadGacha(string path, Transform playerTransform)
+    {
+        string modifiedPath = "Gachas/" + path;
+        modifiedPath = modifiedPath.Remove(modifiedPath.LastIndexOf('.'));
+
+        Object obj = Resources.Load(modifiedPath);
+        GameObject gacha = Instantiate<GameObject>((GameObject)obj) as GameObject;
+
+        gacha.transform.SetParent(playerTransform);
     }
 }
