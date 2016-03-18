@@ -22,6 +22,7 @@ class PlayerLoadSave : MonoBehaviour
     void SaveState()
     {
         StreamWriter writer = new StreamWriter(Application.dataPath + Constants.PLAYER_STATE_PATH);
+        string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));
         writer.Close();
     }
@@ -36,5 +37,21 @@ class PlayerLoadSave : MonoBehaviour
 
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
+        Transform playerTransform = playerScript.transform;
+        foreach (string path in playerScript.GachaCollection)
+        {
+            LoadGacha(path, playerTransform);
+        }
+    }
+
+    public static void LoadGacha(string path, Transform playerTransform)
+    {
+        string modifiedPath = "Gachas/" + path;
+        modifiedPath = modifiedPath.Remove(modifiedPath.LastIndexOf('.'));
+
+        Object obj = Resources.Load(modifiedPath);
+        GameObject gacha = Instantiate<GameObject>((GameObject)obj) as GameObject;
+
+        gacha.transform.SetParent(playerTransform);
     }
 }
