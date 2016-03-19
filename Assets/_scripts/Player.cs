@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     new Transform transform;
     Transform collectionParent;
 
-    void Start()
+    void Awake()
     {
         transform = GetComponent<Transform>();
         collectionParent = GameObject.Find("Collection").transform;
