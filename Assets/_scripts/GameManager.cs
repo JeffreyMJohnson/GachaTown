@@ -4,37 +4,45 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager manager;
+
     public List<string> masterPathList = null;
+    public List<Gacha> MasterGachaCollection;
 
     Transform playerTransform;
 
     void Start()
     {
-        masterPathList = new List<string>();
-        DirectoryInfo dir = new DirectoryInfo(Application.dataPath + "/Resources/" + Constants.GACHA_PATH);
-        FileInfo[] info = dir.GetFiles("*.prefab");
-
-        int count = 0;
-        foreach (FileInfo f in info)
-        {
-            masterPathList.Add(f.Name);
-            Debug.Log(f.Name);
-            count++;
-        }
-        Debug.Log(string.Format("{0} prefab files in directory {1}", count, dir.Name));
-
         playerTransform = GetComponentInChildren<Player>().transform;
     }
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (manager == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            manager = this;
+        }
+        else if(manager != this)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
-    public string GetRandomGacha()
+    public int GetRandomGachaIndex()
     {
-        int randomIndex = Random.Range(0, masterPathList.Count - 1);
-        return masterPathList[randomIndex];
-       
+        int randomIndex = Random.Range(0, MasterGachaCollection.Count - 1);
+        return randomIndex;
+
+    }
+
+    public GameObject GetGachaGameObject(int index)
+    {
+        Gacha gacha = MasterGachaCollection[index];
+        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
+        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
+        gachaMan.SetGachaData(gacha);
+        return newGacha;
     }
 }

@@ -10,8 +10,8 @@ class PlayerLoadSave : MonoBehaviour
     {
         playerScript = GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
-
         LoadState();
+
     }
 
     void OnDestroy()
@@ -19,7 +19,7 @@ class PlayerLoadSave : MonoBehaviour
         SaveState();
     }
 
-    void SaveState()
+    public void SaveState()
     {
         StreamWriter writer = new StreamWriter(Application.dataPath + Constants.PLAYER_STATE_PATH);
         string s = JsonUtility.ToJson(playerScript);
@@ -27,21 +27,18 @@ class PlayerLoadSave : MonoBehaviour
         writer.Close();
     }
 
-    void LoadState()
+    public void LoadState()
     {
         if (!File.Exists(Application.dataPath + Constants.PLAYER_STATE_PATH))
         {
             return;
         }
+
         StreamReader reader = new StreamReader(Application.dataPath + Constants.PLAYER_STATE_PATH);
 
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
-        Transform playerTransform = playerScript.transform;
-        foreach (string path in playerScript.GachaCollection)
-        {
-            LoadGacha(path, playerTransform);
-        }
+        playerScript.LoadCollection();
     }
 
     public static void LoadGacha(string path, Transform playerTransform)

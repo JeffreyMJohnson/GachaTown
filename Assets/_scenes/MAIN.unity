@@ -291,6 +291,33 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 473193503}
+--- !u!1 &499596044
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 499596045}
+  m_Layer: 0
+  m_Name: Collection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &499596045
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 499596044}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 505492619}
+  m_RootOrder: 0
 --- !u!1 &505492618
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +344,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 499596045}
   m_Father: {fileID: 2134826610}
   m_RootOrder: 0
 --- !u!114 &505492620
@@ -343,7 +371,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotalCoins: 0
-  GachaCollection: []
+  MyGachaCollection: 
+  myGacha: {fileID: 0}
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1051,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   masterPathList: []
+  MasterGachaCollection:
+  - {fileID: 11400000, guid: 30e004c436f76d34abcdcf09080e34bc, type: 2}
+  - {fileID: 11400000, guid: 73d0e65cfc2aedf44be407739f0b8ec0, type: 2}
+  - {fileID: 11400000, guid: 6641a1d19b24fe2408135b0096225c3b, type: 2}
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

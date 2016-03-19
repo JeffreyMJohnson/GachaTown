@@ -1,11 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Assets._scripts
+[CreateAssetMenu()]
+public class Gacha : ScriptableObject
 {
-    [Serializable]
-    public class Gacha
-    {
-        public string name;
-    }
+    public GameObject basePrefab;
+    public Mesh mesh;
+    public Material material;
 }
