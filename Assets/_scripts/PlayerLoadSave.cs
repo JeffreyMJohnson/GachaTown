@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 
-
+/// <summary>
+/// This script takes care of loading the game state from file on startup and saving on quit.
+/// </summary>
 class PlayerLoadSave : MonoBehaviour
 {
     Player playerScript;
@@ -10,7 +12,6 @@ class PlayerLoadSave : MonoBehaviour
     {
         playerScript = GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
-
         LoadState();
     }
 
@@ -19,7 +20,7 @@ class PlayerLoadSave : MonoBehaviour
         SaveState();
     }
 
-    void SaveState()
+    public void SaveState()
     {
         StreamWriter writer = new StreamWriter(Application.dataPath + Constants.PLAYER_STATE_PATH);
         string s = JsonUtility.ToJson(playerScript);
@@ -27,31 +28,17 @@ class PlayerLoadSave : MonoBehaviour
         writer.Close();
     }
 
-    void LoadState()
+    public void LoadState()
     {
         if (!File.Exists(Application.dataPath + Constants.PLAYER_STATE_PATH))
         {
             return;
         }
+
         StreamReader reader = new StreamReader(Application.dataPath + Constants.PLAYER_STATE_PATH);
 
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
-        Transform playerTransform = playerScript.transform;
-        foreach (string path in playerScript.GachaCollection)
-        {
-            LoadGacha(path, playerTransform);
-        }
-    }
-
-    public static void LoadGacha(string path, Transform playerTransform)
-    {
-        string modifiedPath = "Gachas/" + path;
-        modifiedPath = modifiedPath.Remove(modifiedPath.LastIndexOf('.'));
-
-        Object obj = Resources.Load(modifiedPath);
-        GameObject gacha = Instantiate<GameObject>((GameObject)obj) as GameObject;
-
-        gacha.transform.SetParent(playerTransform);
+        playerScript.LoadCollection();
     }
 }

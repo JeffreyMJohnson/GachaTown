@@ -1,40 +1,51 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<string> masterPathList = null;
-
+    public static GameManager instance;
+    public List<GachaSet> setList = new List<GachaSet>();
     Transform playerTransform;
 
     void Start()
     {
-        masterPathList = new List<string>();
-        DirectoryInfo dir = new DirectoryInfo(Application.dataPath + "/Resources/" + Constants.GACHA_PATH);
-        FileInfo[] info = dir.GetFiles("*.prefab");
-
-        int count = 0;
-        foreach (FileInfo f in info)
-        {
-            masterPathList.Add(f.Name);
-            Debug.Log(f.Name);
-            count++;
-        }
-        Debug.Log(string.Format("{0} prefab files in directory {1}", count, dir.Name));
-
         playerTransform = GetComponentInChildren<Player>().transform;
     }
 
     void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (instance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Destroy(gameObject);
+        }
+
     }
 
-    public string GetRandomGacha()
+    public Gacha GetRandomGacha(int setIndex)
     {
-        int randomIndex = Random.Range(0, masterPathList.Count - 1);
-        return masterPathList[randomIndex];
-       
+        int randomIndex = Random.Range(0, setList[setIndex].collection.Count);
+        return setList[setIndex].collection[randomIndex];
+    }
+
+    public GameObject GetGachaGameObject(Gacha gacha)
+    {
+        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
+        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
+        gachaMan.SetGachaData(gacha);
+        return newGacha;
+    }
+
+    public GameObject GetGachaGameObject(int setIndex, int gachaIndex)
+    {
+        Gacha gacha = setList[setIndex].collection[gachaIndex];
+        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
+        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
+        gachaMan.SetGachaData(gacha);
+        return newGacha;
     }
 }

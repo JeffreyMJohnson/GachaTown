@@ -1,28 +1,45 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-[System.Serializable]
+
 public class Player : MonoBehaviour
 {
     public int TotalCoins = 0;
-    public List<string> GachaCollection = null;
+    public List<Gacha> collection;
 
     new Transform transform;
+    Transform collectionParent;
 
     void Awake()
     {
         transform = GetComponent<Transform>();
+        collectionParent = GameObject.Find("Collection").transform;
     }
-    
 
-    public void AddGachaToList(string gacha)
+    public void AddGachaToList(Gacha gacha)
     {
-        if(GachaCollection == null)
+        if(collection == null)
         {
-            GachaCollection = new List<string>();
+            collection = new List<Gacha>();
         }
-        GachaCollection.Add(gacha);
-        PlayerLoadSave.LoadGacha(gacha, transform);
+        collection.Add(gacha);
+        LoadGacha(gacha);
+    }
+
+    void LoadGacha(Gacha a_gacha)
+    {
+        GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
+        gacha.transform.parent = collectionParent;
+        gacha.name = a_gacha.name;
+    }
+
+
+    public void LoadCollection()
+    {
+         foreach(Gacha gacha in collection)
+        {
+            LoadGacha(gacha);
+        }
     }
 
 }
