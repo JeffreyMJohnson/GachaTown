@@ -372,7 +372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TotalCoins: 0
   MyGachaCollection: 
-  myGacha: {fileID: 0}
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,6 +1054,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 30e004c436f76d34abcdcf09080e34bc, type: 2}
   - {fileID: 11400000, guid: 73d0e65cfc2aedf44be407739f0b8ec0, type: 2}
   - {fileID: 11400000, guid: 6641a1d19b24fe2408135b0096225c3b, type: 2}
+  setList:
+  - {fileID: 11400000, guid: b6ca75b9d5e7963439d55b7e1b3b6e4a, type: 2}
+  - {fileID: 11400000, guid: 401155c4766d891478904c2348b00d89, type: 2}
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

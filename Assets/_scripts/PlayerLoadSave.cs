@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.IO;
 
-
+/// <summary>
+/// This script takes care of loading the game state from file on startup and saving on quit.
+/// </summary>
 class PlayerLoadSave : MonoBehaviour
 {
     Player playerScript;
@@ -11,7 +13,6 @@ class PlayerLoadSave : MonoBehaviour
         playerScript = GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
         LoadState();
-
     }
 
     void OnDestroy()
@@ -39,16 +40,5 @@ class PlayerLoadSave : MonoBehaviour
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
         playerScript.LoadCollection();
-    }
-
-    public static void LoadGacha(string path, Transform playerTransform)
-    {
-        string modifiedPath = "Gachas/" + path;
-        modifiedPath = modifiedPath.Remove(modifiedPath.LastIndexOf('.'));
-
-        Object obj = Resources.Load(modifiedPath);
-        GameObject gacha = Instantiate<GameObject>((GameObject)obj) as GameObject;
-
-        gacha.transform.SetParent(playerTransform);
     }
 }

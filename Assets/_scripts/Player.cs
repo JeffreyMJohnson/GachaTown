@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     public int TotalCoins = 0;
-    public List<int> MyGachaCollection = null;
+    public List<Gacha> collection;
 
     new Transform transform;
     Transform collectionParent;
@@ -16,31 +16,29 @@ public class Player : MonoBehaviour
         collectionParent = GameObject.Find("Collection").transform;
     }
 
-
-
-    public void AddGachaToList(int index)
+    public void AddGachaToList(Gacha gacha)
     {
-        if (MyGachaCollection == null)
+        if(collection == null)
         {
-            MyGachaCollection = new List<int>();
+            collection = new List<Gacha>();
         }
-        MyGachaCollection.Add(index);
-        LoadGacha(index);
+        collection.Add(gacha);
+        LoadGacha(gacha);
     }
 
-    void LoadGacha(int index)
+    void LoadGacha(Gacha a_gacha)
     {
-        GameObject gacha = GameManager.manager.GetGachaGameObject(index);
+        GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
         gacha.transform.parent = collectionParent;
-        gacha.name = GameManager.manager.MasterGachaCollection[index].name;
+        gacha.name = a_gacha.name;
     }
 
 
     public void LoadCollection()
     {
-        foreach (int index in MyGachaCollection)
+         foreach(Gacha gacha in collection)
         {
-            LoadGacha(index);
+            LoadGacha(gacha);
         }
     }
 
