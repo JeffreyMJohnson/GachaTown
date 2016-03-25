@@ -4,17 +4,15 @@ using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
-    public int TotalCoins;
+    public int TotalCoins = 0;
     public List<Gacha> collection;
-    public List<GameObject> gachaCollection;
-    public int Selected;
+    public List<GameObject> gachaCollection;    public int Selected = 1;
     new Transform transform;
     Transform collectionParent;
 
     void Awake()
     {
         transform = GetComponent<Transform>();
-
         collectionParent = GameObject.Find("Collection").transform;
     }
 
