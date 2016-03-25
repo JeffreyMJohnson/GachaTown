@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 {
     public int TotalCoins = 0;
     public List<Gacha> collection;
-
+    public List<GameObject> gachaCollection;    public int Selected = 1;
     new Transform transform;
     Transform collectionParent;
 
@@ -22,23 +22,30 @@ public class Player : MonoBehaviour
         {
             collection = new List<Gacha>();
         }
+        if (gachaCollection == null)
+        {
+            gachaCollection = new List<GameObject>();
+        }
+        GameObject gachaObject = LoadGacha(gacha);
         collection.Add(gacha);
-        LoadGacha(gacha);
+        gachaCollection.Add(gachaObject);
     }
 
-    void LoadGacha(Gacha a_gacha)
+    GameObject LoadGacha(Gacha a_gacha)
     {
         GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
         gacha.transform.parent = collectionParent;
         gacha.name = a_gacha.name;
+        return gacha;
     }
 
 
     public void LoadCollection()
     {
-         foreach(Gacha gacha in collection)
+        foreach(Gacha gacha in collection)
         {
-            LoadGacha(gacha);
+            gachaCollection.Add(LoadGacha(gacha));
+            //LoadGacha(gacha);
         }
     }
 

@@ -7,14 +7,15 @@ public class BuyGacha : MonoBehaviour
 
 
     public Text moneyTextField;
-    public int GachaSet = 0;
-    Player localPlayer;
+    public Text displayTextField;
+    public int GachaSet = 0;    Player localPlayer;
 
     void Start()
     {
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
         localPlayer = tPlayer.GetComponent<Player>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
+        displayTextField.text = localPlayer.Selected.ToString();
     }
     public void Buy()
     {

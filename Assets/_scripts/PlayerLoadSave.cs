@@ -22,6 +22,13 @@ class PlayerLoadSave : MonoBehaviour
 
     public void SaveState()
     {
+        if(playerScript == null)
+        {
+            playerScript = GetComponent<Player>();
+        }
+        //clear the gameobject collection to load from the data collection at player load.
+        playerScript.gachaCollection.Clear();
+
         StreamWriter writer = new StreamWriter(Application.dataPath + Constants.PLAYER_STATE_PATH);
         string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));
