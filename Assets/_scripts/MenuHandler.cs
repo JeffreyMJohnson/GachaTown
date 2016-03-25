@@ -3,15 +3,15 @@ using System.Collections;
 
 public class MenuHandler : MonoBehaviour {
 
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING }
+    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
 
     //Menus menuState = 0;
 
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start ()
     {
-	
-	}
+
+    }
 
     public void LoadMain()
     {
@@ -31,6 +31,11 @@ public class MenuHandler : MonoBehaviour {
     public void LoadSetting()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.SETTING);
+    }
+
+    public void LoadChoose()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.GACHACHOOSE);
     }
 
     public void LoadCollection()

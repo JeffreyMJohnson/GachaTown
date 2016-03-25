@@ -6,8 +6,7 @@ public class Player : MonoBehaviour
 {
     public int TotalCoins = 0;
     public List<Gacha> collection;
-    public List<GameObject> gachaCollection;
-
+    public List<GameObject> gachaCollection;    public int Selected = 1;
     new Transform transform;
     Transform collectionParent;
 
