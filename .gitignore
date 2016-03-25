@@ -23,6 +23,7 @@ ExportedObj/
 *.state.meta
 #p4merge save files
 *.orig
+*.orig.meta
 
 
 # Unity3D generated meta files
