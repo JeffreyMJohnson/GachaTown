@@ -29,7 +29,7 @@ class PlayerLoadSave : MonoBehaviour
         //clear the gameobject collection to load from the data collection at player load.
         playerScript.gachaCollection.Clear();
 
-        StreamWriter writer = new StreamWriter(Application.dataPath + Constants.PLAYER_STATE_PATH);
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
         string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));
         writer.Close();
@@ -37,12 +37,12 @@ class PlayerLoadSave : MonoBehaviour
 
     public void LoadState()
     {
-        if (!File.Exists(Application.dataPath + Constants.PLAYER_STATE_PATH))
+        if (!File.Exists(Application.persistentDataPath + Constants.PLAYER_STATE_PATH))
         {
             return;
         }
 
-        StreamReader reader = new StreamReader(Application.dataPath + Constants.PLAYER_STATE_PATH);
+        StreamReader reader = new StreamReader(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
 
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
