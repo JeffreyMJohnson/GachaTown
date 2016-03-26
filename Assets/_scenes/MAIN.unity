@@ -1067,7 +1067,7 @@ GameObject:
   - 114: {fileID: 2135882666}
   - 114: {fileID: 2135882669}
   m_Layer: 5
-  m_Name: BuyGacha
+  m_Name: Gacha Machines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1130,7 +1130,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1650336255}
-        m_MethodName: LoadGacha
+        m_MethodName: LoadChoose
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
