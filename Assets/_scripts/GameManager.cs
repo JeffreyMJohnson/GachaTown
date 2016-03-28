@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
+
     public static GameManager instance;
     public List<GachaSet> setList = new List<GachaSet>();
     Transform playerTransform;
@@ -52,5 +54,11 @@ public class GameManager : MonoBehaviour
         GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
         gachaMan.SetGachaData(gacha);
         return newGacha;
+    }
+
+    public void ChangeScene(Menus scene)
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+        //menuState = aChangeTo;
     }
 }
