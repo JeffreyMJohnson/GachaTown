@@ -7,7 +7,7 @@ public class GachaRotator : MonoBehaviour
 
     //all you have to do is slap a gacha machine object as a child of this one, make sure they're all in the same place
 
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
+    //public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
     public Text gachaDisplay;
     GameObject[] gachaMachines;
     Transform[] gachaTransforms;
@@ -110,7 +110,7 @@ public class GachaRotator : MonoBehaviour
     {
         //pass selectedGacha to player
         playerScript.Selected = selectedGacha;
-        UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.GACHA);
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)MenuHandler.Menus.GACHA);
 
     }
 

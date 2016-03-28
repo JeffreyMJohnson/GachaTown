@@ -19,11 +19,16 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             instance = this;
         }
-        else if(instance != this)
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
 
+    }
+
+    public GachaSet GetGachaSet(int setIndex)
+    {
+        return setList[setIndex];
     }
 
     public Gacha GetRandomGacha(int setIndex)
