@@ -110,8 +110,8 @@ public class GachaRotator : MonoBehaviour
     {
         //pass selectedGacha to player
         playerScript.Selected = selectedGacha;
-        UnityEngine.SceneManagement.SceneManager.LoadScene((int)MenuHandler.Menus.GACHA);
-
+        //UnityEngine.SceneManagement.SceneManager.LoadScene((int)MenuHandler.Menus.GACHA);
+        GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
     }
 
     // Update is called once per frame

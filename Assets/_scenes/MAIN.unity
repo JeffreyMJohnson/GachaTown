@@ -183,7 +183,7 @@ GameObject:
   - 114: {fileID: 473193506}
   - 114: {fileID: 473193505}
   m_Layer: 5
-  m_Name: SeeCollection
+  m_Name: View Collection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -245,7 +245,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650336255}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadViewCollection
         m_Mode: 1
         m_Arguments:
@@ -447,7 +447,7 @@ GameObject:
   - 114: {fileID: 999162827}
   - 114: {fileID: 999162826}
   m_Layer: 5
-  m_Name: HowToPlay
+  m_Name: How To Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650336255}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadSetting
         m_Mode: 1
         m_Arguments:
@@ -634,7 +634,7 @@ GameObject:
   - 114: {fileID: 1197545200}
   - 114: {fileID: 1197545199}
   m_Layer: 5
-  m_Name: VisitTown
+  m_Name: Visit Town
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1650336255}
+      - m_Target: {fileID: 0}
         m_MethodName: LoadTown
         m_Mode: 1
         m_Arguments:
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1650336253}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b860900c123189d438b7bd2c89f634b7, type: 3}
+  m_Script: {fileID: 11500000, guid: fa8951beaf5e12e4298cb1b5d5d35011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2056184947
@@ -1127,18 +1127,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2135882667}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1650336255}
-        m_MethodName: LoadChooseMachine
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2135882667

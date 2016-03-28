@@ -17,7 +17,6 @@ public class BuyGacha : MonoBehaviour
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
         localPlayer = tPlayer.GetComponent<Player>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
-        //displayTextField.text = localPlayer.Selected.ToString();
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
 
         //add onclick event for menu button
@@ -27,7 +26,7 @@ public class BuyGacha : MonoBehaviour
 
     void LoadMainMenu()
     {
-        MenuHandler.Change(MenuHandler.Menus.MAIN);
+        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
     public void Buy()
