@@ -10,7 +10,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_scenes/MAIN.unity
   - enabled: 0
-    path: Assets/_scenes/GACHA_BUY_old.unity
+    path: Assets/_scenes/old/GACHA_BUY_old.unity
   - enabled: 1
     path: Assets/_scenes/GACHA_BUY.unity
   - enabled: 1
