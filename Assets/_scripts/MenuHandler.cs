@@ -4,10 +4,19 @@ using System.Collections;
 public class MenuHandler : MonoBehaviour {
 
     public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
+    public static MenuHandler instance;
 
-    //Menus menuState = 0;
-    
-
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
     public void LoadMain()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.MAIN);
@@ -18,7 +27,7 @@ public class MenuHandler : MonoBehaviour {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.TOWN);
     }
 
-    public void LoadGacha()
+    public void LoadBuyGacha()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.GACHA);
     }
@@ -28,12 +37,12 @@ public class MenuHandler : MonoBehaviour {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.SETTING);
     }
 
-    public void LoadChoose()
+    public void LoadChooseMachine()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.GACHACHOOSE);
     }
 
-    public void LoadCollection()
+    public void LoadViewCollection()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)Menus.COLLECTION);
     }
