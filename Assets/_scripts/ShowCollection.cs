@@ -19,13 +19,14 @@ public class ShowCollection : MonoBehaviour
 
     private void SetCollection()
     {
-       for (int i = 0; i < player.collection.Count; i++)
+       for (int i = 0; i < player.gachaCollection.Count; i++)
         {
-            Gacha gacha = player.collection[i];
-            Transform model = gachaPositions[i].FindChild("Gacha");
+            GameObject gacha = player.gachaCollection[i];
+            gacha.transform.position = gachaPositions[i].position;
+            //Transform model = gachaPositions[i].FindChild("Gacha");
             
-            model.GetComponent<MeshFilter>().sharedMesh = gacha.mesh;
-            model.GetComponent<MeshRenderer>().sharedMaterial = gacha.material;
+            //model.GetComponent<MeshFilter>().sharedMesh = gacha.mesh;
+            //model.GetComponent<MeshRenderer>().sharedMaterial = gacha.material;
             
 
         }

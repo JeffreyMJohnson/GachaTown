@@ -5,12 +5,14 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     public int TotalCoins = 1000;
-    public List<Gacha> collection;
     public List<GameObject> gachaCollection;
     public int Selected = 1;
     new Transform transform;
+
     Transform collectionParent;
 
+    [SerializeField][HideInInspector]
+    List<Gacha> collection;
     void Awake()
     {
         transform = GetComponent<Transform>();
@@ -46,7 +48,6 @@ public class Player : MonoBehaviour
         foreach(Gacha gacha in collection)
         {
             gachaCollection.Add(LoadGacha(gacha));
-            //LoadGacha(gacha);
         }
     }
 
