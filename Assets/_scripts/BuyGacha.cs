@@ -29,6 +29,14 @@ public class BuyGacha : MonoBehaviour
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            LoadMainMenu();
+        }
+    }
+
     public void Buy()
     {
         if (localPlayer.TotalCoins >= 5)

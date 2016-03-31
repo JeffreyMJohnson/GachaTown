@@ -9,13 +9,14 @@ public class GachaRotator : MonoBehaviour
 
     //public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
     public Text gachaDisplay;
+    public Text moneyDisplay;
     GameObject[] gachaMachines;
     Transform[] gachaTransforms;
     float rotationInterval = 0;
     public int selectedGacha = 0;
     int gachaCount = 0;
+    public float rotateTime = 15; //in frames
     float rotateStart = 15;
-    float rotateMax = 15;
     Player playerScript;
 
 	// Use this for initialization
@@ -25,6 +26,9 @@ public class GachaRotator : MonoBehaviour
         playerScript = tPlayer.GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
         selectedGacha = playerScript.Selected;
+        moneyDisplay.text = playerScript.TotalCoins.ToString();
+
+        rotateStart = rotateTime;
 
         gachaMachines = new GameObject[transform.childCount];
         gachaTransforms = new Transform[transform.childCount];
@@ -56,7 +60,7 @@ public class GachaRotator : MonoBehaviour
 
     public void RotateLeft()
     {
-        if (rotateStart == rotateMax)
+        if (rotateStart == rotateTime)
         {
             rotateStart = 0;
             //transform.Rotate(0, -rotationInterval, 0);
@@ -72,7 +76,7 @@ public class GachaRotator : MonoBehaviour
 
     public void RotateRight()
     {
-        if (rotateStart == rotateMax)
+        if (rotateStart == rotateTime)
         {
             rotateStart = 0;
             //transform.Rotate(0, rotationInterval, 0);
@@ -82,6 +86,11 @@ public class GachaRotator : MonoBehaviour
 
             TextUpdate();
         }
+    }
+
+    public void LoadMainMenu()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 
     public void SelectGacha()
@@ -103,16 +112,20 @@ public class GachaRotator : MonoBehaviour
     // Update is called once per frame
     void Update ()
     {
-        if (rotateStart < rotateMax)
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            LoadMainMenu();
+        }
+        if (rotateStart < rotateTime)
         {
             rotateStart++;
 
             float tstart = transform.eulerAngles.y;
             float tdestination = GetDestinationRotation();
-            float tprogress = rotateStart / rotateMax;
+            float tprogress = rotateStart / rotateTime;
             float tcurrent = ((tdestination - tstart) * tprogress) + tstart;
 
-            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateMax) - transform.eulerAngles.y, 0);
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
 
         }
 
