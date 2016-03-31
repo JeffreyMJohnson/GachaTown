@@ -37,15 +37,22 @@ class PlayerLoadSave : MonoBehaviour
 
     public void LoadState()
     {
-        if (!File.Exists(Application.persistentDataPath + Constants.PLAYER_STATE_PATH))
+        string filePath = Application.persistentDataPath + Constants.PLAYER_STATE_PATH;
+        if (!File.Exists(filePath))
         {
             return;
         }
 
-        StreamReader reader = new StreamReader(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
+        StreamReader reader = new StreamReader(filePath);
 
         JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), playerScript);
         reader.Close();
+
+        //fix for bad state file... should not ship with this code!!
+        if (playerScript.BadCollectionLoaded())
+        {
+            File.Delete(filePath);
+        }
         playerScript.LoadCollection();
     }
 }

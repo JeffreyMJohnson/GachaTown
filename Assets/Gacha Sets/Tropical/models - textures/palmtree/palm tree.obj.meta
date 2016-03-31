@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 40db5dd11d985a243b3d1bde3594918d
+guid: 450115793c4c2984aa5a27d5d425b884
 timeCreated: 1458253795
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: hut
-    100002: //RootNode
-    400000: hut
-    400002: //RootNode
-    2300000: hut
-    3300000: hut
-    4300000: hut
+    100000: //RootNode
+    100002: pCube25
+    400000: //RootNode
+    400002: pCube25
+    2300000: pCube25
+    3300000: pCube25
+    4300000: pCube25
   materials:
     importMaterials: 1
     materialName: 0
