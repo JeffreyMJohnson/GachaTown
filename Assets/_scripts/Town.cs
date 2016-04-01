@@ -22,11 +22,21 @@ public class Town : MonoBehaviour
 
     void InitMenu()
     {
-        Button mainMenu = canvas.GetComponentInChildren<Button>();
-        mainMenu.onClick.AddListener(HandleButtonClick);
+        Button[] mainMenu = canvas.GetComponentsInChildren<Button>();
+        for (int i = 0; i < mainMenu.Length; i++)
+        {
+
+        }
+        mainMenu[0].onClick.AddListener(HandleMenuButtonClick);
+        mainMenu[1].onClick.AddListener(HandlePlaceButtonClick);
     }
 
-    public void HandleButtonClick()
+    public void HandlePlaceButtonClick()
+    {
+
+    }
+
+    public void HandleMenuButtonClick()
     {
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
