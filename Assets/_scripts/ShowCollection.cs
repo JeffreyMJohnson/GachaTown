@@ -15,7 +15,7 @@ public class ShowCollection : MonoBehaviour
 
     //public GameObject[] nextPage;
     //public GameObject[] previousPage;
-    public GameObject[] totalCollection;
+   // public GameObject[] totalCollection;
     public GameObject[] currentPage;
     void Start()
     {
@@ -24,7 +24,7 @@ public class ShowCollection : MonoBehaviour
         player = FindObjectOfType<Player>();
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
-        SetCollection();
+        SetCollection(currentPageNumber);
     }
 
     void Update()
@@ -35,11 +35,10 @@ public class ShowCollection : MonoBehaviour
         }
     }
 
-    private void SetCollection()
-    {
-     
-      SetCurrentPage(currentPageNumber);
-      SetGachasPosition(currentPageNumber);
+    private void SetCollection(int page)
+    {     
+      SetCurrentPage(page);
+      SetGachasPosition(page);
         
     }
 
@@ -51,6 +50,7 @@ public class ShowCollection : MonoBehaviour
         {
             testCondition = player.gachaCollection.Count;
         }
+        
         for (int i = start; i < testCondition;i++)
         {   
                 currentPage[i - start] = player.gachaCollection[i];                        
@@ -75,57 +75,40 @@ public class ShowCollection : MonoBehaviour
 
 
     public void Previous()
-    {
-        //collection.transform.position = Vector3.Lerp(collection.transform.position,collection.transform.position + (Vector3.right*5),Time.deltaTime);
-        //mPrev = true;
-        //for (int i = 0; i < page.nextPage.Length; i++)
-        //{
-        //    page.currentPage = page.nextPage;
-        //}
-        //if (pageNumber >= 0)
-        //{
-        //    collection.transform.Translate(Vector3.right * 6);
-        //    for (int i = 0; i < page.currentPage.Length; i++)
-        //    {
-
-        //        page.currentPage[i] = page.previousPage[i];
-
-        //    }
-        //    Debug.Log("previous");
-        //}
-
+    {        
         if (currentPageNumber > 0)
         {
+            ClearGachaSpot();
             currentPageNumber -= 1;
-            SetCurrentPage(currentPageNumber);
+            SetCollection(currentPageNumber);
         }
-
-
     }
     public void Next()
     {
-        currentPageNumber += 1;
-        SetCurrentPage(currentPageNumber);
-        //mNext = true;
-        //collection.transform.Translate(Vector3.left * 6);
-
-
-
-        //for (int i = 0; i < page.currentPage.Length; i++)
-        //{
-
-        //    page.previousPage[i] = page.currentPage[i];
-
-        //}
-
-        //for (int i = 0; i < page.currentPage.Length; i++)
-        //{
-
-        //    page.currentPage[i] = page.nextPage[i];
-
-        //}
-
+        if (currentPageNumber * pageSize < player.gachaCollection.Count)
+        {
+            ClearGachaSpot();
+            currentPageNumber += 1;
+            SetCollection(currentPageNumber);
+        }
         Debug.Log("next");
+    }
+
+    public void ClearGachaSpot()
+    {
+        for (int i = 0; i < currentPage.Length; i++)
+        {
+            if (currentPage[i] == null)
+            {
+                continue;
+            }
+
+            currentPage[i].transform.Translate(0,100,0);
+            currentPage[i] = null;
+            
+
+
+        }
     }
 
     void OnDrawGizmos()
@@ -133,8 +116,7 @@ public class ShowCollection : MonoBehaviour
         for(int i = 0; i < gachaPositions.Length; i++)
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawWireCube(gachaPositions[i].position, Vector3.one);
-            
+            Gizmos.DrawWireCube(gachaPositions[i].position, Vector3.one);            
         }
         
     }
