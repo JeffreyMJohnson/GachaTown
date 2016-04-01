@@ -8,7 +8,12 @@ public class ShowCollection : MonoBehaviour
     public Transform[] gachaPositions;
     GameObject gameManager;
     GameObject collection;
+    public int pageSize = 9;
 
+    public GameObject[] currentPage;
+
+    public GameObject[] nextPage;
+    public GameObject[] previousPage;
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
@@ -21,13 +26,38 @@ public class ShowCollection : MonoBehaviour
     {
        for (int i = 0; i < player.gachaCollection.Count; i++)
         {
-            GameObject gacha = player.gachaCollection[i];
-            gacha.transform.position = gachaPositions[i].position;
-            //Transform model = gachaPositions[i].FindChild("Gacha");
+
+
+
+            if (i <= pageSize - 1)
+            {
+                
+                currentPage[i] = player.gachaCollection[i];
+                currentPage[i].transform.position = gachaPositions[i].position;
+               // previousPage[i] = player.gachaCollection[i];
+            }
+
             
+           
+
+            //Transform model = gachaPositions[i].FindChild("Gacha");
+
             //model.GetComponent<MeshFilter>().sharedMesh = gacha.mesh;
             //model.GetComponent<MeshRenderer>().sharedMaterial = gacha.material;
-            
+
+
+        }
+        //
+        int index = 0;
+        for (int j = pageSize; j < pageSize+pageSize; j++)
+        {
+
+
+
+            nextPage[index] = player.gachaCollection[j];
+            nextPage[index].transform.position = gachaPositions[j].position;
+            Debug.Log(player.gachaCollection[pageSize + j]);
+            index += 1;
 
         }
     }
