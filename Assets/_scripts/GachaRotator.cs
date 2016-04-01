@@ -9,13 +9,14 @@ public class GachaRotator : MonoBehaviour
 
     //public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
     public Text gachaDisplay;
+    public Text moneyDisplay;
     GameObject[] gachaMachines;
     Transform[] gachaTransforms;
     float rotationInterval = 0;
     public int selectedGacha = 0;
     int gachaCount = 0;
-    float rotateStart;
-    int rotateMax;
+    public float rotateTime = 15; //in frames
+    float rotateStart = 15;
     Player playerScript;
 
 	// Use this for initialization
@@ -25,6 +26,9 @@ public class GachaRotator : MonoBehaviour
         playerScript = tPlayer.GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
         selectedGacha = playerScript.Selected;
+        moneyDisplay.text = playerScript.TotalCoins.ToString();
+
+        rotateStart = rotateTime;
 
         gachaMachines = new GameObject[transform.childCount];
         gachaTransforms = new Transform[transform.childCount];
@@ -51,59 +55,43 @@ public class GachaRotator : MonoBehaviour
 	
     void TextUpdate()
     {
-        switch(selectedGacha)
-        {
-            case 0:
-                gachaDisplay.text = "MACHINE NO. 0\nCOST 5";
-                break;
-            case 1:
-                gachaDisplay.text = "MACHINE NO. 1\nCOST 5";
-                break;
-            case 2:
-                gachaDisplay.text = "MACHINE NO. 2\nCOST 5";
-                break;
-            case 3:
-                gachaDisplay.text = "MACHINE NO. 3\nCOST 5";
-                break;
-            case 4:
-                gachaDisplay.text = "MACHINE NO. 4\nCOST 5";
-                break;
-            case 5:
-                gachaDisplay.text = "MACHINE NO. 5\nCOST 5";
-                break;
-            case 6:
-                gachaDisplay.text = "MACHINE NO. 6\nCOST 5";
-                break;
-            case 7:
-                gachaDisplay.text = "MACHINE NO. 7\nCOST 5";
-                break;
-            default:
-                gachaDisplay.text = "INVALID ENTRY";
-                break;
-        }
+        gachaDisplay.text = "MACHINE NO. " + selectedGacha + "\nCOST 5";
     }
 
     public void RotateLeft()
     {
-        transform.Rotate(0, -rotationInterval, 0);
+        if (rotateStart == rotateTime)
+        {
+            rotateStart = 0;
+            //transform.Rotate(0, -rotationInterval, 0);
 
-        selectedGacha--;
-        if (selectedGacha == -1)
-            selectedGacha = gachaCount - 1;
-        selectedGacha = selectedGacha % gachaCount;
+            selectedGacha--;
+            if (selectedGacha == -1)
+                selectedGacha = gachaCount - 1;
+            selectedGacha = selectedGacha % gachaCount;
 
-        TextUpdate();
+            TextUpdate();
+        }
     }
 
     public void RotateRight()
     {
+        if (rotateStart == rotateTime)
+        {
+            rotateStart = 0;
+            //transform.Rotate(0, rotationInterval, 0);
 
-        transform.Rotate(0, rotationInterval, 0);
+            selectedGacha++;
+            selectedGacha = selectedGacha % gachaCount;
 
-        selectedGacha++;
-        selectedGacha = selectedGacha % gachaCount;
+            TextUpdate();
+        }
+    }
 
-        TextUpdate();
+    //I'm not being dumb, it's used by a button
+    public void LoadMainMenu()
+    {
+        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
     public void SelectGacha()
@@ -113,17 +101,34 @@ public class GachaRotator : MonoBehaviour
         //UnityEngine.SceneManagement.SceneManager.LoadScene((int)MenuHandler.Menus.GACHA);
         GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
     }
-
+    float GetDestinationRotation()
+    {
+        float toReturn = selectedGacha * rotationInterval;
+        if (toReturn == 360 - rotationInterval && transform.eulerAngles.y <= rotationInterval)
+            toReturn = -rotationInterval;
+        if (toReturn == 0 && transform.eulerAngles.y >= 360 - rotationInterval)
+            toReturn = 360;
+        return toReturn;
+    }
     // Update is called once per frame
     void Update ()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            LoadMainMenu();
+        }
+        if (rotateStart < rotateTime)
+        {
+            rotateStart++;
 
-        //if (rotateStart == rotateMax)
-        //{
-        //    rotateStart += 0.05f;
-        //}
-        //float rotateY = Mathf.Lerp(0, rotationInterval, rotateStart / rotateMax);
-        //transform.Rotate(0, rotateY, 0);
+            float tstart = transform.eulerAngles.y;
+            float tdestination = GetDestinationRotation();
+            float tprogress = rotateStart / rotateTime;
+            float tcurrent = ((tdestination - tstart) * tprogress) + tstart;
+
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
+
+        }
 
 
     }

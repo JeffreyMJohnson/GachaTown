@@ -12,13 +12,31 @@ public class Town : MonoBehaviour
         InitMenu();
 	}
 
-    void InitMenu()
+    void Update ()
     {
-        Button mainMenu = canvas.GetComponentInChildren<Button>();
-        mainMenu.onClick.AddListener(HandleButtonClick);
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
     }
 
-    public void HandleButtonClick()
+    void InitMenu()
+    {
+        Button[] mainMenu = canvas.GetComponentsInChildren<Button>();
+        for (int i = 0; i < mainMenu.Length; i++)
+        {
+
+        }
+        mainMenu[0].onClick.AddListener(HandleMenuButtonClick);
+        mainMenu[1].onClick.AddListener(HandlePlaceButtonClick);
+    }
+
+    public void HandlePlaceButtonClick()
+    {
+
+    }
+
+    public void HandleMenuButtonClick()
     {
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }

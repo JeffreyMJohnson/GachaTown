@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 
 public class Player : MonoBehaviour
@@ -34,6 +35,11 @@ public class Player : MonoBehaviour
         gachaCollection.Add(gachaObject);
     }
 
+    public bool BadCollectionLoaded()
+    {
+        return collection.Any(gacha => gacha == null);
+    }
+
     GameObject LoadGacha(Gacha a_gacha)
     {
         GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
@@ -45,6 +51,11 @@ public class Player : MonoBehaviour
 
     public void LoadCollection()
     {
+        if (BadCollectionLoaded())
+        {
+            return;
+        }
+
         foreach(Gacha gacha in collection)
         {
             gachaCollection.Add(LoadGacha(gacha));

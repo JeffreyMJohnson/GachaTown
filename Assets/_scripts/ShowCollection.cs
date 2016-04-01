@@ -1,4 +1,5 @@
-﻿using UnityEngine;using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
@@ -24,6 +25,14 @@ public class ShowCollection : MonoBehaviour
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
         SetCollection();
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
     }
 
     private void SetCollection()
