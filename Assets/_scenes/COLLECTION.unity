@@ -674,7 +674,6 @@ GameObject:
   - 223: {fileID: 1372445662}
   - 114: {fileID: 1372445661}
   - 114: {fileID: 1372445660}
-  - 114: {fileID: 1372445664}
   m_Layer: 5
   m_Name: Collection Canvas
   m_TagString: Untagged
@@ -755,17 +754,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1022, y: 575}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1372445664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1372445659}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 618d51a621e305942879eea03d276640, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1491767700
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,14 @@ public class MainMenu : MonoBehaviour
         GameManager.instance.ChangeScene(scene);
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     void InitButtonHandlers()
     {
         Button[] buttons = GetComponentsInChildren<Button>();
