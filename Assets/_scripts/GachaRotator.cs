@@ -88,9 +88,10 @@ public class GachaRotator : MonoBehaviour
         }
     }
 
+    //I'm not being dumb, it's used by a button
     public void LoadMainMenu()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
     public void SelectGacha()

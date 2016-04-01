@@ -35,7 +35,8 @@ public class CoinDrag : MonoBehaviour
             RaycastHit[] hits = Physics.RaycastAll(ray);
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.gameObject.name == "coinslot")
+                //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
+                if (hit.collider.gameObject.name == "coinslot" && draggedCoin != null)
                 {
                     machine.Buy();
                 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System;
 
@@ -15,6 +16,14 @@ public class ShowCollection : MonoBehaviour
         collection = GameObject.Find("Collection");
         player = FindObjectOfType<Player>();
         SetCollection();
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
     }
 
     private void SetCollection()

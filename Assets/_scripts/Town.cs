@@ -16,7 +16,7 @@ public class Town : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
         }
     }
 
