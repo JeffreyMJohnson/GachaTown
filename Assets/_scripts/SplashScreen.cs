@@ -12,6 +12,10 @@ public class SplashScreen : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
+        if (Input.anyKey)
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
