@@ -41,7 +41,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 case "How To Play":
                     continue;
-                    break;
+                    //break;
             }
             button.onClick.AddListener(delegate { HandleClick(scene); });
 
