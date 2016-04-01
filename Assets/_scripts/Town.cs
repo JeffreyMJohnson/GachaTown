@@ -12,6 +12,14 @@ public class Town : MonoBehaviour
         InitMenu();
 	}
 
+    void Update ()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+        }
+    }
+
     void InitMenu()
     {
         Button mainMenu = canvas.GetComponentInChildren<Button>();
