@@ -10,10 +10,12 @@ public class ShowCollection : MonoBehaviour
     GameObject collection;
     public int pageSize = 9;
 
-    public GameObject[] currentPage;
+    //public GameObject[] currentPage;
 
-    public GameObject[] nextPage;
-    public GameObject[] previousPage;
+    //public GameObject[] nextPage;
+    //public GameObject[] previousPage;
+    public GameObject[] totalCollection;
+    public GameObject[] testPage;
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
@@ -24,18 +26,17 @@ public class ShowCollection : MonoBehaviour
 
     private void SetCollection()
     {
+     
        for (int i = 0; i < player.gachaCollection.Count; i++)
         {
+            //testPage.Length = player.gachaCollection.Count;
 
 
 
-            if (i <= pageSize - 1)
-            {
-                
-                currentPage[i] = player.gachaCollection[i];
-                currentPage[i].transform.position = gachaPositions[i].position;
+            totalCollection[i] = player.gachaCollection[i];
+            totalCollection[i].transform.position = gachaPositions[i].position;
                // previousPage[i] = player.gachaCollection[i];
-            }
+            
 
             
            
@@ -48,18 +49,34 @@ public class ShowCollection : MonoBehaviour
 
         }
         //
-        int index = 0;
-        for (int j = pageSize; j < pageSize+pageSize; j++)
+        //int index = 0;
+        //for (int j = pageSize; j < pageSize+pageSize; j++)
+        //{
+
+
+
+        //    nextPage[index] = player.gachaCollection[j];
+        //    nextPage[index].transform.position = gachaPositions[j].position;
+        //    Debug.Log(player.gachaCollection[pageSize + j]);
+        //    index += 1;
+
+        //}
+    }
+
+   public void GetGacha(int page)
+    {
+
+
+        for (int i = page*pageSize; i < ((page*pageSize)+pageSize);i++)
         {
-
-
-
-            nextPage[index] = player.gachaCollection[j];
-            nextPage[index].transform.position = gachaPositions[j].position;
-            Debug.Log(player.gachaCollection[pageSize + j]);
-            index += 1;
-
+            if (player.gachaCollection[i]!=null)
+            {
+                testPage[i - (page * pageSize)] = player.gachaCollection[i];
+            }
+            
         }
+    
+
     }
 
     void OnDrawGizmos()

@@ -41,38 +41,47 @@ public class ChangeCollection : MonoBehaviour {
         //{
         //    page.currentPage = page.nextPage;
         //}
-        if (pageNumber >= 0)
+        //if (pageNumber >= 0)
+        //{
+        //    collection.transform.Translate(Vector3.right * 6);
+        //    for (int i = 0; i < page.currentPage.Length; i++)
+        //    {
+
+        //        page.currentPage[i] = page.previousPage[i];
+
+        //    }
+        //    Debug.Log("previous");
+        //}
+
+        if (pageNumber > 0)
         {
-            collection.transform.Translate(Vector3.right * 6);
-            for (int i = 0; i < page.currentPage.Length; i++)
-            {
-
-                page.currentPage[i] = page.previousPage[i];
-
-            }
-            Debug.Log("previous");
+            pageNumber -= 1;
+            page.GetGacha(pageNumber);
         }
         
 
     }
     public void Next()
     {
+        pageNumber += 1;
         //mNext = true;
-        collection.transform.Translate(Vector3.left * 6);
+        //collection.transform.Translate(Vector3.left * 6);
 
-        for (int i = 0; i < page.currentPage.Length; i++)
-        {
+        page.GetGacha(pageNumber);
 
-            page.previousPage[i] = page.currentPage[i];
+        //for (int i = 0; i < page.currentPage.Length; i++)
+        //{
 
-        }
+        //    page.previousPage[i] = page.currentPage[i];
+
+        //}
        
-        for (int i = 0; i < page.currentPage.Length; i++)
-        {
+        //for (int i = 0; i < page.currentPage.Length; i++)
+        //{
             
-            page.currentPage[i] = page.nextPage[i];
+        //    page.currentPage[i] = page.nextPage[i];
 
-        }
+        //}
 
         Debug.Log("next");
     }

@@ -845,7 +845,7 @@ MonoBehaviour:
   - {fileID: 214363212}
   - {fileID: 657314737}
   pageSize: 9
-  currentPage:
+  totalCollection:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -855,7 +855,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  nextPage:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -865,7 +864,16 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  previousPage:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  testPage:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
