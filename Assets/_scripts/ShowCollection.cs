@@ -9,74 +9,114 @@ public class ShowCollection : MonoBehaviour
     GameObject gameManager;
     GameObject collection;
     public int pageSize = 9;
-
+    int currentPageNumber;
     //public GameObject[] currentPage;
 
     //public GameObject[] nextPage;
     //public GameObject[] previousPage;
     public GameObject[] totalCollection;
-    public GameObject[] testPage;
+    public GameObject[] currentPage;
     void Start()
     {
         gameManager = GameObject.Find("GameManager");
         collection = GameObject.Find("Collection");
         player = FindObjectOfType<Player>();
+        currentPageNumber = 0;
+        currentPage = new GameObject[pageSize];
         SetCollection();
     }
 
     private void SetCollection()
     {
      
-       for (int i = 0; i < player.gachaCollection.Count; i++)
-        {
-            //testPage.Length = player.gachaCollection.Count;
-
-
-
-            totalCollection[i] = player.gachaCollection[i];
-            totalCollection[i].transform.position = gachaPositions[i].position;
-               // previousPage[i] = player.gachaCollection[i];
-            
-
-            
-           
-
-            //Transform model = gachaPositions[i].FindChild("Gacha");
-
-            //model.GetComponent<MeshFilter>().sharedMesh = gacha.mesh;
-            //model.GetComponent<MeshRenderer>().sharedMaterial = gacha.material;
-
-
-        }
-        //
-        //int index = 0;
-        //for (int j = pageSize; j < pageSize+pageSize; j++)
-        //{
-
-
-
-        //    nextPage[index] = player.gachaCollection[j];
-        //    nextPage[index].transform.position = gachaPositions[j].position;
-        //    Debug.Log(player.gachaCollection[pageSize + j]);
-        //    index += 1;
-
-        //}
+      SetCurrentPage(currentPageNumber);
+      SetGachasPosition(currentPageNumber);
+        
     }
 
-   public void GetGacha(int page)
+   public void SetCurrentPage(int page)
     {
-
-
-        for (int i = page*pageSize; i < ((page*pageSize)+pageSize);i++)
+        int start = pageSize * page;
+        int testCondition = start + pageSize;
+        if (player.gachaCollection.Count < testCondition)
         {
-            if (player.gachaCollection[i]!=null)
-            {
-                testPage[i - (page * pageSize)] = player.gachaCollection[i];
-            }
-            
+            testCondition = player.gachaCollection.Count;
         }
-    
+        for (int i = start; i < testCondition;i++)
+        {   
+                currentPage[i - start] = player.gachaCollection[i];                        
+        }
+        //return currentPage;
 
+    }
+    void SetGachasPosition(int page)
+    {
+        for (int i = 0; i < currentPage.Length; i++)
+        {
+            if (currentPage[i]!=null)
+            {
+                currentPage[i].transform.position = gachaPositions[i].transform.position;
+            }
+           
+
+        }
+
+    }
+
+
+
+    public void Previous()
+    {
+        //collection.transform.position = Vector3.Lerp(collection.transform.position,collection.transform.position + (Vector3.right*5),Time.deltaTime);
+        //mPrev = true;
+        //for (int i = 0; i < page.nextPage.Length; i++)
+        //{
+        //    page.currentPage = page.nextPage;
+        //}
+        //if (pageNumber >= 0)
+        //{
+        //    collection.transform.Translate(Vector3.right * 6);
+        //    for (int i = 0; i < page.currentPage.Length; i++)
+        //    {
+
+        //        page.currentPage[i] = page.previousPage[i];
+
+        //    }
+        //    Debug.Log("previous");
+        //}
+
+        if (currentPageNumber > 0)
+        {
+            currentPageNumber -= 1;
+            SetCurrentPage(currentPageNumber);
+        }
+
+
+    }
+    public void Next()
+    {
+        currentPageNumber += 1;
+        SetCurrentPage(currentPageNumber);
+        //mNext = true;
+        //collection.transform.Translate(Vector3.left * 6);
+
+
+
+        //for (int i = 0; i < page.currentPage.Length; i++)
+        //{
+
+        //    page.previousPage[i] = page.currentPage[i];
+
+        //}
+
+        //for (int i = 0; i < page.currentPage.Length; i++)
+        //{
+
+        //    page.currentPage[i] = page.nextPage[i];
+
+        //}
+
+        Debug.Log("next");
     }
 
     void OnDrawGizmos()
