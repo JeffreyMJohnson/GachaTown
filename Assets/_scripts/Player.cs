@@ -35,6 +35,12 @@ public class Player : MonoBehaviour
         gachaCollection.Add(gachaObject);
     }
 
+    public void ClearCollection()
+    {
+        collection.Clear();
+        gachaCollection.Clear();
+    }
+
     public bool BadCollectionLoaded()
     {
         return collection.Any(gacha => gacha == null);
