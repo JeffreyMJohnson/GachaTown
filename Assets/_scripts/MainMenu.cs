@@ -13,6 +13,14 @@ public class MainMenu : MonoBehaviour
         GameManager.instance.ChangeScene(scene);
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
     void InitButtonHandlers()
     {
         Button[] buttons = GetComponentsInChildren<Button>();
@@ -33,7 +41,7 @@ public class MainMenu : MonoBehaviour
                     break;
                 case "How To Play":
                     continue;
-                    break;
+                    //break;
             }
             button.onClick.AddListener(delegate { HandleClick(scene); });
 
