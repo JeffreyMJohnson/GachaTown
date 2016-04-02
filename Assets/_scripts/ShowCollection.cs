@@ -44,7 +44,7 @@ public class ShowCollection : MonoBehaviour
     }
 
    public void SetCurrentPage(int page)
-        {
+    {
         int start = pageSize * page;
         int testCondition = start + pageSize;
         if (player.gachaCollection.Count < testCondition)
@@ -56,7 +56,7 @@ public class ShowCollection : MonoBehaviour
                 currentPage[i - start] = player.gachaCollection[i];                        
         }
         //return currentPage;
-            
+
     }
     void SetGachasPosition(int page)
     {
@@ -66,7 +66,7 @@ public class ShowCollection : MonoBehaviour
             {
                 currentPage[i].transform.position = gachaPositions[i].transform.position;
             }
-            
+           
 
         }
 
