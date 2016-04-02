@@ -7,12 +7,6 @@ public class GameManager : MonoBehaviour
 
     public static GameManager instance;
     public List<GachaSet> setList = new List<GachaSet>();
-    Transform playerTransform;
-
-    void Start()
-    {
-        playerTransform = GetComponentInChildren<Player>().transform;
-    }
 
     void Awake()
     {
@@ -59,6 +53,5 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(Menus scene)
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
-        //menuState = aChangeTo;
     }
 }

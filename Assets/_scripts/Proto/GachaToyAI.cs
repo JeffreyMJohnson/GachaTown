@@ -8,11 +8,8 @@ public class GachaToyAI : MonoBehaviour
     public bool isSeeking;
     public bool isWandering;
     float speed = .02f;
-    Vector3 npcPos;
-    Vector3 targetPos;
 
     Vector3 wanderDir;
-    Vector3 seekDir;
     void Start()
     {
         self = GetComponent<Transform>();
@@ -62,15 +59,8 @@ public class GachaToyAI : MonoBehaviour
     void Seek()
     {
 
-        // npcPos = new Vector3( self.transform.position.x, 0, self.transform.position.z);       
-
-        // targetPos = new Vector3(target.transform.position.x, 0, target.transform.position.z);
-
-
-        self.LookAt(target, self.up);
-        //self.transform.rotation = Quaternion.Euler(targetPos);
-        self.Translate(Vector3.Normalize( target.position- self.position ) *speed,Space.World);        
-        //Debug.Log(Vector3.Normalize(npcPos - targetPos) * speed);
+         self.LookAt(target, self.up);
+        self.Translate(Vector3.Normalize( target.position- self.position ) *speed,Space.World);  
 
 
     }

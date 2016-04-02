@@ -8,7 +8,6 @@ public class Player : MonoBehaviour
     public int TotalCoins = 1000;
     public List<GameObject> gachaCollection;
     public int Selected = 1;
-    new Transform transform;
 
     Transform collectionParent;
 
@@ -16,8 +15,7 @@ public class Player : MonoBehaviour
     List<Gacha> collection;
     void Awake()
     {
-        transform = GetComponent<Transform>();
-        collectionParent = GameObject.Find("Collection").transform;
+         collectionParent = GameObject.Find("Collection").transform;
     }
 
     public void AddGachaToList(Gacha gacha)

@@ -63,8 +63,6 @@ public class pg_Editor : ScriptableObject, ISerializationCallbackReceiver
 	}
 	private static pg_Editor _instance;
 	
-	Color oldColor;
-
 	private bool useAxisConstraints = false;
 	private bool snapEnabled = true;
 	private SnapUnit snapUnit = SnapUnit.Meter;
@@ -256,8 +254,6 @@ NoParseForYou:
 		_snapAsGroup = snapAsGroup;
 		_scaleSnapEnabled = ScaleSnapEnabled;
 	}
-
-	private GUISkin sixBySevenSkin;
 #endregion
 
 #region MENU

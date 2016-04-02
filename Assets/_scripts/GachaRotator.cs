@@ -6,8 +6,7 @@ public class GachaRotator : MonoBehaviour
 {
 
     //all you have to do is slap a gacha machine object as a child of this one, make sure they're all in the same place
-
-    //public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE }
+    
     public Text gachaDisplay;
     public Text moneyDisplay;
     GameObject[] gachaMachines;
@@ -18,8 +17,7 @@ public class GachaRotator : MonoBehaviour
     public float rotateTime = 15; //in frames
     float rotateStart = 15;
     Player playerScript;
-
-	// Use this for initialization
+    
 	void Start ()
     {
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
@@ -63,7 +61,6 @@ public class GachaRotator : MonoBehaviour
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
-            //transform.Rotate(0, -rotationInterval, 0);
 
             selectedGacha--;
             if (selectedGacha == -1)
@@ -79,7 +76,6 @@ public class GachaRotator : MonoBehaviour
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
-            //transform.Rotate(0, rotationInterval, 0);
 
             selectedGacha++;
             selectedGacha = selectedGacha % gachaCount;
@@ -98,7 +94,6 @@ public class GachaRotator : MonoBehaviour
     {
         //pass selectedGacha to player
         playerScript.Selected = selectedGacha;
-        //UnityEngine.SceneManagement.SceneManager.LoadScene((int)MenuHandler.Menus.GACHA);
         GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
     }
     float GetDestinationRotation()
@@ -110,7 +105,7 @@ public class GachaRotator : MonoBehaviour
             toReturn = 360;
         return toReturn;
     }
-    // Update is called once per frame
+
     void Update ()
     {
         if (Input.GetKey(KeyCode.Escape))
@@ -120,11 +115,6 @@ public class GachaRotator : MonoBehaviour
         if (rotateStart < rotateTime)
         {
             rotateStart++;
-
-            float tstart = transform.eulerAngles.y;
-            float tdestination = GetDestinationRotation();
-            float tprogress = rotateStart / rotateTime;
-            float tcurrent = ((tdestination - tstart) * tprogress) + tstart;
 
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
 
