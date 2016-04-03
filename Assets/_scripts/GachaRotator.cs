@@ -21,7 +21,7 @@ public class GachaRotator : MonoBehaviour
 	void Start ()
     {
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
-        playerScript = tPlayer.GetComponent<Player>();
+	    playerScript = tPlayer.GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
         selectedGacha = playerScript.Selected;
         moneyDisplay.text = playerScript.TotalCoins.ToString();
