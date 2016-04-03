@@ -1,34 +1,25 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
 
 public class MainMenu : MonoBehaviour
 {
-    public UnityEvent orientationChangeEvent;
-
-    private ScreenOrientation currentOrientation;
     Canvas portrait;
     Canvas landscape;
-
-
 
     void Start()
     {
         InitButtonHandlers();
 
-        currentOrientation = Screen.orientation;
-
-        if(orientationChangeEvent == null)
-        {
-            orientationChangeEvent = new UnityEvent();
-
-        }
-
-        orientationChangeEvent.AddListener(HandleScreenOrientationChange);
+       GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
 
         InitCanvas();
-       
 
+
+    }
+
+    void OnDestroy()
+    {
+        GameManager.instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
     }
 
     public void HandleClick(GameManager.Menus scene)
@@ -41,12 +32,6 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
-        }
-
-        if(Screen.orientation != currentOrientation)
-        {
-            currentOrientation = Screen.orientation;
-            orientationChangeEvent.Invoke();
         }
     }
 
@@ -100,7 +85,8 @@ public class MainMenu : MonoBehaviour
 
     void SetOrientationCanvas()
     {
-        if(currentOrientation == ScreenOrientation.Portrait)
+        
+        if (GameManager.instance.IsPortrait)
         {
             portrait.gameObject.SetActive(true);
             landscape.gameObject.SetActive(false);
@@ -112,11 +98,10 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    
+
 
     void HandleScreenOrientationChange()
     {
-        Debug.Log(string.Format("Orientation changed. Now - {0}", Screen.orientation));
         SetOrientationCanvas();
     }
     #endregion

@@ -33,7 +33,7 @@ class PlayerLoadSave : MonoBehaviour
             Debug.Log("Bad collection.");
         }
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
-        string s = JsonUtility.ToJson(playerScript);
+        //string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));
         writer.Close();
     }

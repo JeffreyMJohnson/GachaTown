@@ -170,7 +170,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &249847497
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,11 +427,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa8951beaf5e12e4298cb1b5d5d35011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orientationChangeEvent:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!4 &357571185
 Transform:
   m_ObjectHideFlags: 0
@@ -707,7 +702,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!1 &933197594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,7 +1469,7 @@ RectTransform:
   m_Children:
   - {fileID: 1650336254}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1603,7 +1598,7 @@ RectTransform:
   m_Children:
   - {fileID: 1903494379}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1706,7 +1701,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &2134826609
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +1730,7 @@ Transform:
   m_Children:
   - {fileID: 505492619}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
 --- !u!114 &2134826611
 MonoBehaviour:
   m_ObjectHideFlags: 0

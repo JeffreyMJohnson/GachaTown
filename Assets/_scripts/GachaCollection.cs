@@ -23,7 +23,7 @@ class GachaCollection
     {
         _collection.Clear();
     }
-
+    /*
     public void Load()
     {
         foreach (Gacha gacha in _collection)
@@ -31,6 +31,7 @@ class GachaCollection
             
         }
     }
+    */
 
     #region private
     [UnityEngine.SerializeField]
