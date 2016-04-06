@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Hut
   m_EditorClassIdentifier: 
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
-  mesh: {fileID: 4300000, guid: 40db5dd11d985a243b3d1bde3594918d, type: 3}
+  mesh: {fileID: 4300000, guid: ee6f14122cabb6545ad240f13a890370, type: 3}
   material: {fileID: 2100000, guid: e1322606ae85cd64c8b0f4fe880310db, type: 2}

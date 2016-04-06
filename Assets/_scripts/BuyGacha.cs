@@ -20,8 +20,21 @@ public class BuyGacha : MonoBehaviour
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
 
         //add onclick event for menu button
-        Button menu = FindObjectOfType<Button>();
-        menu.onClick.AddListener(LoadMainMenu);
+        Button[] buttons = FindObjectsOfType<Button>();
+        foreach (Button button in buttons)
+        {
+            switch(button.name)
+            {
+                case "Main Menu Button":
+                    button.onClick.AddListener(LoadMainMenu);
+                    break;
+                case "Buy Twenty Button":
+                    button.onClick.AddListener(BuyLazy);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     void LoadMainMenu()
@@ -48,5 +61,12 @@ public class BuyGacha : MonoBehaviour
 
     }
 
+    public void BuyLazy()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            Buy();
+        }
+    }
     
 }

@@ -1,25 +1,15 @@
 fileFormatVersion: 2
-guid: b7f33295b29408249aba90fd7650b3ca
-timeCreated: 1459618340
+guid: ee6f14122cabb6545ad240f13a890370
+timeCreated: 1459648497
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: flame
-    100002: //RootNode
-    100004: tikitorch
-    100006: tikitorch1
-    100008: transform1
-    100010: transform2
-    400000: flame
-    400002: //RootNode
-    400004: tikitorch
-    400006: tikitorch1
-    400008: transform1
-    400010: transform2
-    2300000: tikitorch1
-    3300000: tikitorch1
-    4300000: tikitorch1
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: beach_hut
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -45,7 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 10
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
