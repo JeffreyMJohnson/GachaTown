@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Haunted House
   m_EditorClassIdentifier: 
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
-  mesh: {fileID: 4300000, guid: c950b7f4b2d52ea4697305fb5a15849a, type: 3}
-  material: {fileID: 2100000, guid: a4e80ad587424f5489239966da9d836f, type: 2}
+  mesh: {fileID: 4300000, guid: 32d6ae964434a2349bf9616adc350076, type: 3}
+  material: {fileID: 2100000, guid: 31432f971d9bf6b4e861f3d6cf94c3bb, type: 2}
   name: Haunted House

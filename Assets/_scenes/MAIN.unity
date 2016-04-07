@@ -1818,8 +1818,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   setList:
-  - {fileID: 11400000, guid: b6ca75b9d5e7963439d55b7e1b3b6e4a, type: 2}
   - {fileID: 11400000, guid: d70466071dfc3f142add60eda8184e0c, type: 2}
+  - {fileID: 11400000, guid: 8d496aab1ed098943b74afaa9b90d369, type: 2}
+  - {fileID: 11400000, guid: dcbf725998481dd4e992c7d5c326878f, type: 2}
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

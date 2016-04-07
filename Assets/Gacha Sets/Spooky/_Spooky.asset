@@ -13,5 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collection:
   - {fileID: 11400000, guid: 47140c107ef8d734b97381d84d107ebd, type: 2}
+  - {fileID: 11400000, guid: aa4416a0fae9dc94fac46926eb99a064, type: 2}
   name: Spooky
   description: Boo
