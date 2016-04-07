@@ -5,15 +5,17 @@ public class MainMenu : MonoBehaviour
 {
     Canvas portrait;
     Canvas landscape;
-
+    AudioSource buttonSound;
+    
     void Start()
     {
         InitButtonHandlers();
-
-       GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
+        buttonSound = GetComponent<AudioSource>();
+        GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
 
         InitCanvas();
 
+        
 
     }
 
@@ -24,6 +26,8 @@ public class MainMenu : MonoBehaviour
 
     public void HandleClick(GameManager.Menus scene)
     {
+        
+        buttonSound.Play();//sometimes doesn't work if you click multiple times
         GameManager.instance.ChangeScene(scene);
     }
 
