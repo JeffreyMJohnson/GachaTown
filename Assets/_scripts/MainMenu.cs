@@ -1,19 +1,22 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     Canvas portrait;
     Canvas landscape;
-
+    AudioSource buttonSound;
+    
     void Start()
     {
         InitButtonHandlers();
-
-       GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
+        buttonSound = GetComponent<AudioSource>();
+        GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
 
         InitCanvas();
 
+        
 
     }
 
@@ -24,6 +27,8 @@ public class MainMenu : MonoBehaviour
 
     public void HandleClick(GameManager.Menus scene)
     {
+        
+        buttonSound.Play();
         GameManager.instance.ChangeScene(scene);
     }
 

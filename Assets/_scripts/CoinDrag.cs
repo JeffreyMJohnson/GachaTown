@@ -8,11 +8,14 @@ public class CoinDrag : MonoBehaviour
     //cached reference to child prefab for instantiating when dragged
     GameObject coinPrefab;
     BuyGacha machine;
+    AudioSource coinDrop;
+    
 
     void Start()
     {
         coinPrefab = transform.FindChild("Coin_1").gameObject;
         machine = FindObjectOfType<BuyGacha>();
+        coinDrop = GetComponent<AudioSource>();
     }
 
     void OnMouseDrag()
@@ -39,6 +42,7 @@ public class CoinDrag : MonoBehaviour
                 if (hit.collider.gameObject.name == "coinslot" && draggedCoin != null)
                 {
                     machine.Buy();
+                    coinDrop.Play();
                 }
             }
             //either way destroy the coin clone when button released.

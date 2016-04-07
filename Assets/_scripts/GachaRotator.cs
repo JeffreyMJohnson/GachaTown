@@ -17,11 +17,17 @@ public class GachaRotator : MonoBehaviour
     public float rotateTime = 15; //in frames
     float rotateStart = 15;
     Player playerScript;
+
+    //sounds have a chance of not working
+    AudioSource sound;
+    public AudioClip rotateGachaSound;
+    public AudioClip buttonPressSound;
     
 	void Start ()
     {
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
 	    playerScript = tPlayer.GetComponent<Player>();
+        sound = GetComponent<AudioSource>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
         selectedGacha = playerScript.Selected;
         moneyDisplay.text = playerScript.TotalCoins.ToString();
@@ -68,6 +74,7 @@ public class GachaRotator : MonoBehaviour
             selectedGacha = selectedGacha % gachaCount;
 
             TextUpdate();
+            sound.PlayOneShot(rotateGachaSound);
         }
     }
 
@@ -81,18 +88,23 @@ public class GachaRotator : MonoBehaviour
             selectedGacha = selectedGacha % gachaCount;
 
             TextUpdate();
+            sound.PlayOneShot(rotateGachaSound);
         }
     }
 
     //I'm not being dumb, it's used by a button
     public void LoadMainMenu()
     {
+
+        sound.PlayOneShot(buttonPressSound);
+       
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
     public void SelectGacha()
     {
         //pass selectedGacha to player
+        sound.PlayOneShot(buttonPressSound);
         playerScript.Selected = selectedGacha;
         GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
     }
