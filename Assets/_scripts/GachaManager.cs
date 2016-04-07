@@ -4,7 +4,7 @@ using System.Collections;
 public class GachaManager : MonoBehaviour
 {
     public Gacha myGacha;
-    
+
 
     public void SetGachaData(Gacha gacha)
     {

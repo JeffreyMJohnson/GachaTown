@@ -8,7 +8,7 @@ public class BuyGacha : MonoBehaviour
 
     public Text moneyTextField;
     public Text displayTextField;
-    public int GachaSet = 0;
+    public int gachaSet = 0;
 
     Player localPlayer;
     AudioSource buttonSound;
@@ -18,7 +18,7 @@ public class BuyGacha : MonoBehaviour
         localPlayer = tPlayer.GetComponent<Player>();
         buttonSound = GetComponent<AudioSource>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
-        displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
+        displayTextField.text = GameManager.instance.gachaSetDB.GetGachaSet(gachaSet).name;
 
         //add onclick event for menu button
         Button[] buttons = FindObjectsOfType<Button>();
@@ -61,7 +61,8 @@ public class BuyGacha : MonoBehaviour
         {
             localPlayer.TotalCoins -= 5;
             moneyTextField.text = localPlayer.TotalCoins.ToString();
-            localPlayer.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
+            localPlayer.AddGachaToList(GameManager.instance.gachaSetDB.GetGachaSet(gachaSet).GetRandomGacha());
+            //localPlayer.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
         }
 
     }
