@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
@@ -58,15 +59,17 @@ public class Town : MonoBehaviour
         setList.onValueChanged.AddListener(HandleGachaSetSelection);
         gachaList.onValueChanged.AddListener(HandleGachaSelection);
 
-        ClearSelectionMenu();
+        LoadGachaSetDropDown();
+        //ClearSelectionMenu();
     }
 
     void ClearSelectionMenu()
     {
         List<GachaSet> setCollection = GameManager.instance.setList;
 
-        LoadGachaSetDropDown();
+        setList.value = 0;
 
+        
         gachaList.ClearOptions();
         gachaList.enabled = false;
         selectGacha.enabled = false;
@@ -76,32 +79,30 @@ public class Town : MonoBehaviour
     {
         List<GachaSet> setCollection = GameManager.instance.setList;
         setList.ClearOptions();
+        setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
         for (int i = 0; i < setCollection.Count; i++)
         {
             GachaSet gachaSet = setCollection[i];
             setList.options.Add(new Dropdown.OptionData(gachaSet.name));
         }
-        setList.captionText.text = "Select Gacha Set";
+        
         //note this will fire the onValueChange event and is taken into account there.
-        setList.value = -1;
-        //
+        setList.value = 0;
     }
 
     void LoadGachaDropDown(int gachaSetIndex)
     {
-        gachaList.ClearOptions();
-        gachaList.captionText.text = "Select Gacha";
+        
         List<GachaSet> setCollection = GameManager.instance.setList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
-
+        gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
         foreach (Gacha gacha in gachaSet.collection)
         {
             gachaList.options.Add(new Dropdown.OptionData(gacha.name));
         }
         gachaList.enabled = true;
         //note this will fire the onValueChange event and is taken into account there.
-        gachaList.value = -1;
-
+        gachaList.value = 0;
     }
 
     /// <summary>
@@ -110,8 +111,8 @@ public class Town : MonoBehaviour
     /// <param name="value"></param>
     public void HandleGachaSelection(int value)
     {
-        //when setting the dropdown value to -1 to clear the 'selected' choice it fires this event, want to ignore it in this case.
-        if (value < 0)
+        //when setting the dropdown value to 0 to clear the 'selected' choice it fires this event, want to ignore it in this case.
+        if (value == 0)
         {
             return;
         }
@@ -125,17 +126,17 @@ public class Town : MonoBehaviour
     /// <param name="value"></param>
     public void HandleGachaSetSelection(int value)
     {
-        //when setting the dropdown value to -1 to clear the 'selected' choice it fires this event, want to ignore it in this case.
-        if (value < 0)
+        //when setting the dropdown value to 0 to clear the 'selected' choice it fires this event, want to ignore it in this case.
+        if (value ==0)
         {
             return;
         }
-        LoadGachaDropDown(value);
+        LoadGachaDropDown(value - 1);//subtract 1 to account for placeholder in list at index 0 in dropdown
     }
 
     public void HandlePlaceButtonClick()
     {
-        Gacha selectedGacha = GameManager.instance.setList[setList.value].collection[gachaList.value];
+        Gacha selectedGacha = GameManager.instance.setList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         //todo implement the drag / drop to town here
         Debug.Log("Place " + selectedGacha.name + " now.");
 
