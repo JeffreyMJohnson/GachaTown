@@ -14,3 +14,4 @@ MonoBehaviour:
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
   mesh: {fileID: 4300000, guid: 5d2094902ef332c439f7de8c6dff58b7, type: 3}
   material: {fileID: 2100000, guid: 237ade6c91dc9294db7291ae59968841, type: 2}
+  name: Palm Tree

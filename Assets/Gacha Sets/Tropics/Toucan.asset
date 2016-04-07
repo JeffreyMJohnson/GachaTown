@@ -14,3 +14,4 @@ MonoBehaviour:
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
   mesh: {fileID: 4300000, guid: 3d0bba114218f42408cc58dc386dc2c1, type: 3}
   material: {fileID: 2100000, guid: 58d6339eefaffa14c934d26a3339c87c, type: 2}
+  name: Toucan

@@ -14,3 +14,4 @@ MonoBehaviour:
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
   mesh: {fileID: 4300002, guid: c7b9fefd57a0ef34787ca5613c5bc400, type: 3}
   material: {fileID: 2100000, guid: 20c68d7af91e882419c392dbcfb5d4a9, type: 2}
+  name: Hibiscus Bush

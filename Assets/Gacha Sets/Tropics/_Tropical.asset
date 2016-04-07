@@ -18,3 +18,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3789a4b00a1628479f8f819d8833179, type: 2}
   - {fileID: 11400000, guid: faf2713f9482c10438e6ab0903d41087, type: 2}
   - {fileID: 11400000, guid: 368af5b25e6dd6d44b56ebae8b207b8a, type: 2}
+  name: Tropical
+  description: Have a burger in paradise.
