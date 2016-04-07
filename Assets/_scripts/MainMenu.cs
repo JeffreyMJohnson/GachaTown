@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -27,7 +28,7 @@ public class MainMenu : MonoBehaviour
     public void HandleClick(GameManager.Menus scene)
     {
         
-        buttonSound.Play();//sometimes doesn't work if you click multiple times
+        buttonSound.Play();
         GameManager.instance.ChangeScene(scene);
     }
 
