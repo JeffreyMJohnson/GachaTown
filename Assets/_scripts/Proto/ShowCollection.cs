@@ -6,7 +6,7 @@ using System;
 public class ShowCollection : MonoBehaviour
 {
     public Player player;
-    public Transform[] gachaPositions;
+    public Vector3 gachaPosition;
     public int pageSize = 9;
     public bool ShowGizmos = true;
 
@@ -20,7 +20,9 @@ public class ShowCollection : MonoBehaviour
         player = FindObjectOfType<Player>();
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
-        SetCollection();
+        SetCollection(currentPageNumber);
+
+
     }
 
     void Update()
@@ -31,11 +33,10 @@ public class ShowCollection : MonoBehaviour
         }
     }
 
-    private void SetCollection()
+    private void SetCollection(int page)
     {
-
-        SetCurrentPage(currentPageNumber);
-        SetGachasPosition(currentPageNumber);
+        SetCurrentPage(page);
+        SetGachasPosition(page);
 
     }
 
@@ -59,7 +60,8 @@ public class ShowCollection : MonoBehaviour
         {
             if (currentPage[i] != null)
             {
-                currentPage[i].transform.position = gachaPositions[i].transform.position;
+                //fis this shit
+                //currentPage[i].transform.position = gachaPositions[i].transform.position;
             }
 
 
@@ -73,29 +75,48 @@ public class ShowCollection : MonoBehaviour
     {
         if (currentPageNumber > 0)
         {
+            ClearGachaSpot();
             currentPageNumber -= 1;
-            SetCurrentPage(currentPageNumber);
+            SetCollection(currentPageNumber);
         }
-
-
     }
     public void Next()
     {
+        if (currentPageNumber * pageSize < player.gachaCollection.Count-pageSize)
+        {
+            ClearGachaSpot();
         currentPageNumber += 1;
-        SetCurrentPage(currentPageNumber);
+        }
+        Debug.Log("next");
+    }
+    public void ClearGachaSpot()
+    {
+        for (int i = 0; i < currentPage.Length; i++)
+        {
+            if (currentPage[i] == null)
+            {
+                continue;
+            }
+
+            currentPage[i].transform.Translate(0, 100, 0);
+            currentPage[i] = null;
+
+
+    }
     }
 
     void OnDrawGizmos()
     {
-        if (ShowGizmos)
-        {
-            for (int i = 0; i < gachaPositions.Length; i++)
-            {
-                Gizmos.color = Color.green;
-                Gizmos.DrawWireCube(gachaPositions[i].position, Vector3.one);
+        //fix this shit
+        //if (ShowGizmos)
+        //{
+        //    for (int i = 0; i < gachaPositions.Length; i++)
+        //    {
+        //        Gizmos.color = Color.green;
+        //        Gizmos.DrawWireCube(gachaPositions[i].position, Vector3.one);
 
-            }
-        }
+        //    }
+        //}
 
 
     }
