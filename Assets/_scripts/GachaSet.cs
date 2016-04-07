@@ -6,7 +6,7 @@ public class GachaSet : ScriptableObject
 {
     new string name;
     string description;
-    public List<Gacha> collection;
+    List<Gacha> collection;
 
     public void AddGacha(Gacha toAdd)
     {
