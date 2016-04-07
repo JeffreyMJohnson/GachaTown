@@ -28,10 +28,7 @@ class PlayerLoadSave : MonoBehaviour
         }
         //clear the gameobject collection to load from the data collection at player load.
         playerScript.gachaCollection.Clear();
-        if (playerScript.BadCollectionLoaded())
-        {
-            Debug.Log("Bad collection.");
-        }
+        Debug.Assert(playerScript.BadCollectionLoaded() == false, "Bad save file found.");
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
         //string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));

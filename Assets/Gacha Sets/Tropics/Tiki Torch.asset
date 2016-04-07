@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: Tiki Torch
   m_EditorClassIdentifier: 
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
-  mesh: {fileID: 4300000, guid: 034d178e4123bc6489aa8f77018ebe9e, type: 3}
+  mesh: {fileID: 4300000, guid: b7f33295b29408249aba90fd7650b3ca, type: 3}
   material: {fileID: 2100000, guid: d7367cf57a0f0c549950b88144802c73, type: 2}
