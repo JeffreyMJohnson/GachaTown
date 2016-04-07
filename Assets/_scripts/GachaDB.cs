@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class GachaDB
 {
 
-    List<GachaSet> setList;
+    public List<GachaSet> setList;
 
     public void init(List<GachaSet> toSet)
     {
