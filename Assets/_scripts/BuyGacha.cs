@@ -11,31 +11,41 @@ public class BuyGacha : MonoBehaviour
     public int GachaSet = 0;
 
     Player localPlayer;
-    AudioSource buttonPress;
+    AudioSource buttonSound;
     void Start()
     {
         GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
         localPlayer = tPlayer.GetComponent<Player>();
-        buttonPress = GetComponent<AudioSource>();
+        buttonSound = GetComponent<AudioSource>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
 
         //add onclick event for menu button
-        Button menu = FindObjectOfType<Button>(); //can't add more than one button in this scene
-        menu.onClick.AddListener(LoadMainMenu);
+        Button[] buttons = FindObjectsOfType<Button>(); //can't add more than one button in this scene
+        foreach (Button button in buttons)
+        {
+            if (button.name == "Main Menu Button")
+            {
+                
+                button.onClick.AddListener(delegate { HandleClick(GameManager.Menus.MAIN); });
+            }
+        }
+    }
+    
+    public void HandleClick(GameManager.Menus scene)
+    {
+
+        buttonSound.Play();//sometimes doesn't work if you click multiple times
+        GameManager.instance.ChangeScene(scene);
     }
 
-    void LoadMainMenu()
-    {
-        buttonPress.Play();
-        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
-    }
+    
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            LoadMainMenu();
+            HandleClick(GameManager.Menus.MAIN);
         }
     }
 
