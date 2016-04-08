@@ -17,6 +17,8 @@ public class Town : MonoBehaviour
         InitMenu();
     }
 
+    private bool rayHit = false;
+    private Vector3 hitPos = Vector3.zero;
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
@@ -26,16 +28,28 @@ public class Town : MonoBehaviour
 
         if (gachaToPlace != null)
         {
-            gachaToPlace.transform.position = Camera.current.ScreenToWorldPoint(Input.mousePosition);
-            Debug.DrawRay(gachaToPlace.transform.position, -Vector3.up);
-            if (Input.GetMouseButtonDown(0))
-            {
-                Debug.Log("drop");
-            }
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
+            if (Physics.Raycast(ray, out hit))
+            {
+                gachaToPlace.transform.position = hit.point;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    gachaToPlace = null;
+                }
+            }
         }
 
 
+    }
+
+    void OnDrawGizmos()
+    {
+        if (rayHit)
+        {
+            Gizmos.DrawCube(hitPos, new Vector3(.25f, .25f, .25f));
+        }
     }
 
     void InitMenu()
@@ -116,7 +130,7 @@ public class Town : MonoBehaviour
     /// <param name="gachaSetIndex"></param>
     void LoadGachaDropDown(int gachaSetIndex)
     {
-
+        gachaList.ClearOptions();
         List<GachaSet> setCollection = GameManager.instance.setList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
         gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));

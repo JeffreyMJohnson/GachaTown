@@ -1907,6 +1907,7 @@ GameObject:
   - 4: {fileID: 1487807555}
   - 33: {fileID: 1487807558}
   - 23: {fileID: 1487807556}
+  - 64: {fileID: 1487807557}
   m_Layer: 5
   m_Name: Base Plate
   m_TagString: Untagged
@@ -1953,6 +1954,18 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!64 &1487807557
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1487807554}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 0
+  m_Mesh: {fileID: 4300000, guid: 07bf30bd48cad7d4e8677a3a1a8def46, type: 3}
 --- !u!33 &1487807558
 MeshFilter:
   m_ObjectHideFlags: 0
