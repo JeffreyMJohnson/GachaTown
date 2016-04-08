@@ -5,6 +5,7 @@ using UnityEngine;
 public class GachaSet : ScriptableObject
 {
     public List<Gacha> collection;
-    public string name;
+    public new string name;
     public string description;
+
 }

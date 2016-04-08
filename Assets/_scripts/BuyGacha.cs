@@ -18,6 +18,11 @@ public class BuyGacha : MonoBehaviour
         localPlayer = tPlayer.GetComponent<Player>();
         buttonSound = GetComponent<AudioSource>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
+
+        if (localPlayer.Selected > GameManager.instance.setList.Count - 1)
+            localPlayer.Selected = GameManager.instance.setList.Count - 1;
+
+        GachaSet = localPlayer.Selected;
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
 
         //add onclick event for menu button
@@ -35,7 +40,6 @@ public class BuyGacha : MonoBehaviour
                 default:
                     break;
             }
-
         }
     }
     public void HandleClick(GameManager.Menus scene)
