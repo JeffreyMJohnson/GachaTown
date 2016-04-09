@@ -1,18 +1,85 @@
 fileFormatVersion: 2
-guid: 98ab0647c658efa45a96d4e1e955f50a
-timeCreated: 1459547154
+guid: 4ba6528894de43e47bb5376efb9e9ab8
+timeCreated: 1460050278
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: lemur_
-    400000: //RootNode
-    400002: lemur_
-    2300000: lemur_
-    3300000: lemur_
-    4300000: lemur_
+    100000: clavicle
+    100002: controls
+    100004: ear_l
+    100006: ear_r
+    100008: elbow_l
+    100010: elbow_r
+    100012: foot_l
+    100014: foot_l 1
+    100016: foot_r
+    100018: foot_r 1
+    100020: hand_l
+    100022: hand_r
+    100024: head
+    100026: Hip
+    100028: joint4
+    100030: leg_l
+    100032: leg_r
+    100034: //RootNode
+    100036: neck
+    100038: obj_lemur
+    100040: shin_l
+    100042: shin_r
+    100044: shoulder_l
+    100046: shoulder_r
+    100048: spine_1
+    100050: spine_2
+    100052: tail2
+    100054: tail3
+    100056: tail4
+    100058: tail5
+    100060: tail6
+    100062: tail_base
+    100064: tip_ear_l
+    100066: tip_ear_r
+    100068: toe_l
+    100070: toe_r
+    400000: clavicle
+    400002: controls
+    400004: ear_l
+    400006: ear_r
+    400008: elbow_l
+    400010: elbow_r
+    400012: foot_l
+    400014: foot_l 1
+    400016: foot_r
+    400018: foot_r 1
+    400020: hand_l
+    400022: hand_r
+    400024: head
+    400026: Hip
+    400028: joint4
+    400030: leg_l
+    400032: leg_r
+    400034: //RootNode
+    400036: neck
+    400038: obj_lemur
+    400040: shin_l
+    400042: shin_r
+    400044: shoulder_l
+    400046: shoulder_r
+    400048: spine_1
+    400050: spine_2
+    400052: tail2
+    400054: tail3
+    400056: tail4
+    400058: tail5
+    400060: tail6
+    400062: tail_base
+    400064: tip_ear_l
+    400066: tip_ear_r
+    400068: toe_l
+    400070: toe_r
+    4300000: obj_lemur
     9500000: //RootNode
+    13700000: obj_lemur
   materials:
     importMaterials: 1
     materialName: 0
@@ -39,7 +106,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 25
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0

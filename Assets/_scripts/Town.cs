@@ -5,6 +5,8 @@ using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
+    public AnimationClip walk;
+    private Animator anim;
     Canvas canvas;
     Dropdown setList = null;
     Dropdown gachaList = null;
@@ -15,10 +17,18 @@ public class Town : MonoBehaviour
     {
         canvas = FindObjectOfType<Canvas>();
         InitMenu();
+
+        //lock to landscape mode
+        Screen.orientation = ScreenOrientation.Landscape;
+        anim = GetComponent<Animator>();
     }
 
-    private bool rayHit = false;
-    private Vector3 hitPos = Vector3.zero;
+    void OnDestroy()
+    {
+        Screen.orientation = ScreenOrientation.AutoRotation;
+    }
+
+    private GameObject lemur = null;
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
@@ -37,19 +47,15 @@ public class Town : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     gachaToPlace = null;
+
+                    //todo remove this 
+                    lemur = GameObject.Find("Lemur");
+
                 }
             }
         }
 
 
-    }
-
-    void OnDrawGizmos()
-    {
-        if (rayHit)
-        {
-            Gizmos.DrawCube(hitPos, new Vector3(.25f, .25f, .25f));
-        }
     }
 
     void InitMenu()

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Lemur
   m_EditorClassIdentifier: 
   basePrefab: {fileID: 135956, guid: 19345fc9c3be61e4bbaffa54ada4ef9b, type: 2}
-  mesh: {fileID: 4300000, guid: 98ab0647c658efa45a96d4e1e955f50a, type: 3}
-  material: {fileID: 2100000, guid: 5f520e0367809e348bc04d0451582041, type: 2}
+  mesh: {fileID: 4300000, guid: 4ba6528894de43e47bb5376efb9e9ab8, type: 3}
+  material: {fileID: 2100000, guid: 67fc08e5244b2f14cb659ac9008399b5, type: 2}
+  animControl: {fileID: 9100000, guid: a60d2a19a00a1b847ae7f96da5b8badd, type: 2}
   name: Lemur
