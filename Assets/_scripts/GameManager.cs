@@ -70,6 +70,14 @@ public class GameManager : MonoBehaviour
         orientationController.OrientationChangeEvent.RemoveListener(callBack);
     }
 
+    public bool DoesPlayerHave(string gacha)
+    {
+        if (GameObject.Find(gacha) == null)
+            return false;
+        else
+            return true;
+    }
+
     public GachaSet GetGachaSet(int setIndex)
     {
         return setList[setIndex];
@@ -88,6 +96,13 @@ public class GameManager : MonoBehaviour
         return newGacha;
     }
 
+    public string GetGachaName(int setIndex, int gachaIndex)
+    {
+        if (gachaIndex > setList[setIndex].collection.Count - 1)
+            gachaIndex = setList[setIndex].collection.Count - 1;
+        return setList[setIndex].collection[gachaIndex].name;
+    }
+
     public void ChangeScene(Menus scene)
     {
         StartCoroutine(WaitForAudio(scene));
@@ -98,4 +113,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
     }
+
+
+
 }
