@@ -1,57 +1,49 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
-    Canvas canvas;
-    Dropdown setList = null;
-    Dropdown gachaList = null;
+    #region public properties
+    public AnimationClip walk;
+    #endregion
+
+    #region private fields
+    private Animator anim = null;
+    private Canvas canvas = null;
+    private Dropdown setList = null;
+    private Dropdown gachaList = null;
     private Button selectGacha = null;
     private GameObject gachaToPlace = null;
+    #endregion
 
+    #region unity lifecycle methods
     void Start()
     {
         canvas = FindObjectOfType<Canvas>();
+        Debug.Assert(canvas != null, "canvas not found.");
+
         InitMenu();
+
+        //lock to landscape mode
+        Screen.orientation = ScreenOrientation.Landscape;
+        
     }
 
-    private bool rayHit = false;
-    private Vector3 hitPos = Vector3.zero;
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
-        }
+        HandleEscapeKey();
 
-        if (gachaToPlace != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                gachaToPlace.transform.position = hit.point;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    gachaToPlace = null;
-                }
-            }
-        }
-
-
+        HandleGachaClickDrag();
     }
 
-    void OnDrawGizmos()
+    void OnDestroy()
     {
-        if (rayHit)
-        {
-            Gizmos.DrawCube(hitPos, new Vector3(.25f, .25f, .25f));
-        }
+        Screen.orientation = ScreenOrientation.AutoRotation;
     }
+    #endregion
 
+    #region GUI
     void InitMenu()
     {
         Button[] buttons = canvas.GetComponentsInChildren<Button>();
@@ -96,7 +88,7 @@ public class Town : MonoBehaviour
     /// </summary>
     void ClearSelectionMenu()
     {
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
 
         setList.value = 0;
 
@@ -111,7 +103,7 @@ public class Town : MonoBehaviour
     /// </summary>
     void LoadGachaSetDropDown()
     {
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
         setList.ClearOptions();
         setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
         for (int i = 0; i < setCollection.Count; i++)
@@ -131,10 +123,10 @@ public class Town : MonoBehaviour
     void LoadGachaDropDown(int gachaSetIndex)
     {
         gachaList.ClearOptions();
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
         gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
-        foreach (Gacha gacha in gachaSet.collection)
+        foreach (GameObject gacha in gachaSet.collection)
         {
             gachaList.options.Add(new Dropdown.OptionData(gacha.name));
         }
@@ -142,7 +134,9 @@ public class Town : MonoBehaviour
         //note this will fire the onValueChange event and is taken into account there.
         gachaList.value = 0;
     }
+    #endregion
 
+    #region UI Handlers
     /// <summary>
     /// Gacha Selection dropdown OnValueChange event handler.
     /// </summary>
@@ -177,10 +171,10 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandlePlaceButtonClick()
     {
-        Gacha selectedGacha = GameManager.instance.setList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
+        GameObject selectedGacha = GameManager.instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         //todo implement the drag / drop to town here
 
-        gachaToPlace = GameManager.instance.GetGachaGameObject(setList.value - 1, gachaList.value - 1);
+        gachaToPlace = Instantiate<GameObject>(GameManager.instance.GetGachaPrefab(new GachaID(setList.value - 1, gachaList.value - 1)));
 
         ClearSelectionMenu();
     }
@@ -194,4 +188,30 @@ public class Town : MonoBehaviour
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
+    private void HandleEscapeKey()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
+    }
+
+    private void HandleGachaClickDrag()
+    {
+        if (gachaToPlace != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                gachaToPlace.transform.position = hit.point;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    gachaToPlace = null;
+                }
+            }
+        }
+    }
+    #endregion
 }
