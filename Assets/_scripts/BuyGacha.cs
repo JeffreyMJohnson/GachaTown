@@ -19,8 +19,6 @@ public class BuyGacha : MonoBehaviour
         buttonSound = GetComponent<AudioSource>();
         moneyTextField.text = localPlayer.TotalCoins.ToString();
 
-        if (localPlayer.Selected > GameManager.instance.setList.Count - 1)
-            localPlayer.Selected = GameManager.instance.setList.Count - 1;
 
         GachaSet = localPlayer.Selected;
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;

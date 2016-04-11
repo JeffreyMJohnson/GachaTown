@@ -9,23 +9,13 @@ public class GameManager : MonoBehaviour
 {
     public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
 
-    public struct GachaID
-    {
-        public int setIndex;
-        public int gachaIndex;
-
-        public GachaID(int a_setIndex, int a_gachaIndex)
-        {
-            setIndex = a_setIndex;
-            gachaIndex = a_gachaIndex;
-        }
-    }
+   
 
 
     public List<GachaSet> masterGachaSetList = new List<GachaSet>(); 
 
     public static GameManager instance;
-    public List<GachaSet> setList = new List<GachaSet>();
+    //public List<GachaSet> setList = new List<GachaSet>();
 
     public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
 
@@ -70,37 +60,43 @@ public class GameManager : MonoBehaviour
         orientationController.OrientationChangeEvent.RemoveListener(callBack);
     }
 
-    public bool DoesPlayerHave(string gacha)
+    /*
+     * this doesn't belong in this class
+    public bool DoesPlayerHave(string gachaName)
     {
-        if (GameObject.Find(gacha) == null)
+        if (GameObject.Find(gachaName) == null)
             return false;
         else
             return true;
     }
-
+    */
     public GachaSet GetGachaSet(int setIndex)
     {
-        return setList[setIndex];
+        return masterGachaSetList[setIndex];
     }
 
     public GachaID GetRandomGacha(int setIndex)
     {
-        int randomIndex = Random.Range(0, setList[setIndex].collection.Count);
+        int randomIndex = Random.Range(0, masterGachaSetList[setIndex].collection.Count);
         return new GachaID(setIndex, randomIndex);
     }
 
-    public GameObject GetGacha(int setIndex, int gachaIndex)
+    /// <summary>
+    /// returns prefab of gachaName of given set and gachaName index.
+    /// </summary>
+    /// <param name="setIndex"></param>
+    /// <param name="gachaIndex"></param>
+    /// <returns></returns>
+    public GameObject GetGachaPrefab(int setIndex, int gachaIndex)
     {
-        GameObject gachaPrefab = setList[setIndex].collection[gachaIndex];
-        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
-        return newGacha;
+        return masterGachaSetList[setIndex].collection[gachaIndex];
     }
 
     public string GetGachaName(int setIndex, int gachaIndex)
     {
-        if (gachaIndex > setList[setIndex].collection.Count - 1)
-            gachaIndex = setList[setIndex].collection.Count - 1;
-        return setList[setIndex].collection[gachaIndex].name;
+        if (gachaIndex > masterGachaSetList[setIndex].collection.Count - 1)
+            gachaIndex = masterGachaSetList[setIndex].collection.Count - 1;
+        return masterGachaSetList[setIndex].collection[gachaIndex].name;
     }
 
     public void ChangeScene(Menus scene)
@@ -114,6 +110,11 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
     }
 
-
+    //todo this needs to find a better home
+    public bool IsGachaAnimated(GameObject gachaGameObject)
+    {
+        Animator anim = gachaGameObject.GetComponent<Animator>();
+        return (anim == null) || (anim.enabled);
+    }
 
 }

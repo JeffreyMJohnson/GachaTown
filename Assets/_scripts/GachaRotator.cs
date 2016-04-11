@@ -18,6 +18,8 @@ public class GachaRotator : MonoBehaviour
     float rotateStart = 15;
     Player playerScript;
 
+    private int maxGachaSetCount;
+
     //sounds have a chance of not working
     AudioSource sound;
     public AudioClip rotateGachaSound;
@@ -55,6 +57,8 @@ public class GachaRotator : MonoBehaviour
             transform.Rotate(0, rotationInterval, 0);
         }
         TextUpdate();
+
+	    maxGachaSetCount = GameManager.instance.masterGachaSetList.Count;
     }
 	
     void TextUpdate()
@@ -62,30 +66,46 @@ public class GachaRotator : MonoBehaviour
         gachaDisplay.text = "MACHINE NO. " + selectedGacha + "\nCOST 5";
     }
 
+    /// <summary>
+    /// decrease gacha set index
+    /// </summary>
     public void RotateLeft()
     {
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
 
-            selectedGacha--;
-            if (selectedGacha == -1)
-                selectedGacha = gachaCount - 1;
-            selectedGacha = selectedGacha % gachaCount;
+            selectedGacha++;
+            //if (selectedGacha == -1)
+            //    selectedGacha = gachaCount - 1;
+            //selectedGacha = selectedGacha % gachaCount;
+            if (selectedGacha == maxGachaSetCount)
+            {
+                selectedGacha = 0;
+            }
 
             TextUpdate();
             sound.PlayOneShot(rotateGachaSound);
         }
     }
 
+    /// <summary>
+    /// decrease gacha set index
+    /// </summary>
     public void RotateRight()
     {
+        //bug this needs to be changed float equality is not done this way
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
 
-            selectedGacha++;
-            selectedGacha = selectedGacha % gachaCount;
+            selectedGacha--;
+            //selectedGacha = selectedGacha % gachaCount;
+            if (selectedGacha < 0)
+            {
+                selectedGacha = maxGachaSetCount - 1;
+            }
+
 
             TextUpdate();
             sound.PlayOneShot(rotateGachaSound);
@@ -126,6 +146,7 @@ public class GachaRotator : MonoBehaviour
         }
         if (rotateStart < rotateTime)
         {
+            //bug add deltaTime for timing not frame count.  if you want frame count use an int
             rotateStart++;
 
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);

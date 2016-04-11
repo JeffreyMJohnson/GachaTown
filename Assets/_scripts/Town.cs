@@ -102,7 +102,7 @@ public class Town : MonoBehaviour
     /// </summary>
     void ClearSelectionMenu()
     {
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
 
         setList.value = 0;
 
@@ -117,7 +117,7 @@ public class Town : MonoBehaviour
     /// </summary>
     void LoadGachaSetDropDown()
     {
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
         setList.ClearOptions();
         setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
         for (int i = 0; i < setCollection.Count; i++)
@@ -137,7 +137,7 @@ public class Town : MonoBehaviour
     void LoadGachaDropDown(int gachaSetIndex)
     {
         gachaList.ClearOptions();
-        List<GachaSet> setCollection = GameManager.instance.setList;
+        List<GachaSet> setCollection = GameManager.instance.masterGachaSetList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
         gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
         foreach (GameObject gacha in gachaSet.collection)
@@ -183,10 +183,10 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandlePlaceButtonClick()
     {
-        GameObject selectedGacha = GameManager.instance.setList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
+        GameObject selectedGacha = GameManager.instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         //todo implement the drag / drop to town here
 
-        gachaToPlace = GameManager.instance.GetGacha(setList.value - 1, gachaList.value - 1);
+        gachaToPlace = Instantiate<GameObject>(GameManager.instance.GetGachaPrefab(setList.value - 1, gachaList.value - 1));
 
         ClearSelectionMenu();
     }

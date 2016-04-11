@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TotalCoins: 1000
-  gachaCollection: []
+  collectionObjects: []
   Selected: 1
 --- !u!1 &663162456
 GameObject:
@@ -1816,8 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0b18d1f63acf942aaee99a4a3748c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  masterGachaSetList: []
-  setList:
+  masterGachaSetList:
   - {fileID: 11400000, guid: 73e98c33a5ad50b4085d855f24ad88be, type: 2}
   - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
   - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}

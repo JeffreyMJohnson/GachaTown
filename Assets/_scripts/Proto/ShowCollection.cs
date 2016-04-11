@@ -49,8 +49,8 @@ public class ShowCollection : MonoBehaviour
         }
         for (int i = start; i < testCondition; i++)
         {
-            GameManager.GachaID gachaID = player.gachaCollection[i];
-            currentPage[i - start] = GameManager.instance.GetGacha(gachaID.setIndex, gachaID.gachaIndex);
+            GachaID gachaID = player.gachaCollection[i];
+            currentPage[i - start] = GameManager.instance.GetGachaPrefab(gachaID.SetIndex, gachaID.GachaIndex);
         }
 
     }
