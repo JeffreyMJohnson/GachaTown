@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fb86982afe610ae4e8e408cfb876e1d3
-timeCreated: 1460050694
+guid: aefd9ea46b6e0d14882076987b1c7db4
+timeCreated: 1459547154
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
@@ -9,7 +9,7 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: tea_set
+    4300000: hybiscusBush
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -35,7 +35,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 75
+    globalScale: 3
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

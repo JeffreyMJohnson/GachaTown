@@ -140,7 +140,7 @@ public class Town : MonoBehaviour
         List<GachaSet> setCollection = GameManager.instance.setList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
         gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
-        foreach (Gacha gacha in gachaSet.collection)
+        foreach (GameObject gacha in gachaSet.collection)
         {
             gachaList.options.Add(new Dropdown.OptionData(gacha.name));
         }
@@ -183,10 +183,10 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandlePlaceButtonClick()
     {
-        Gacha selectedGacha = GameManager.instance.setList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
+        GameObject selectedGacha = GameManager.instance.setList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         //todo implement the drag / drop to town here
 
-        gachaToPlace = GameManager.instance.GetGachaGameObject(setList.value - 1, gachaList.value - 1);
+        gachaToPlace = GameManager.instance.GetGacha(setList.value - 1, gachaList.value - 1);
 
         ClearSelectionMenu();
     }

@@ -21,8 +21,6 @@ public class ShowCollection : MonoBehaviour
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
         SetCollection(currentPageNumber);
-
-
     }
 
     void Update()
@@ -42,6 +40,7 @@ public class ShowCollection : MonoBehaviour
 
     public void SetCurrentPage(int page)
     {
+
         int start = pageSize * page;
         int testCondition = start + pageSize;
         if (player.gachaCollection.Count < testCondition)
@@ -50,7 +49,8 @@ public class ShowCollection : MonoBehaviour
         }
         for (int i = start; i < testCondition; i++)
         {
-            currentPage[i - start] = player.gachaCollection[i];
+            GameManager.GachaID gachaID = player.gachaCollection[i];
+            currentPage[i - start] = GameManager.instance.GetGacha(gachaID.setIndex, gachaID.gachaIndex);
         }
 
     }
@@ -82,10 +82,10 @@ public class ShowCollection : MonoBehaviour
     }
     public void Next()
     {
-        if (currentPageNumber * pageSize < player.gachaCollection.Count-pageSize)
+        if (currentPageNumber * pageSize < player.gachaCollection.Count - pageSize)
         {
             ClearGachaSpot();
-        currentPageNumber += 1;
+            currentPageNumber += 1;
         }
         Debug.Log("next");
     }
@@ -98,11 +98,12 @@ public class ShowCollection : MonoBehaviour
                 continue;
             }
 
-            currentPage[i].transform.Translate(0, 100, 0);
-            currentPage[i] = null;
+            //currentPage[i].transform.Translate(0, 100, 0);
 
+            //currentPage[i] = null;
+            Destroy(currentPage[i]);
 
-    }
+        }
     }
 
     void OnDrawGizmos()

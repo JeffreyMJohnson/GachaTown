@@ -6,64 +6,46 @@ using System.Linq;
 public class Player : MonoBehaviour
 {
     public int TotalCoins = 1000;
-    public List<GameObject> gachaCollection;
+    [SerializeField]
+    public List<GameManager.GachaID> gachaCollection;
+
+#if DEBUG
+    public List<GameObject> collectionObjects;
+#endif 
+
     public int Selected = 1;
 
     Transform collectionParent;
 
-    [SerializeField][HideInInspector]
-    List<Gacha> collection;
+    [SerializeField]
+    [HideInInspector]
     void Awake()
     {
-         collectionParent = GameObject.Find("Collection").transform;
+        collectionParent = GameObject.Find("Collection").transform;
+
+#if DEBUG
+        collectionObjects = new List<GameObject>();
+#endif
     }
 
-    public void AddGachaToList(Gacha gacha)
+    public void AddGachaToList(GameManager.GachaID gachaID)
     {
-        if(collection == null)
-        {
-            collection = new List<Gacha>();
-        }
         if (gachaCollection == null)
         {
-            gachaCollection = new List<GameObject>();
+            gachaCollection = new List<GameManager.GachaID>();
         }
-        GameObject gachaObject = LoadGacha(gacha);
-        collection.Add(gacha);
-        gachaCollection.Add(gachaObject);
+        gachaCollection.Add(gachaID);
+
+#if DEBUG
+        GameObject gacha = GameManager.instance.GetGacha(gachaID.setIndex, gachaID.gachaIndex);
+        gacha.transform.position = Vector3.right * 100;
+        collectionObjects.Add(gacha);
+#endif
     }
 
     public void ClearCollection()
     {
-        collection.Clear();
         gachaCollection.Clear();
-    }
-
-    public bool BadCollectionLoaded()
-    {
-        return collection.Any(gacha => gacha == null);
-    }
-
-    GameObject LoadGacha(Gacha a_gacha)
-    {
-        GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
-        gacha.transform.parent = collectionParent;
-        gacha.name = a_gacha.name;
-        return gacha;
-    }
-
-
-    public void LoadCollection()
-    {
-        if (BadCollectionLoaded())
-        {
-            return;
-        }
-
-        foreach(Gacha gacha in collection)
-        {
-            gachaCollection.Add(LoadGacha(gacha));
-        }
     }
 
 }

@@ -57,6 +57,7 @@ public class BuyGacha : MonoBehaviour
 
     public void Buy()
     {
+        //todo this magic number needs refactored out and money system implemented
         if (localPlayer.TotalCoins >= 5)
         {
             localPlayer.TotalCoins -= 5;

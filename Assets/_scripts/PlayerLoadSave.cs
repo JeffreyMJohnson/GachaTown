@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.IO;
 
+//todo this whole class needs looked at
+/*
 /// <summary>
 /// This script takes care of loading the game state from file on startup and saving on quit.
 /// </summary>
@@ -20,6 +22,7 @@ class PlayerLoadSave : MonoBehaviour
         SaveState();
     }
 
+    //todo need total rewrite test
     public void SaveState()
     {
         if(playerScript == null)
@@ -28,7 +31,7 @@ class PlayerLoadSave : MonoBehaviour
         }
         //clear the gameobject collection to load from the data collection at player load.
         playerScript.gachaCollection.Clear();
-        Debug.Assert(playerScript.BadCollectionLoaded() == false, "Bad save file found.");
+        //Debug.Assert(playerScript.BadCollectionLoaded() == false, "Bad save file found.");
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
         //string s = JsonUtility.ToJson(playerScript);
         writer.Write(JsonUtility.ToJson(playerScript));
@@ -49,10 +52,11 @@ class PlayerLoadSave : MonoBehaviour
         reader.Close();
 
         //fix for bad state file... should not ship with this code!!
-        if (playerScript.BadCollectionLoaded())
-        {
-            File.Delete(filePath);
-        }
-        playerScript.LoadCollection();
+        //if (playerScript.BadCollectionLoaded())
+        //{
+        //    File.Delete(filePath);
+        //}
+        //playerScript.LoadCollection();
     }
 }
+*/

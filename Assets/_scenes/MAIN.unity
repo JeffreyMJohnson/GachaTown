@@ -716,7 +716,6 @@ MonoBehaviour:
   TotalCoins: 1000
   gachaCollection: []
   Selected: 1
-  collection: []
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,10 +1816,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0b18d1f63acf942aaee99a4a3748c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masterGachaSetList: []
   setList:
-  - {fileID: 11400000, guid: d70466071dfc3f142add60eda8184e0c, type: 2}
-  - {fileID: 11400000, guid: 8d496aab1ed098943b74afaa9b90d369, type: 2}
-  - {fileID: 11400000, guid: dcbf725998481dd4e992c7d5c326878f, type: 2}
+  - {fileID: 11400000, guid: 73e98c33a5ad50b4085d855f24ad88be, type: 2}
+  - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
+  - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

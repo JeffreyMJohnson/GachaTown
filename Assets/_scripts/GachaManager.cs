@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GachaManager : MonoBehaviour
 {
+    /*
     public Gacha myGacha;
     
 
@@ -29,7 +30,7 @@ public class GachaManager : MonoBehaviour
         }
 
     }
-
+    */
 
 
 }

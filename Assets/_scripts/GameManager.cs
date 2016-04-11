@@ -9,9 +9,24 @@ public class GameManager : MonoBehaviour
 {
     public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
 
+    public struct GachaID
+    {
+        public int setIndex;
+        public int gachaIndex;
+
+        public GachaID(int a_setIndex, int a_gachaIndex)
+        {
+            setIndex = a_setIndex;
+            gachaIndex = a_gachaIndex;
+        }
+    }
+
+
+    public List<GachaSet> masterGachaSetList = new List<GachaSet>(); 
 
     public static GameManager instance;
     public List<GachaSet> setList = new List<GachaSet>();
+
     public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
 
     private DeviceOrientationController orientationController = new DeviceOrientationController();
@@ -60,26 +75,16 @@ public class GameManager : MonoBehaviour
         return setList[setIndex];
     }
 
-    public Gacha GetRandomGacha(int setIndex)
+    public GachaID GetRandomGacha(int setIndex)
     {
         int randomIndex = Random.Range(0, setList[setIndex].collection.Count);
-        return setList[setIndex].collection[randomIndex];
+        return new GachaID(setIndex, randomIndex);
     }
 
-    public GameObject GetGachaGameObject(Gacha gacha)
+    public GameObject GetGacha(int setIndex, int gachaIndex)
     {
-        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
-        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
-        gachaMan.SetGachaData(gacha);
-        return newGacha;
-    }
-
-    public GameObject GetGachaGameObject(int setIndex, int gachaIndex)
-    {
-        Gacha gacha = setList[setIndex].collection[gachaIndex];
-        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
-        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
-        gachaMan.SetGachaData(gacha);
+        GameObject gachaPrefab = setList[setIndex].collection[gachaIndex];
+        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
         return newGacha;
     }
 
