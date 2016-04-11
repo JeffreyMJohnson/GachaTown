@@ -670,7 +670,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 505492619}
   - 114: {fileID: 505492621}
-  - 114: {fileID: 505492620}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -691,17 +690,6 @@ Transform:
   - {fileID: 499596045}
   m_Father: {fileID: 2134826610}
   m_RootOrder: 0
---- !u!114 &505492620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 505492618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29909a2f80a297a488b430517c6dba78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &505492621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,7 +704,6 @@ MonoBehaviour:
   TotalCoins: 1000
   gachaCollection: []
   Selected: 1
-  collection: []
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,10 +1804,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa0b18d1f63acf942aaee99a4a3748c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setList:
-  - {fileID: 11400000, guid: d70466071dfc3f142add60eda8184e0c, type: 2}
-  - {fileID: 11400000, guid: 8d496aab1ed098943b74afaa9b90d369, type: 2}
-  - {fileID: 11400000, guid: dcbf725998481dd4e992c7d5c326878f, type: 2}
+  masterGachaSetList:
+  - {fileID: 11400000, guid: 73e98c33a5ad50b4085d855f24ad88be, type: 2}
+  - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
+  - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

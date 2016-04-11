@@ -4,27 +4,43 @@ using System.Collections;
 
 public class BuyGacha : MonoBehaviour
 {
-
-
+    #region public properties
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
+    #endregion
 
-    Player localPlayer;
-    AudioSource buttonSound;
+    #region private fields
+    Player player;
+    AudioSource audioSource;
+    #endregion
+
+    #region unity lifecycle methods
     void Start()
     {
-        GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
-        localPlayer = tPlayer.GetComponent<Player>();
-        buttonSound = GetComponent<AudioSource>();
-        moneyTextField.text = localPlayer.TotalCoins.ToString();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
+
+        player = playerObject.GetComponent<Player>();
+        Debug.Assert(player != null, "player script was not found.");
+
+        audioSource = GetComponent<AudioSource>();
+        Debug.Assert(audioSource != null, "audio source component was not found.");
+
+        Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
+        Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
+
+        moneyTextField.text = player.TotalCoins.ToString();
+
         displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
+        GachaSet = player.Selected;
+
 
         //add onclick event for menu button
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
         {
-            switch(button.name)
+            switch (button.name)
             {
                 case "Main Menu Button":
                     button.onClick.AddListener(delegate { HandleClick(GameManager.Menus.MAIN); });
@@ -35,17 +51,8 @@ public class BuyGacha : MonoBehaviour
                 default:
                     break;
             }
-
         }
     }
-    public void HandleClick(GameManager.Menus scene)
-    {
-
-        buttonSound.Play();//sometimes doesn't work if you click multiple times
-        GameManager.instance.ChangeScene(scene);
-    }
-
-    
 
     void Update()
     {
@@ -54,16 +61,13 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Menus.MAIN);
         }
     }
+    #endregion
 
-    public void Buy()
+    #region UI Handlers
+    public void HandleClick(GameManager.Menus scene)
     {
-        if (localPlayer.TotalCoins >= 5)
-        {
-            localPlayer.TotalCoins -= 5;
-            moneyTextField.text = localPlayer.TotalCoins.ToString();
-            localPlayer.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
-        }
-
+        audioSource.Play();
+        GameManager.instance.ChangeScene(scene);
     }
 
     public void BuyLazy()
@@ -73,5 +77,21 @@ public class BuyGacha : MonoBehaviour
             Buy();
         }
     }
-    
+    #endregion
+
+    #region public API
+    public void Buy()
+    {
+        //todo this magic number needs refactored out and money system implemented
+        if (player.TotalCoins >= 5)
+        {
+            player.TotalCoins -= 5;
+            moneyTextField.text = player.TotalCoins.ToString();
+            player.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
+        }
+
+    }
+    #endregion
+
+
 }

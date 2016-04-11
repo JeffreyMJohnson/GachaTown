@@ -6,37 +6,51 @@ public class GachaRotator : MonoBehaviour
 {
 
     //all you have to do is slap a gacha machine object as a child of this one, make sure they're all in the same place
-    
+    #region public properties
     public Text gachaDisplay;
     public Text moneyDisplay;
-    GameObject[] gachaMachines;
-    Transform[] gachaTransforms;
-    float rotationInterval = 0;
+    public AudioClip rotateSoundClip;
+    public AudioClip buttonPresssoundClip;
     public int selectedGacha = 0;
-    int gachaCount = 0;
     public float rotateTime = 15; //in frames
-    float rotateStart = 15;
-    Player playerScript;
+    #endregion
 
-    //sounds have a chance of not working
-    AudioSource sound;
-    public AudioClip rotateGachaSound;
-    public AudioClip buttonPressSound;
-    
-	void Start ()
+    #region private fields
+    private int maxGachaSetCount;
+    private GameObject[] gachaMachines;
+    private Transform[] gachaTransforms;
+    private float rotationInterval = 0;
+    private AudioSource audioSource;
+    private float rotateStart = 15;
+    private Player playerScript;
+    private int gachaCount = 0;
+    #endregion
+
+    #region unity lifecycle methods
+void Start()
     {
-        GameObject tPlayer = GameObject.FindGameObjectWithTag("Player");
-	    playerScript = tPlayer.GetComponent<Player>();
-        sound = GetComponent<AudioSource>();
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        Debug.Assert(playerObject != null, "player gameObject nout found.");
+
+        playerScript = playerObject.GetComponent<Player>();
         Debug.Assert(playerScript != null, "Did not find Player script.");
+
+
+        audioSource = GetComponent<AudioSource>();
+        Debug.Assert(audioSource != null, "audio source component not found.");
+
         selectedGacha = playerScript.Selected;
+
+        Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
         moneyDisplay.text = playerScript.TotalCoins.ToString();
+
+        Debug.Assert(gachaDisplay != null, "gacha display text component not found, set in editor ?");
 
         rotateStart = rotateTime;
 
         gachaMachines = new GameObject[transform.childCount];
         gachaTransforms = new Transform[transform.childCount];
-        foreach( Transform child in transform)
+        foreach (Transform child in transform)
         {
             gachaTransforms[gachaCount] = child;
             gachaMachines[gachaCount] = child.gameObject;
@@ -55,40 +69,80 @@ public class GachaRotator : MonoBehaviour
             transform.Rotate(0, rotationInterval, 0);
         }
         TextUpdate();
+
+        maxGachaSetCount = GameManager.instance.masterGachaSetList.Count;
     }
-	
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            LoadMainMenu();
+        }
+        if (rotateStart < rotateTime)
+        {
+            //bug add deltaTime for timing not frame count.  if you want frame count use an int
+            rotateStart++;
+
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
+
+        }
+
+
+    }
+    #endregion
+
+
+
+
     void TextUpdate()
     {
         gachaDisplay.text = "MACHINE NO. " + selectedGacha + "\nCOST 5";
     }
 
+    /// <summary>
+    /// decrease gacha set index
+    /// </summary>
     public void RotateLeft()
     {
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
 
-            selectedGacha--;
-            if (selectedGacha == -1)
-                selectedGacha = gachaCount - 1;
-            selectedGacha = selectedGacha % gachaCount;
+            selectedGacha++;
+            //if (selectedGacha == -1)
+            //    selectedGacha = gachaCount - 1;
+            //selectedGacha = selectedGacha % gachaCount;
+            if (selectedGacha == maxGachaSetCount)
+            {
+                selectedGacha = 0;
+            }
 
             TextUpdate();
-            sound.PlayOneShot(rotateGachaSound);
+            audioSource.PlayOneShot(rotateSoundClip);
         }
     }
 
+    /// <summary>
+    /// decrease gacha set index
+    /// </summary>
     public void RotateRight()
     {
+        //bug this needs to be changed float equality is not done this way
         if (rotateStart == rotateTime)
         {
             rotateStart = 0;
 
-            selectedGacha++;
-            selectedGacha = selectedGacha % gachaCount;
+            selectedGacha--;
+            //selectedGacha = selectedGacha % gachaCount;
+            if (selectedGacha < 0)
+            {
+                selectedGacha = maxGachaSetCount - 1;
+            }
+
 
             TextUpdate();
-            sound.PlayOneShot(rotateGachaSound);
+            audioSource.PlayOneShot(rotateSoundClip);
         }
     }
 
@@ -96,15 +150,15 @@ public class GachaRotator : MonoBehaviour
     public void LoadMainMenu()
     {
 
-        sound.PlayOneShot(buttonPressSound);
-       
+        audioSource.PlayOneShot(buttonPresssoundClip);
+
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
     public void SelectGacha()
     {
         //pass selectedGacha to player
-        sound.PlayOneShot(buttonPressSound);
+        audioSource.PlayOneShot(buttonPresssoundClip);
         playerScript.Selected = selectedGacha;
         GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
     }
@@ -118,20 +172,5 @@ public class GachaRotator : MonoBehaviour
         return toReturn;
     }
 
-    void Update ()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            LoadMainMenu();
-        }
-        if (rotateStart < rotateTime)
-        {
-            rotateStart++;
-
-            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
-
-        }
-
-
-    }
+   
 }
