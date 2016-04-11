@@ -1,63 +1,49 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
+    #region public properties
     public AnimationClip walk;
-    private Animator anim;
-    Canvas canvas;
-    Dropdown setList = null;
-    Dropdown gachaList = null;
+    #endregion
+
+    #region private fields
+    private Animator anim = null;
+    private Canvas canvas = null;
+    private Dropdown setList = null;
+    private Dropdown gachaList = null;
     private Button selectGacha = null;
     private GameObject gachaToPlace = null;
+    #endregion
 
+    #region unity lifecycle methods
     void Start()
     {
         canvas = FindObjectOfType<Canvas>();
+        Debug.Assert(canvas != null, "canvas not found.");
+
         InitMenu();
 
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
-        anim = GetComponent<Animator>();
+        
+    }
+
+    void Update()
+    {
+        HandleEscapeKey();
+
+        HandleGachaClickDrag();
     }
 
     void OnDestroy()
     {
         Screen.orientation = ScreenOrientation.AutoRotation;
     }
+    #endregion
 
-    private GameObject lemur = null;
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
-        }
-
-        if (gachaToPlace != null)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                gachaToPlace.transform.position = hit.point;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    gachaToPlace = null;
-
-                    //todo remove this 
-                    lemur = GameObject.Find("Lemur");
-
-                }
-            }
-        }
-
-
-    }
-
+    #region GUI
     void InitMenu()
     {
         Button[] buttons = canvas.GetComponentsInChildren<Button>();
@@ -148,7 +134,9 @@ public class Town : MonoBehaviour
         //note this will fire the onValueChange event and is taken into account there.
         gachaList.value = 0;
     }
+    #endregion
 
+    #region UI Handlers
     /// <summary>
     /// Gacha Selection dropdown OnValueChange event handler.
     /// </summary>
@@ -186,7 +174,7 @@ public class Town : MonoBehaviour
         GameObject selectedGacha = GameManager.instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         //todo implement the drag / drop to town here
 
-        gachaToPlace = Instantiate<GameObject>(GameManager.instance.GetGachaPrefab(setList.value - 1, gachaList.value - 1));
+        gachaToPlace = Instantiate<GameObject>(GameManager.instance.GetGachaPrefab(new GachaID(setList.value - 1, gachaList.value - 1)));
 
         ClearSelectionMenu();
     }
@@ -200,4 +188,30 @@ public class Town : MonoBehaviour
         GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
     }
 
+    private void HandleEscapeKey()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
+    }
+
+    private void HandleGachaClickDrag()
+    {
+        if (gachaToPlace != null)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                gachaToPlace.transform.position = hit.point;
+                if (Input.GetMouseButtonDown(0))
+                {
+                    gachaToPlace = null;
+                }
+            }
+        }
+    }
+    #endregion
 }

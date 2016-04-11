@@ -4,13 +4,16 @@ using System.Collections.Generic;
 
 public class CollectionSort : MonoBehaviour
 {
-
+    #region public properties
     public Vector3 gachaOffset = new Vector3(-2, -3, 0);
     public Vector3 pageOffset = new Vector3(30, 0, 0);
     public Vector3 pageDestination;
     public Vector3 pageOrigin;
     public Vector2 displaySize = new Vector2(2, 3);
     public Material hiddenMaterial;
+    #endregion
+
+    #region private fields
     List<List<GameObject>> collectionPages = new List<List<GameObject>>();
 
     float scrollStart = 0;
@@ -19,34 +22,9 @@ public class CollectionSort : MonoBehaviour
     const int MAX_GACHA_PER_PAGE = 9;
 
     private Player player;
+    #endregion
 
-    // Use this for initialization
-
-    /// <summary>
-    /// returns a GameObject instance from prefab matching given set and gacha index.
-    /// </summary>
-    /// <param name="setIndex"></param>
-    /// <param name="gachaIndex"></param>
-    /// <returns></returns>
-    GameObject GetGachaGameObject(int setIndex, int gachaIndex)
-    {
-        //todo review this with Tyler
-        /*
-        if (gachaIndex > GameManager.instance.setList[setIndex].collection.Count - 1)
-            gachaIndex = GameManager.instance.setList[setIndex].collection.Count - 1;
-            */
-        Debug.Assert(setIndex < GameManager.instance.masterGachaSetList.Count);
-        Debug.Assert(gachaIndex < GameManager.instance.masterGachaSetList[setIndex].collection.Count);
-
-
-        GameObject gachaPrefab = GameManager.instance.GetGachaPrefab(setIndex, gachaIndex);
-        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
-        newGacha.transform.parent = transform;
-        //GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
-        // gachaMan.SetGachaData(gacha);
-        return newGacha;
-    }
-
+    #region unity lifecycle methods
     void Start()
     {
         player = GameObject.FindObjectOfType<Player>();
@@ -54,62 +32,20 @@ public class CollectionSort : MonoBehaviour
 
         pageOrigin = transform.position;
         pageDestination = transform.position;
+
+        //todo use accessor for this collection
         if (GameManager.instance.masterGachaSetList.Count == 0)
-            Debug.Log("setlist is empty");
-
-        for (int i = 0; i < GameManager.instance.masterGachaSetList.Count; i++)
         {
-            collectionPages.Add(new List<GameObject>());
-
-            //todo need to check if max is greater than count of set
-            GachaSet set = GameManager.instance.masterGachaSetList[i];
-            int currentPageCount = 0;
-            if (MAX_GACHA_PER_PAGE > set.collection.Count)
-            {
-                currentPageCount = set.collection.Count;
-            }
-            else
-            {
-                currentPageCount = MAX_GACHA_PER_PAGE;
-            }
-
-            for (int j = 0; j < currentPageCount; j++)
-            {
-                Vector3 offset = gachaOffset + new Vector3(displaySize.x * (int)(j / 3), displaySize.y * (j % 3));
-                GameObject gachaObject = GetGachaGameObject(i, j);
-                collectionPages[i].Add(gachaObject);
-                gachaObject.transform.position = offset + (pageOffset * i);
-                bool gachaInCollection = player.InCollection(new GachaID(i, j));
-
-                if (!gachaInCollection)
-                {
-                    //if the model has animations implemented the mesh componenets change so here is some checking to get through this
-                    //when all implemented will need a cleaner way I imagine
-                    if (GameManager.instance.IsGachaAnimated(gachaObject))
-                    {
-                        SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                        Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
-                        mesh.material = hiddenMaterial;
-                    }
-                    else
-                    {
-                        MeshRenderer mesh = gachaObject.GetComponentInChildren<MeshRenderer>();
-                        Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
-                        mesh.material = hiddenMaterial;
-                    }
-
-
-                }
-            }
+            Debug.Log("setlist is empty");
         }
+
+        InitCollectionPages();
 
         SetTitle();
 
-
-
-        //get count of gacha sets
-        //create page for each set
-        //set pageCount to gacha set count
+        //todo get count of gacha sets
+        //todo create page for each set
+        //todo set pageCount to gacha set count
 
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
@@ -143,12 +79,17 @@ public class CollectionSort : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region GUI
     void SetTitle()
     {
         Text title = GameObject.Find("PageTitle").GetComponent<Text>();
         title.text = GameManager.instance.masterGachaSetList[currentPage].name;
     }
+    #endregion
 
+    #region UI handlers
     public void Previous()
     {
         if (currentPage != 0 && scrollStart == scrollTime)
@@ -160,9 +101,6 @@ public class CollectionSort : MonoBehaviour
             pageDestination = transform.position + pageOffset;
         }
     }
-
-    //next page
-    //same as previous except don't be an idiot
     public void Next()
     {
         if (currentPage < GameManager.instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
@@ -174,5 +112,83 @@ public class CollectionSort : MonoBehaviour
             pageDestination = transform.position - pageOffset;
         }
     }
+    #endregion
+
+
+    void InitCollectionPages()
+    {
+        for (int i = 0; i < GameManager.instance.masterGachaSetList.Count; i++)
+        {
+            collectionPages.Add(new List<GameObject>());
+
+            GachaSet set = GameManager.instance.masterGachaSetList[i];
+            //case for when set contains less than Max count variable
+            int currentPageCount = 0;
+            if (MAX_GACHA_PER_PAGE > set.collection.Count)
+            {
+                currentPageCount = set.collection.Count;
+            }
+            else
+            {
+                currentPageCount = MAX_GACHA_PER_PAGE;
+            }
+
+            for (int j = 0; j < currentPageCount; j++)
+            {
+                Vector3 offset = gachaOffset + new Vector3(displaySize.x * (int)(j / 3), displaySize.y * (j % 3));
+                GachaID gachaID = new GachaID(i, j);
+                GameObject gachaObject = GetGachaGameObject(gachaID);
+                collectionPages[i].Add(gachaObject);
+                gachaObject.transform.position = offset + (pageOffset * i);
+               
+                SetGachaMaterial(gachaObject, gachaID);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sets the material of given gacha depending on if in players collection or not.
+    /// </summary>
+    /// <param name="gachaObject"></param>
+    /// <param name="gachaID"></param>
+    public void SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
+    {
+        bool gachaInCollection = player.InCollection(gachaID);
+        if (!gachaInCollection)
+        {
+            //if the model has animations implemented the mesh componenets change so here is some checking to get through this
+            //when all implemented will need a cleaner way I imagine
+            if (GameManager.instance.IsGachaAnimated(gachaObject))
+            {
+                SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
+                Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
+                mesh.material = hiddenMaterial;
+            }
+            else
+            {
+                MeshRenderer mesh = gachaObject.GetComponentInChildren<MeshRenderer>();
+                Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
+                mesh.material = hiddenMaterial;
+            }
+            
+        }
+    }
+
+    /// <summary>
+    /// returns a GameObject instance from prefab matching GachaID.
+    /// </summary>
+    /// <param name="gachaID"></param>
+    /// <returns></returns>
+    GameObject GetGachaGameObject(GachaID gachaID)
+    {
+        Debug.Assert(gachaID.SetIndex < GameManager.instance.masterGachaSetList.Count);
+        Debug.Assert(gachaID.GachaIndex < GameManager.instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
+
+        GameObject gachaPrefab = GameManager.instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
+        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
+        newGacha.transform.parent = transform;
+        return newGacha;
+    }
+
 
 }

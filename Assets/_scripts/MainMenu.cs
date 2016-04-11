@@ -4,32 +4,21 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    #region private fields
     Canvas portrait;
     Canvas landscape;
-    AudioSource buttonSound;
-    
+    AudioSource audioSource;
+    #endregion
+
+    #region unity lifecycle methods
     void Start()
     {
         InitButtonHandlers();
-        buttonSound = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        Debug.Assert(audioSource != null, "audiosource component not found.");
         GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
 
         InitCanvas();
-
-        
-
-    }
-
-    void OnDestroy()
-    {
-        GameManager.instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
-    }
-
-    public void HandleClick(GameManager.Menus scene)
-    {
-        
-        buttonSound.Play();
-        GameManager.instance.ChangeScene(scene);
     }
 
     void Update()
@@ -39,6 +28,22 @@ public class MainMenu : MonoBehaviour
             Application.Quit();
         }
     }
+
+    void OnDestroy()
+    {
+        GameManager.instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
+    }
+    #endregion
+
+    #region UI handlers
+    public void HandleClick(GameManager.Menus scene)
+    {
+
+        audioSource.Play();
+        GameManager.instance.ChangeScene(scene);
+    }
+
+    #endregion
 
     void InitButtonHandlers()
     {
@@ -68,7 +73,7 @@ public class MainMenu : MonoBehaviour
 
         }
     }
-
+    
     #region Handle Screen Orientation Change
     void InitCanvas()
     {
@@ -90,7 +95,7 @@ public class MainMenu : MonoBehaviour
 
     void SetOrientationCanvas()
     {
-        
+
         if (GameManager.instance.IsPortrait)
         {
             portrait.gameObject.SetActive(true);

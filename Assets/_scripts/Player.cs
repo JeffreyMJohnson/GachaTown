@@ -2,31 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Json;
+using System.IO;
 
 public class Player : MonoBehaviour
 {
+    #region public properties
     public int TotalCoins = 1000;
     [SerializeField]
     public List<GachaID> gachaCollection;
+    public int Selected = 0;
+    #endregion
 
-#if DEBUG
-    public List<GameObject> collectionObjects;
-#endif 
-
-    public int Selected = 1;
-
+    #region private fields
     Transform collectionParent;
+    #endregion
 
-    [SerializeField]
-    [HideInInspector]
+    #region unity lifecycle methods
     void Awake()
     {
         collectionParent = GameObject.Find("Collection").transform;
-#if DEBUG
-        collectionObjects = new List<GameObject>();
-#endif
+        LoadState();
     }
 
+    void OnDestroy()
+    {
+        SaveState();
+    }
+    #endregion
+
+    #region Public API
     public void AddGachaToList(GachaID gachaID)
     {
         if (gachaCollection == null)
@@ -34,12 +39,6 @@ public class Player : MonoBehaviour
             gachaCollection = new List<GachaID>();
         }
         gachaCollection.Add(gachaID);
-
-#if DEBUG
-        GameObject gacha = GameManager.instance.GetGachaPrefab(gachaID.SetIndex, gachaID.GachaIndex);
-        gacha.transform.position = Vector3.right * 100;
-        collectionObjects.Add(gacha);
-#endif
     }
 
     public void ClearCollection()
@@ -55,4 +54,30 @@ public class Player : MonoBehaviour
         }
         return gachaCollection.Contains(gachaID);
     }
+    #endregion
+
+    #region Save / Load State
+    private void SaveState()
+    {
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
+        string s = JsonUtility.ToJson(this);
+        writer.Write(JsonUtility.ToJson(this));
+        writer.Close();
+    }
+
+    private void LoadState()
+    {
+        string filePath = Application.persistentDataPath + Constants.PLAYER_STATE_PATH;
+        if (!File.Exists(filePath))
+        {
+            Debug.LogWarning("State save file: [" + filePath + "] not found.");
+            return;
+        }
+
+        StreamReader reader = new StreamReader(filePath);
+
+        JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), this);
+        reader.Close();
+    }
+    #endregion
 }

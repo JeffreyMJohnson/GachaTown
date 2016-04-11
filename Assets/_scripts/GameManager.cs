@@ -5,22 +5,34 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 
+/// <summary>
+/// singleton class that is available from every scene (once instantiated in Main Menu scene). 
+/// Acess this class from the static instance property, do not instantiate your own.
+/// eg GameManager.instance.Foo();
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
 
-   
+    #region public properties
+    public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
-
-    public List<GachaSet> masterGachaSetList = new List<GachaSet>(); 
-
+    /// <summary>
+    /// Accessor property for this class.
+    /// </summary>
     public static GameManager instance;
-    //public List<GachaSet> setList = new List<GachaSet>();
 
+    /// <summary>
+    /// Returns true if the device screen orientation is in portrait mode, else returns false.
+    /// </summary>
     public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
+    #endregion
 
+    #region private fields
     private DeviceOrientationController orientationController = new DeviceOrientationController();
+    #endregion
 
+    #region unity lifecycle methods
     private void Update()
     {
         orientationController.Update();
@@ -39,7 +51,9 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region device screen orientation logic
     /// <summary>
     /// Register a callback method that will be called whenever the device orientation changes from portrait
     /// or landscape.
@@ -60,21 +74,25 @@ public class GameManager : MonoBehaviour
         orientationController.OrientationChangeEvent.RemoveListener(callBack);
     }
 
-    /*
-     * this doesn't belong in this class
-    public bool DoesPlayerHave(string gachaName)
-    {
-        if (GameObject.Find(gachaName) == null)
-            return false;
-        else
-            return true;
-    }
-    */
+    #endregion
+
+    #region Gacha collection access
+    /// <summary>
+    /// Returns GachaSet object of given index from the MasterGachaCollection
+    /// </summary>
+    /// <param name="setIndex"></param>
+    /// <returns></returns>
     public GachaSet GetGachaSet(int setIndex)
     {
         return masterGachaSetList[setIndex];
     }
 
+    /// <summary>
+    /// Returns a GachaID struct that points to the prefab of a random Gacha from the given set index.
+    /// NOTE:Use unity's Instantiate<GameObject>(GetGachaPrefab(GachaID)) to instantiate a gameObject from GachaID.
+    /// </summary>
+    /// <param name="setIndex"></param>
+    /// <returns></returns>
     public GachaID GetRandomGacha(int setIndex)
     {
         int randomIndex = Random.Range(0, masterGachaSetList[setIndex].collection.Count);
@@ -82,23 +100,20 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// returns prefab of gachaName of given set and gachaName index.
+    /// returns prefab located at given GachaID data.
     /// </summary>
-    /// <param name="setIndex"></param>
-    /// <param name="gachaIndex"></param>
+    /// <param name="gachaID"></param>
     /// <returns></returns>
-    public GameObject GetGachaPrefab(int setIndex, int gachaIndex)
+    public GameObject GetGachaPrefab(GachaID gachaID)
     {
-        return masterGachaSetList[setIndex].collection[gachaIndex];
+        return masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex];
     }
+    #endregion
 
-    public string GetGachaName(int setIndex, int gachaIndex)
-    {
-        if (gachaIndex > masterGachaSetList[setIndex].collection.Count - 1)
-            gachaIndex = masterGachaSetList[setIndex].collection.Count - 1;
-        return masterGachaSetList[setIndex].collection[gachaIndex].name;
-    }
-
+    /// <summary>
+    /// Global change scene method. Note this adds a pause before scene change to allow for audio playing
+    /// </summary>
+    /// <param name="scene"></param>
     public void ChangeScene(Menus scene)
     {
         StartCoroutine(WaitForAudio(scene));
