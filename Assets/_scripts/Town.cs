@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Assets._scripts;
 
 public class Town : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Town : MonoBehaviour
     #endregion
 
     #region unity lifecycle methods
+
     void Start()
     {
         canvas = FindObjectOfType<Canvas>();
@@ -27,7 +29,6 @@ public class Town : MonoBehaviour
 
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
-        
     }
 
     void Update()
