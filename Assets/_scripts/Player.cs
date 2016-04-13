@@ -1,69 +1,83 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-
+using System;
+using System.Json;
+using System.IO;
 
 public class Player : MonoBehaviour
 {
+    #region public properties
     public int TotalCoins = 1000;
-    public List<GameObject> gachaCollection;
-    public int Selected = 1;
+    [SerializeField]
+    public List<GachaID> gachaCollection;
+    public int Selected = 0;
+    #endregion
 
+    #region private fields
     Transform collectionParent;
+    #endregion
 
-    [SerializeField][HideInInspector]
-    List<Gacha> collection;
+    #region unity lifecycle methods
     void Awake()
     {
-         collectionParent = GameObject.Find("Collection").transform;
+        collectionParent = GameObject.Find("Collection").transform;
+        LoadState();
     }
 
-    public void AddGachaToList(Gacha gacha)
+    void OnDestroy()
     {
-        if(collection == null)
-        {
-            collection = new List<Gacha>();
-        }
+        SaveState();
+    }
+    #endregion
+
+    #region Public API
+    public void AddGachaToList(GachaID gachaID)
+    {
         if (gachaCollection == null)
         {
-            gachaCollection = new List<GameObject>();
+            gachaCollection = new List<GachaID>();
         }
-        GameObject gachaObject = LoadGacha(gacha);
-        collection.Add(gacha);
-        gachaCollection.Add(gachaObject);
+        gachaCollection.Add(gachaID);
     }
 
     public void ClearCollection()
     {
-        collection.Clear();
         gachaCollection.Clear();
     }
 
-    public bool BadCollectionLoaded()
+    public bool InCollection(GachaID gachaID)
     {
-        return collection.Any(gacha => gacha == null);
-    }
-
-    GameObject LoadGacha(Gacha a_gacha)
-    {
-        GameObject gacha = GameManager.instance.GetGachaGameObject(a_gacha);
-        gacha.transform.parent = collectionParent;
-        gacha.name = a_gacha.name;
-        return gacha;
-    }
-
-
-    public void LoadCollection()
-    {
-        if (BadCollectionLoaded())
+        if (gachaCollection == null)
         {
+            return false;
+        }
+        return gachaCollection.Contains(gachaID);
+    }
+    #endregion
+
+    #region Save / Load State
+    private void SaveState()
+    {
+        StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
+        string s = JsonUtility.ToJson(this);
+        writer.Write(JsonUtility.ToJson(this));
+        writer.Close();
+    }
+
+    private void LoadState()
+    {
+        string filePath = Application.persistentDataPath + Constants.PLAYER_STATE_PATH;
+        if (!File.Exists(filePath))
+        {
+            Debug.LogWarning("State save file: [" + filePath + "] not found.");
             return;
         }
 
-        foreach(Gacha gacha in collection)
-        {
-            gachaCollection.Add(LoadGacha(gacha));
-        }
-    }
+        StreamReader reader = new StreamReader(filePath);
 
+        JsonUtility.FromJsonOverwrite(reader.ReadToEnd(), this);
+        reader.Close();
+    }
+    #endregion
 }

@@ -1,18 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
+/// <summary>
+/// singleton class that is available from every scene (once instantiated in Main Menu scene). 
+/// Acess this class from the static instance property, do not instantiate your own.
+/// eg GameManager.instance.Foo();
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
 
-    
-    public static GameManager instance;
-    public List<GachaSet> setList = new List<GachaSet>();
-    public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
-    
-    private DeviceOrientationController orientationController = new DeviceOrientationController();
+    #region public properties
+    public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
+    /// <summary>
+    /// Accessor property for this class.
+    /// </summary>
+    public static GameManager instance;
+
+    /// <summary>
+    /// Returns true if the device screen orientation is in portrait mode, else returns false.
+    /// </summary>
+    public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
+    #endregion
+
+    #region private fields
+    private DeviceOrientationController orientationController = new DeviceOrientationController();
+    #endregion
+
+    #region unity lifecycle methods
     private void Update()
     {
         orientationController.Update();
@@ -31,7 +51,9 @@ public class GameManager : MonoBehaviour
         }
 
     }
+    #endregion
 
+    #region device screen orientation logic
     /// <summary>
     /// Register a callback method that will be called whenever the device orientation changes from portrait
     /// or landscape.
@@ -52,36 +74,62 @@ public class GameManager : MonoBehaviour
         orientationController.OrientationChangeEvent.RemoveListener(callBack);
     }
 
+    #endregion
+
+    #region Gacha collection access
+    /// <summary>
+    /// Returns GachaSet object of given index from the MasterGachaCollection
+    /// </summary>
+    /// <param name="setIndex"></param>
+    /// <returns></returns>
     public GachaSet GetGachaSet(int setIndex)
     {
-        return setList[setIndex];
+        return masterGachaSetList[setIndex];
     }
 
-    public Gacha GetRandomGacha(int setIndex)
+    /// <summary>
+    /// Returns a GachaID struct that points to the prefab of a random Gacha from the given set index.
+    /// NOTE:Use unity's Instantiate<GameObject>(GetGachaPrefab(GachaID)) to instantiate a gameObject from GachaID.
+    /// </summary>
+    /// <param name="setIndex"></param>
+    /// <returns></returns>
+    public GachaID GetRandomGacha(int setIndex)
     {
-        int randomIndex = Random.Range(0, setList[setIndex].collection.Count);
-        return setList[setIndex].collection[randomIndex];
+        int randomIndex = Random.Range(0, masterGachaSetList[setIndex].collection.Count);
+        return new GachaID(setIndex, randomIndex);
     }
 
-    public GameObject GetGachaGameObject(Gacha gacha)
+    /// <summary>
+    /// returns prefab located at given GachaID data.
+    /// </summary>
+    /// <param name="gachaID"></param>
+    /// <returns></returns>
+    public GameObject GetGachaPrefab(GachaID gachaID)
     {
-        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
-        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
-        gachaMan.SetGachaData(gacha);
-        return newGacha;
+        return masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex];
     }
+    #endregion
 
-    public GameObject GetGachaGameObject(int setIndex, int gachaIndex)
-    {
-        Gacha gacha = setList[setIndex].collection[gachaIndex];
-        GameObject newGacha = Instantiate<GameObject>(gacha.basePrefab);
-        GachaManager gachaMan = newGacha.GetComponent<GachaManager>();
-        gachaMan.SetGachaData(gacha);
-        return newGacha;
-    }
-
+    /// <summary>
+    /// Global change scene method. Note this adds a pause before scene change to allow for audio playing
+    /// </summary>
+    /// <param name="scene"></param>
     public void ChangeScene(Menus scene)
     {
+        StartCoroutine(WaitForAudio(scene));
+    }
+
+    private IEnumerator WaitForAudio(Menus scene)
+    {
+        yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
     }
+
+    //todo this needs to find a better home
+    public bool IsGachaAnimated(GameObject gachaGameObject)
+    {
+        Animator anim = gachaGameObject.GetComponent<Animator>();
+        return (anim == null) || (anim.enabled);
+    }
+
 }
