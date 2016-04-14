@@ -12,11 +12,20 @@ using UnityEngine.Networking;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
-
+    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }   
+    
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
+    //Music
+    public AudioSource audioSource;
+    public AudioClip bgmMainMenu;
+    public AudioClip bgmBuyGacha;
+    public AudioClip bgmALT;
+
+    public AudioClip FXRotate;
+    public AudioClip FXButton;
+    public AudioClip FXBuyTwenty;
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -117,6 +126,36 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(Menus scene)
     {
         StartCoroutine(WaitForAudio(scene));
+    }
+    public void PlayMusic(AudioClip music)
+    {
+        audioSource.clip = music;
+        audioSource.Play();
+    }
+    public void PlaySound(AudioClip fx)
+    {
+
+        audioSource.PlayOneShot(fx);
+    }
+
+    public void LoadMainMenu()
+    {
+        PlaySound(FXButton);
+        ChangeScene(Menus.MAIN);
+        PlayMusic(bgmMainMenu);
+    }
+    public void LoadBuyGacha()
+    {
+        PlaySound(FXButton);
+        ChangeScene(Menus.GACHA);
+        PlayMusic(bgmBuyGacha);
+    }
+
+    public void LoadScene(Menus scene)
+    {
+        PlaySound(FXButton);
+        ChangeScene(scene);
+        PlayMusic(bgmMainMenu);
     }
 
     private IEnumerator WaitForAudio(Menus scene)

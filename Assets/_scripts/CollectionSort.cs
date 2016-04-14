@@ -20,7 +20,7 @@ public class CollectionSort : MonoBehaviour
     float scrollTime = 20;
     int currentPage = 0;
     const int MAX_GACHA_PER_PAGE = 9;
-
+    AudioSource buttonPress;
     private Player player;
     #endregion
 
@@ -29,7 +29,7 @@ public class CollectionSort : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         Debug.Assert(player != null, "no Player script in scene.");
-
+        buttonPress = GetComponent<AudioSource>();
         pageOrigin = transform.position;
         pageDestination = transform.position;
 
@@ -94,6 +94,7 @@ public class CollectionSort : MonoBehaviour
     {
         if (currentPage != 0 && scrollStart == scrollTime)
         {
+            buttonPress.Play();
             currentPage--;
             SetTitle();
             scrollStart = 0;
@@ -105,6 +106,7 @@ public class CollectionSort : MonoBehaviour
     {
         if (currentPage < GameManager.instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
         {
+            buttonPress.Play();
             currentPage++;
             SetTitle();
             scrollStart = 0;
