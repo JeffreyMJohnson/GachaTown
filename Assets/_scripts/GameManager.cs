@@ -12,13 +12,22 @@ using UnityEngine.Networking;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }   
-    
+    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
+
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
     //Music
+
+    /*                  CODE REVIEW
+     * make this private and init at Awake
+     */
     public AudioSource audioSource;
+
+    /*                  CODE REVIEW
+     * Add tooltip attribute to these so user get's more context.
+     */
+    [Tooltip("Background music for Main Menu scene.")]
     public AudioClip bgmMainMenu;
     public AudioClip bgmBuyGacha;
     public AudioClip bgmALT;
@@ -26,6 +35,7 @@ public class GameManager : MonoBehaviour
     public AudioClip FXRotate;
     public AudioClip FXButton;
     public AudioClip FXBuyTwenty;
+
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -127,6 +137,11 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(WaitForAudio(scene));
     }
+
+    /*                  CODE REVIEW
+     * Lack of summary comment. Just simple little explanation, nothing major your name should convey most of info
+     */
+
     public void PlayMusic(AudioClip music)
     {
         audioSource.clip = music;
@@ -158,6 +173,10 @@ public class GameManager : MonoBehaviour
         PlayMusic(bgmMainMenu);
     }
 
+    /*                  CODE REVIEW
+     * verify this still needed
+     */
+     //hack - this is fix for timing problem when firing audio before scene change
     private IEnumerator WaitForAudio(Menus scene)
     {
         yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
