@@ -1809,6 +1809,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73e98c33a5ad50b4085d855f24ad88be, type: 2}
   - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
   - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
+  EnableBackgroundMusic: 0
   audioSource: {fileID: 2134826612}
   bgmMainMenu: {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}
   bgmBuyGacha: {fileID: 8300000, guid: 398aa8fc0f855cc4483d2940998fd3d7, type: 3}
@@ -1826,7 +1827,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1

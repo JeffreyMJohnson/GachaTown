@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
     //Music
+    //todo remove this for release, this just for debug until get UI implemented
+    public bool EnableBackgroundMusic = false;
 
     /*                  CODE REVIEW
      * make this private and init at Awake
@@ -153,30 +155,44 @@ public class GameManager : MonoBehaviour
         audioSource.PlayOneShot(fx);
     }
 
+    /*                  CODE REVIEW
+     * these 3 methods seem to do same thing.
+     */
     public void LoadMainMenu()
     {
         PlaySound(FXButton);
         ChangeScene(Menus.MAIN);
-        PlayMusic(bgmMainMenu);
+        if (EnableBackgroundMusic)
+        {
+            PlayMusic(bgmMainMenu);
+        }
     }
     public void LoadBuyGacha()
     {
         PlaySound(FXButton);
         ChangeScene(Menus.GACHA);
-        PlayMusic(bgmBuyGacha);
+
+        if (EnableBackgroundMusic)
+        {
+            PlayMusic(bgmBuyGacha);
+        }
+
     }
 
     public void LoadScene(Menus scene)
     {
         PlaySound(FXButton);
         ChangeScene(scene);
-        PlayMusic(bgmMainMenu);
+        if (EnableBackgroundMusic)
+        {
+            PlayMusic(bgmMainMenu);
+        }
     }
 
     /*                  CODE REVIEW
      * verify this still needed
      */
-     //hack - this is fix for timing problem when firing audio before scene change
+    //hack - this is fix for timing problem when firing audio before scene change
     private IEnumerator WaitForAudio(Menus scene)
     {
         yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
