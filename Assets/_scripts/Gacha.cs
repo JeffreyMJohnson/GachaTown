@@ -39,6 +39,10 @@ public class Gacha : MonoBehaviour
     #endregion
 
     #region event handlers
+    /// <summary>
+    /// Idle animation timer alarm event handler
+    /// (fired from _idleAnimationTimer)
+    /// </summary>
     void HandleIdleAnimationAlarmEvent()
     {
         //StartCoroutine(WalkForward());
@@ -46,6 +50,10 @@ public class Gacha : MonoBehaviour
         _animator.SetTrigger("Idle");
     }
 
+    /// <summary>
+    /// idle animation finished event handler 
+    /// (fired at end of animation clip)
+    /// </summary>
     void HandleIdleAnimationCompleteEvent()
     {
         _idleAnimationTimer.Start();
