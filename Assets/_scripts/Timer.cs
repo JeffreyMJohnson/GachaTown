@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -24,6 +25,15 @@ namespace Assets._scripts
     ///     {
     ///         Debug.Log("Alarm event Fired.");
     ///         myTimer.Reset();
+    ///     }
+    /// 
+    ///     void UseTimerInForLoopExample()
+    ///     {   
+    ///         for(Timer timer = new Timer(1, true); timer.AlarmRaised == false; timer.Update(Time.deltaTime))
+    ///         {
+    ///             //do something while timer is running
+    ///         } 
+    ///         //timer is done
     ///     }
     /// 
     ///     //the Unity Update loop
@@ -57,10 +67,16 @@ namespace Assets._scripts
             CurrentTimeLeft = 0;
         }
 
-        public Timer(float alarmTime)
+        /// <summary>
+        /// Instantiate Timer object with given alarm time and Is running set to given param. Note startRunning param defaults to false if omitted
+        /// </summary>
+        /// <param name="alarmTime"></param>
+        /// <param name="startRunning"></param>
+        public Timer(float alarmTime, bool startRunning = false)
         {
-            AlarmTime = 0;
-            CurrentTimeLeft = 0;
+            AlarmTime = alarmTime;
+            CurrentTimeLeft = AlarmTime;
+            Running = startRunning;
         }
         #endregion
 
@@ -130,7 +146,7 @@ namespace Assets._scripts
             Running = true;
         }
 
-#endregion
+        #endregion
 
 
     }
