@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class CollectionSort : MonoBehaviour
 {
     #region public properties
-    public Vector3 gachaOffset = new Vector3(-2, -3, 0);
-    public Vector3 pageOffset = new Vector3(30, 0, 0);
-    public Vector3 pageDestination;
-    public Vector3 pageOrigin;
-    public Vector2 displaySize = new Vector2(2, 3);
+    public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
+    public Vector3 pageOffset;// = new Vector3(50, 0, 0);
+    Vector3 pageDestination;
+    Vector3 pageOrigin;
+    public Vector2 displaySize;// = new Vector2(2, 3);
     public Material hiddenMaterial;
     #endregion
 
