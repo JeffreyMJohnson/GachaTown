@@ -2,43 +2,68 @@
 using UnityEngine.UI;
 using System.Collections;
 
+
 public class Settings : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-        Button[] buttons = FindObjectsOfType<Button>();
+    public Slider bgmSlider;
+    public Slider fxSlider;
+    public Button fxButton;
 
-        foreach (Button button in buttons)
-        {
-
-            switch (button.name)
-            {
-                case "LowerBGM":                   
-                    button.onClick.AddListener(GameManager.instance.LowerVolumeFX);
-                    break;
-                case "RaiseBGM":
-                    button.onClick.AddListener(GameManager.instance.RaiseVolumeFX);
-                    break;
-                case "LowerMusic":
-                    button.onClick.AddListener(GameManager.instance.LowerVolumeMusic);
-                    break;
-                case "RaiseMusic":
-                    button.onClick.AddListener(GameManager.instance.RaiseVolumeMusic);
-                    break;
-
-                default:
-
-                    break;
-
-            }
-
-        }
+    public Toggle bgm;
+    public Toggle fx;
+    bool playedSound = false;
+    // Use this for initialization
+    void Start() {
+        bgmSlider.value = GameManager.instance.bgmSource.volume;
+        fxSlider.value = GameManager.instance.fxSource.volume;
+        fxButton.onClick.AddListener(HandleFXSliderButtonClickEvent);
     }
-	
-	// Update is called once per frame
-	void Update () {
-      
+
+    // Update is called once per frame
+    void Update() {
+        GameManager.instance.bgmSource.volume = bgmSlider.value;
+        GameManager.instance.fxSource.volume = fxSlider.value;
+        if (bgm.isOn == false)
+        {
+            MuteBGM();
+        }
+        else
+        {
+            UnmuteBGM();
+        }
+        if (fx.isOn == false)
+        {
+            MuteFX();
+        }
+        else
+        {
+            
+            UnmuteFX();
+        }
     }
 
     
+    public void MuteBGM()
+    {
+        GameManager.instance.bgmSource.enabled = false;            
+    }
+    public void UnmuteBGM()
+    {
+        GameManager.instance.bgmSource.enabled = true;
+    }
+
+    public void MuteFX()
+    {
+        GameManager.instance.fxSource.enabled = false;
+    }
+    
+    public void UnmuteFX()
+    {
+        GameManager.instance.fxSource.enabled = true;        
+    }
+
+    public void HandleFXSliderButtonClickEvent()
+    {
+        GameManager.instance.PlaySound(GameManager.instance.fxButton);
+    }
 }

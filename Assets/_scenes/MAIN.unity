@@ -1662,7 +1662,7 @@ RectTransform:
   m_RootOrder: 6
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -68.38791, y: 134.31482}
+  m_AnchoredPosition: {x: -220, y: -600}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1965987920
@@ -1866,7 +1866,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Settings
 --- !u!222 &2081953807
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1927,6 +1927,8 @@ MonoBehaviour:
   fxRotate: {fileID: 8300000, guid: 5354e22b9c34f844c8eb92aceb5c74fe, type: 3}
   fxButton: {fileID: 8300000, guid: 50bec9c0265b47042b684e0acf0fdc6d, type: 3}
   fxBuyTwenty: {fileID: 8300000, guid: 904a5b59d9795aa47b5142f88d9cb892, type: 3}
+  isMutedBGM: 0
+  isMutedFX: 0
 --- !u!82 &2134826612
 AudioSource:
   m_ObjectHideFlags: 0

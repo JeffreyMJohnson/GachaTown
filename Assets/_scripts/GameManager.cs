@@ -31,6 +31,8 @@ public class
     public AudioClip fxRotate;
     public AudioClip fxButton;
     public AudioClip fxBuyTwenty;
+    public bool isMutedBGM = false;
+   public bool isMutedFX = false;
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -137,13 +139,18 @@ public class
 
     public void PlayMusic(AudioClip music)
     {
-        bgmSource.clip = music;
-        bgmSource.Play();
+        
+            bgmSource.clip = music;
+            bgmSource.Play();
+        
+        
     }
     public void PlaySound(AudioClip fx)
     {
-
-        fxSource.PlayOneShot(fx);
+        
+            fxSource.PlayOneShot(fx);
+        
+        
     }
 
     public void LoadMainMenu()
@@ -194,14 +201,7 @@ public class
         PlaySound(fxButton);
         fxSource.volume -= .1f;      
     }
-    public void MuteMusic()
-    {
-        bgmSource.volume = 0;
-    }
-    public void MuteFX()
-    {
-        fxSource.volume = 0;
-    }
+    
 
 
 
