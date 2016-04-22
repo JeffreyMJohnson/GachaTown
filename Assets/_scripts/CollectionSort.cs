@@ -68,7 +68,7 @@ public class CollectionSort : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
         }
 
         if (scrollStart < scrollTime)
@@ -161,7 +161,7 @@ public class CollectionSort : MonoBehaviour
             if (GameManager.instance.IsGachaAnimated(gachaObject))
             {
                 SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
+                Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name + "should the animator be disabled?");
                 mesh.material = hiddenMaterial;
             }
             else

@@ -21,7 +21,8 @@ public class Gacha : MonoBehaviour
         _animator = GetComponent<Animator>();
         Debug.Assert(_animator != null, "No animator component found.");
         IsAnimated = _animator.enabled;
-        if (IsAnimated)
+
+        if (GameManager.instance.CurrentScene == GameManager.Scene.TOWN && IsAnimated)
         {
             _idleAnimationTimer = new Timer(idleAnimationTime);
             _idleAnimationTimer.Start();
@@ -45,8 +46,6 @@ public class Gacha : MonoBehaviour
     /// </summary>
     void HandleIdleAnimationAlarmEvent()
     {
-        //StartCoroutine(WalkForward());
-        Debug.Log("timer up: " + idleAnimationTime);
         _animator.SetTrigger("Idle");
     }
 

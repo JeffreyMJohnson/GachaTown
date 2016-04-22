@@ -186,14 +186,14 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandleMenuButtonClick()
     {
-        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
     private void HandleEscapeKey()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
 

@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour
     #endregion
 
     #region UI handlers
-    public void HandleClick(GameManager.Menus scene)
+    public void HandleClick(GameManager.Scene scene)
     {
 
         audioSource.Play();
@@ -53,17 +53,17 @@ public class MainMenu : MonoBehaviour
 
         foreach (Button button in buttons)
         {
-            GameManager.Menus scene = GameManager.Menus.MAIN;
+            GameManager.Scene scene = GameManager.Scene.MAIN;
             switch (button.name)
             {
                 case "Gacha Machines":
-                    scene = GameManager.Menus.GACHACHOOSE;
+                    scene = GameManager.Scene.GACHACHOOSE;
                     break;
                 case "Visit Town":
-                    scene = GameManager.Menus.TOWN;
+                    scene = GameManager.Scene.TOWN;
                     break;
                 case "View Collection":
-                    scene = GameManager.Menus.COLLECTION;
+                    scene = GameManager.Scene.COLLECTION;
                     break;
                 case "How To Play":
                     continue;

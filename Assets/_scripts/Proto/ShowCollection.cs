@@ -31,7 +31,7 @@ public class ShowCollection : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
 

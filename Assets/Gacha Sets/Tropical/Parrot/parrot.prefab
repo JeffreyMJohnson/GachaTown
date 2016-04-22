@@ -139,7 +139,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170420}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: cde4fe23ac9a4de4d8c08a8454db3d00, type: 3}
   m_Controller: {fileID: 9100000, guid: 66064bb38a38edf4f86cad786afdd998, type: 2}
   m_CullingMode: 0
@@ -369,7 +369,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Controller
