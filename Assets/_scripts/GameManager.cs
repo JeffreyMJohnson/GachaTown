@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
     {
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
+        //animator needs to be enabled/disabled manually in the prefab
     }
 
 }
