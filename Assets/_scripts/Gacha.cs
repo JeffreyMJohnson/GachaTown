@@ -4,51 +4,73 @@ using Assets._scripts;
 
 public class Gacha : MonoBehaviour
 {
+    #region public properties
     public bool IsAnimated = false;
-    public float animationTimerAlarm = 3;
-    private Timer animationTimer;
+    public float idleAnimationTime;
+    
+    #endregion
+
+    #region private fields
+    private Timer _idleAnimationTimer;
+    private Animator _animator;
+    #endregion
 
     #region unity lifecycle methods
-
     void Start()
     {
-        Animator anim = GetComponent<Animator>();
-        Debug.Assert(anim != null, "No animator component found.");
-        IsAnimated = anim.enabled;
+        _animator = GetComponent<Animator>();
+        Debug.Assert(_animator != null, "No animator component found.");
+        IsAnimated = _animator.enabled;
         if (IsAnimated)
         {
-            animationTimer = new Timer(animationTimerAlarm);
-            animationTimer.Start();
-            animationTimer.onRaiseAlarmEvent += HandleAnimationAlarmEvent;
+            _idleAnimationTimer = new Timer(idleAnimationTime);
+            _idleAnimationTimer.Start();
+            _idleAnimationTimer.onRaiseAlarmEvent += HandleIdleAnimationAlarmEvent;
         }
-        Debug.Log(name + " is animated:" + IsAnimated);
     }
 
     void Update()
     {
-        if (animationTimer != null)
+        if (_idleAnimationTimer != null)
         {
-            animationTimer.Update(Time.deltaTime);
+            _idleAnimationTimer.Update(Time.deltaTime);
         }
-
     }
-
-
     #endregion
 
-    void HandleAnimationAlarmEvent()
+    #region event handlers
+    /// <summary>
+    /// Idle animation timer alarm event handler
+    /// (fired from _idleAnimationTimer)
+    /// </summary>
+    void HandleIdleAnimationAlarmEvent()
     {
-        StartCoroutine(WalkForward());
+        //StartCoroutine(WalkForward());
+        Debug.Log("timer up: " + idleAnimationTime);
+        _animator.SetTrigger("Idle");
     }
+
+    /// <summary>
+    /// idle animation finished event handler 
+    /// (fired at end of animation clip)
+    /// </summary>
+    void HandleIdleAnimationCompleteEvent()
+    {
+        _idleAnimationTimer.Start();
+    }
+    #endregion
 
     IEnumerator WalkForward()
     {
         for (Timer timer = new Timer(1, true); timer.AlarmRaised == false; timer.Update(Time.deltaTime))
         {
-            transform.Translate(Vector3.forward * Time.deltaTime);
+            float speed = 5 * Time.deltaTime;
+            transform.Translate(Vector3.forward * speed);
+            _animator.SetFloat("velocity", speed);
             yield return null;
         }
-        animationTimer.Start();
+        _animator.SetFloat("velocity", 0);
+        _idleAnimationTimer.Start();
 
     }
 }
