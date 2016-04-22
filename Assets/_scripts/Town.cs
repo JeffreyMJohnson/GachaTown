@@ -186,8 +186,7 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandleMenuButtonClick()
     {
-        GameManager.instance.LoadMainMenu();
-        
+        GameManager.instance.LoadMainMenu();        
     }
 
     private void HandleEscapeKey()

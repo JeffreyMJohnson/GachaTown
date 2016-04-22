@@ -117,7 +117,7 @@ void Start()
             }
 
             TextUpdate();
-            GameManager.instance.PlaySound(GameManager.instance.FXRotate);            
+            GameManager.instance.PlaySound(GameManager.instance.fxRotate);            
         }
     }
 
@@ -140,7 +140,7 @@ void Start()
 
 
             TextUpdate();
-            GameManager.instance.PlaySound(GameManager.instance.FXRotate);
+            GameManager.instance.PlaySound(GameManager.instance.fxRotate);
         }
     }
     public void LoadMainMenu()

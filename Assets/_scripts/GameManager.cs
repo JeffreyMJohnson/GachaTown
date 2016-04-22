@@ -10,34 +10,27 @@ using UnityEngine.Networking;
 /// Acess this class from the static instance property, do not instantiate your own.
 /// eg GameManager.instance.Foo();
 /// </summary>
-public class GameManager : MonoBehaviour
+public class 
+    
+    
+    GameManager : MonoBehaviour
 {
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
-
+    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, GACHACHOOSE, HOW_TO_PLAY, SETTING }   
+    
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
     //Music
-    //todo remove this for release, this just for debug until get UI implemented
-    public bool EnableBackgroundMusic = false;
+    public AudioSource bgmSource;
+    public AudioSource fxSource;
 
-    /*                  CODE REVIEW
-     * make this private and init at Awake
-     */
-    public AudioSource audioSource;
-
-    /*                  CODE REVIEW
-     * Add tooltip attribute to these so user get's more context.
-     */
-    [Tooltip("Background music for Main Menu scene.")]
     public AudioClip bgmMainMenu;
     public AudioClip bgmBuyGacha;
     public AudioClip bgmALT;
 
-    public AudioClip FXRotate;
-    public AudioClip FXButton;
-    public AudioClip FXBuyTwenty;
-
+    public AudioClip fxRotate;
+    public AudioClip fxButton;
+    public AudioClip fxBuyTwenty;
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -137,67 +130,86 @@ public class GameManager : MonoBehaviour
     /// <param name="scene"></param>
     public void ChangeScene(Menus scene)
     {
-        StartCoroutine(WaitForAudio(scene));
-    }
+        UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+        //StartCoroutine(WaitForAudio(scene));
 
-    /*                  CODE REVIEW
-     * Lack of summary comment. Just simple little explanation, nothing major your name should convey most of info
-     */
+    }
 
     public void PlayMusic(AudioClip music)
     {
-        audioSource.clip = music;
-        audioSource.Play();
+        bgmSource.clip = music;
+        bgmSource.Play();
     }
     public void PlaySound(AudioClip fx)
     {
 
-        audioSource.PlayOneShot(fx);
+        fxSource.PlayOneShot(fx);
     }
 
-    /*                  CODE REVIEW
-     * these 3 methods seem to do same thing.
-     */
     public void LoadMainMenu()
     {
-        PlaySound(FXButton);
+        PlaySound(fxButton);
         ChangeScene(Menus.MAIN);
-        if (EnableBackgroundMusic)
-        {
-            PlayMusic(bgmMainMenu);
-        }
+        PlayMusic(bgmMainMenu);
     }
     public void LoadBuyGacha()
     {
-        PlaySound(FXButton);
+        PlaySound(fxButton);
         ChangeScene(Menus.GACHA);
-
-        if (EnableBackgroundMusic)
-        {
-            PlayMusic(bgmBuyGacha);
-        }
-
+        PlayMusic(bgmBuyGacha);
+    }
+    public void LoadSettings()
+    {
+        PlaySound(fxButton);
+        ChangeScene(Menus.SETTING);
     }
 
     public void LoadScene(Menus scene)
     {
-        PlaySound(FXButton);
+        PlaySound(fxButton);
         ChangeScene(scene);
-        if (EnableBackgroundMusic)
-        {
-            PlayMusic(bgmMainMenu);
-        }
+        PlayMusic(bgmMainMenu);
     }
 
-    /*                  CODE REVIEW
-     * verify this still needed
-     */
-    //hack - this is fix for timing problem when firing audio before scene change
-    private IEnumerator WaitForAudio(Menus scene)
+
+    //Volume functions
+    
+    public void RaiseVolumeMusic()
     {
-        yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
-        UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+        PlaySound(fxButton);
+        bgmSource.volume += .1f;      
     }
+    public void RaiseVolumeFX()
+    {
+        PlaySound(fxButton);
+        fxSource.volume += .1f;        
+    }  
+    public void LowerVolumeMusic()
+    {
+        PlaySound(fxButton);
+        bgmSource.volume -= .1f; 
+    }
+    public void LowerVolumeFX()
+    {
+        PlaySound(fxButton);
+        fxSource.volume -= .1f;      
+    }
+    public void MuteMusic()
+    {
+        bgmSource.volume = 0;
+    }
+    public void MuteFX()
+    {
+        fxSource.volume = 0;
+    }
+
+
+
+    //private IEnumerator WaitForAudio(Menus scene)
+    //{
+    //    yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
+    //    UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+    //}
 
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)
@@ -205,5 +217,4 @@ public class GameManager : MonoBehaviour
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
     }
-
 }

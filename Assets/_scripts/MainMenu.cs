@@ -7,22 +7,22 @@ public class MainMenu : MonoBehaviour
     #region private fields
     Canvas portrait;
     Canvas landscape;
-    AudioSource audioSource;
+    //AudioSource audioSource;
     #endregion
 
     #region unity lifecycle methods
     void Start()
     {
         InitButtonHandlers();
-        audioSource = GetComponent<AudioSource>();
-        Debug.Assert(audioSource != null, "audiosource component not found.");
+        //audioSource = GetComponent<AudioSource>();
+        //Debug.Assert(audioSource != null, "audiosource component not found.");
         GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
-
+        
         InitCanvas();
     }
 
     void Update()
-    {
+    {        
         if (Input.GetKey(KeyCode.Escape))
         {
             Application.Quit();
@@ -39,7 +39,8 @@ public class MainMenu : MonoBehaviour
     public void HandleClick(GameManager.Menus scene)
     {
 
-        audioSource.Play();
+        //audioSource.Play();
+        GameManager.instance.PlaySound(GameManager.instance.fxButton);
         GameManager.instance.ChangeScene(scene);
     }
 
@@ -47,10 +48,7 @@ public class MainMenu : MonoBehaviour
 
     void InitButtonHandlers()
     {
-
-
         Button[] buttons = FindObjectsOfType<Button>();
-
         foreach (Button button in buttons)
         {
             GameManager.Menus scene = GameManager.Menus.MAIN;
@@ -65,12 +63,15 @@ public class MainMenu : MonoBehaviour
                 case "View Collection":
                     scene = GameManager.Menus.COLLECTION;
                     break;
-                case "How To Play":
-                    continue;
+                case "Settings":
+                    scene = GameManager.Menus.SETTING;
+                    break;
+               //case "How To Play":
+                    //continue;
+                
                     //break;
             }
             button.onClick.AddListener(delegate { HandleClick(scene); });
-
         }
     }
     
