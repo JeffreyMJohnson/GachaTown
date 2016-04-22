@@ -152,7 +152,7 @@ void Start()
 
         audioSource.PlayOneShot(buttonPresssoundClip);
 
-        GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
     public void SelectGacha()
@@ -160,7 +160,7 @@ void Start()
         //pass selectedGacha to player
         audioSource.PlayOneShot(buttonPresssoundClip);
         playerScript.Selected = selectedGacha;
-        GameManager.instance.ChangeScene(GameManager.Menus.GACHA);
+        GameManager.instance.ChangeScene(GameManager.Scene.GACHA);
     }
     float GetDestinationRotation()
     {

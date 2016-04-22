@@ -93,9 +93,10 @@ public class CollectionSort : MonoBehaviour
                 zoomLevelOrigin = collectionCamera.orthographicSize;
                 cameraOrigin = collectionCamera.transform.position;
                 cameraDestination = cameraStartPosition;
+                
             }
             else
-                GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+                GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
         }
 
 
