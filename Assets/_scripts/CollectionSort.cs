@@ -102,19 +102,20 @@ public class CollectionSort : MonoBehaviour
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
         //eventually enable rotate of the gacha
-        if (Input.GetMouseButtonUp(0)) 
+        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if(Physics.Raycast(ray, out hit))
             {
                 isZoomed = true;
-                cameraOrigin = cameraStartPosition;
+                cameraOrigin = collectionCamera.transform.position;
                 cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
                 zoomStart = 0;
                 zoomLevelOrigin = collectionCamera.orthographicSize;
                 zoomLevelDestination = 4.5f;
             }
-                
+            Toggle test;
+            
         }
 
         if (scrollStart < scrollTime)
