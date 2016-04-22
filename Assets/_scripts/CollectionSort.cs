@@ -7,10 +7,18 @@ public class CollectionSort : MonoBehaviour
     #region public properties
     public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
+    public Vector2 displaySize;// = new Vector2(2, 3);
     Vector3 pageDestination;
     Vector3 pageOrigin;
-    public Vector2 displaySize;// = new Vector2(2, 3);
+
+    Ray ray;
+    RaycastHit hit;
+
     public Material hiddenMaterial;
+
+    public Vector3 cameraOrigin;//= new Vector3(6, 8.5, 
+    Vector3 cameraDestination;
+
     #endregion
 
     #region private fields
@@ -69,6 +77,20 @@ public class CollectionSort : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+        }
+
+
+        //ray cast from screen position on left click release
+        //if hits gacha, zoom in on it, load and enable description text
+        //enable rotate of the gacha
+        if (Input.GetMouseButtonUp(0)) 
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {
+                //get
+            }
+                
         }
 
         if (scrollStart < scrollTime)
@@ -140,7 +162,11 @@ public class CollectionSort : MonoBehaviour
                 GameObject gachaObject = GetGachaGameObject(gachaID);
                 collectionPages[i].Add(gachaObject);
                 gachaObject.transform.position = offset + (pageOffset * i);
-               
+                
+                SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
+                gachaSphereCollider.center = new Vector3(0, 2, 0);
+                gachaSphereCollider.radius = 2.5f;
+                                
                 SetGachaMaterial(gachaObject, gachaID);
             }
         }
