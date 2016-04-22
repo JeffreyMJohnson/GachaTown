@@ -85,7 +85,7 @@ public class BuyGacha : MonoBehaviour
         //todo this magic number needs refactored out and money system implemented
         if (player.TotalCoins >= 5)
         {
-            player.TotalCoins -= 5;
+            player.DeductCoins(5);
             moneyTextField.text = player.TotalCoins.ToString();
             player.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
         }

@@ -6,7 +6,9 @@ using Assets._scripts;
 public class Town : MonoBehaviour
 {
     #region public properties
-    public AnimationClip walk;
+
+    public int CoinsPerTap = 5;
+
     #endregion
 
     #region private fields
@@ -16,6 +18,7 @@ public class Town : MonoBehaviour
     private Dropdown gachaList = null;
     private Button selectGacha = null;
     private GameObject gachaToPlace = null;
+    private Player _player = null;
     #endregion
 
     #region unity lifecycle methods
@@ -25,6 +28,9 @@ public class Town : MonoBehaviour
         canvas = FindObjectOfType<Canvas>();
         Debug.Assert(canvas != null, "canvas not found.");
 
+        _player = GameManager.instance.gameObject.GetComponentInChildren<Player>();
+        Debug.Assert(_player != null, "player not found.");
+
         InitMenu();
 
         //lock to landscape mode
@@ -33,14 +39,25 @@ public class Town : MonoBehaviour
 
     void Update()
     {
-        HandleEscapeKey();
+        UpdateEscapeKey();
 
-        HandleGachaClickDrag();
+        UpdateGachaDrag();
     }
 
     void OnDestroy()
     {
-        Screen.orientation = ScreenOrientation.AutoRotation;
+        Screen.orientation = ScreenOrientation.Landscape;
+    }
+
+    /// <summary>
+    /// Change to Menu scene when excape key is pressed.
+    /// </summary>
+    private void UpdateEscapeKey()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+        }
     }
     #endregion
 
@@ -173,38 +190,22 @@ public class Town : MonoBehaviour
     public void HandlePlaceButtonClick()
     {
         GameObject selectedGacha = GameManager.instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
-        //todo implement the drag / drop to town here
-
         gachaToPlace = Instantiate<GameObject>(GameManager.instance.GetGachaPrefab(new GachaID(setList.value - 1, gachaList.value - 1)));
-
+        gachaToPlace.GetComponent<Gacha>().OnClickEvent.AddListener(HandleGachaOnClickEvent);
         ClearSelectionMenu();
     }
 
-
     /// <summary>
-    /// return to menu button onclick event handler.
+    /// moves gacha gameobject with the mouse position until the left mouse button is clicked
     /// </summary>
-    public void HandleMenuButtonClick()
-    {
-        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
-    }
-
-    private void HandleEscapeKey()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
-        }
-    }
-
-    private void HandleGachaClickDrag()
+    private void UpdateGachaDrag()
     {
         if (gachaToPlace != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
+            LayerMask mask = LayerMask.GetMask("Ground");
+            if (Physics.Raycast(ray, out hit, 100, mask))
             {
                 gachaToPlace.transform.position = hit.point;
                 if (Input.GetMouseButtonDown(0))
@@ -214,5 +215,22 @@ public class Town : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// return to menu button onclick event handler.
+    /// </summary>
+    private void HandleMenuButtonClick()
+    {
+        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    private void HandleGachaOnClickEvent()
+    {
+        _player.AddCoins(CoinsPerTap);
+    }
+    
+
+
+
     #endregion
 }
