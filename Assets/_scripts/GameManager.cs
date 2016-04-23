@@ -17,6 +17,19 @@ public class GameManager : MonoBehaviour
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
+    //Music
+    public AudioSource bgmSource;
+    public AudioSource fxSource;
+
+    public AudioClip bgmMainMenu;
+    public AudioClip bgmBuyGacha;
+    public AudioClip bgmALT;
+
+    public AudioClip fxRotate;
+    public AudioClip fxButton;
+    public AudioClip fxBuyTwenty;
+    public bool isMutedBGM = false;
+   public bool isMutedFX = false;
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -123,11 +136,76 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
     }
 
+    public void PlayMusic(AudioClip music)
+    {
+        
+            bgmSource.clip = music;
+            bgmSource.Play();
+        
+        
+    }
+    public void PlaySound(AudioClip fx)
+    {
+        
+            fxSource.PlayOneShot(fx);
+        
+        
+    }
+
+    public void LoadMainMenu()
+    {
+        PlaySound(fxButton);
+        ChangeScene(Scene.MAIN);
+        PlayMusic(bgmMainMenu);
+    }
+    public void LoadBuyGacha()
+    {
+        PlaySound(fxButton);
+        ChangeScene(Scene.GACHA);
+        PlayMusic(bgmBuyGacha);
+    }
+    public void LoadSettings()
+    {
+        PlaySound(fxButton);
+        ChangeScene(Scene.SETTING);
+    }
+
+    public void LoadScene(Scene scene)
+    {
+        PlaySound(fxButton);
+        ChangeScene(scene);
+        PlayMusic(bgmMainMenu);
+    }
+
+
+    //Volume functions
+    
+    public void RaiseVolumeMusic()
+    {
+        PlaySound(fxButton);
+        bgmSource.volume += .1f;      
+    }
+    public void RaiseVolumeFX()
+    {
+        PlaySound(fxButton);
+        fxSource.volume += .1f;        
+    }  
+    public void LowerVolumeMusic()
+    {
+        PlaySound(fxButton);
+        bgmSource.volume -= .1f; 
+    }
+    public void LowerVolumeFX()
+    {
+        PlaySound(fxButton);
+        fxSource.volume -= .1f;      
+    }
+
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)
     {
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
+        //animator needs to be enabled/disabled manually in the prefab
     }
-
 }
