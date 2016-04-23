@@ -10,13 +10,10 @@ using UnityEngine.Networking;
 /// Acess this class from the static instance property, do not instantiate your own.
 /// eg GameManager.instance.Foo();
 /// </summary>
-public class 
-    
-    
-    GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, GACHACHOOSE, HOW_TO_PLAY, SETTING }   
-    
+    public enum Scene { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
+
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
@@ -42,10 +39,13 @@ public class
     /// Returns true if the device screen orientation is in portrait mode, else returns false.
     /// </summary>
     public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
+    public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
+
     #endregion
 
     #region private fields
     private DeviceOrientationController orientationController = new DeviceOrientationController();
+    private Scene _currentScene;
     #endregion
 
     #region unity lifecycle methods
@@ -130,11 +130,10 @@ public class
     /// Global change scene method. Note this adds a pause before scene change to allow for audio playing
     /// </summary>
     /// <param name="scene"></param>
-    public void ChangeScene(Menus scene)
+    public void ChangeScene(Scene scene)
     {
+        CurrentScene = scene;
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
-        //StartCoroutine(WaitForAudio(scene));
-
     }
 
     public void PlayMusic(AudioClip music)
@@ -156,22 +155,22 @@ public class
     public void LoadMainMenu()
     {
         PlaySound(fxButton);
-        ChangeScene(Menus.MAIN);
+        ChangeScene(Scene.MAIN);
         PlayMusic(bgmMainMenu);
     }
     public void LoadBuyGacha()
     {
         PlaySound(fxButton);
-        ChangeScene(Menus.GACHA);
+        ChangeScene(Scene.GACHA);
         PlayMusic(bgmBuyGacha);
     }
     public void LoadSettings()
     {
         PlaySound(fxButton);
-        ChangeScene(Menus.SETTING);
+        ChangeScene(Scene.SETTING);
     }
 
-    public void LoadScene(Menus scene)
+    public void LoadScene(Scene scene)
     {
         PlaySound(fxButton);
         ChangeScene(scene);
@@ -201,20 +200,12 @@ public class
         PlaySound(fxButton);
         fxSource.volume -= .1f;      
     }
-    
-
-
-
-    //private IEnumerator WaitForAudio(Menus scene)
-    //{
-    //    yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
-    //    UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
-    //}
 
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)
     {
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
+        //animator needs to be enabled/disabled manually in the prefab
     }
 }

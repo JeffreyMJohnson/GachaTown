@@ -145,7 +145,8 @@ void Start()
     }
     public void LoadMainMenu()
     {
-        GameManager.instance.LoadMainMenu();
+
+        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
     //I'm not being dumb, it's used by a button
@@ -157,7 +158,7 @@ void Start()
         
 
         playerScript.Selected = selectedGacha;
-        GameManager.instance.LoadBuyGacha();
+        GameManager.instance.ChangeScene(GameManager.Scene.GACHA);
     }
     float GetDestinationRotation()
     {

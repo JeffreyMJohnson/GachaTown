@@ -45,7 +45,7 @@ public class BuyGacha : MonoBehaviour
             switch (button.name)
             {
                 case "Main Menu Button":
-                    button.onClick.AddListener(delegate { HandleClick(GameManager.Menus.MAIN); });
+                    button.onClick.AddListener(delegate { HandleClick(GameManager.Scene.MAIN); });
                     break;
                 case "Buy Twenty Button":
                     button.onClick.AddListener(BuyLazy);
@@ -60,13 +60,13 @@ public class BuyGacha : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            HandleClick(GameManager.Menus.MAIN);
+            HandleClick(GameManager.Scene.MAIN);
         }
     }
     #endregion
 
     #region UI Handlers
-    public void HandleClick(GameManager.Menus scene)
+    public void HandleClick(GameManager.Scene scene)
     {
         GameManager.instance.LoadScene(scene);
     }
@@ -87,7 +87,7 @@ public class BuyGacha : MonoBehaviour
         //todo this magic number needs refactored out and money system implemented
         if (player.TotalCoins >= 5)
         {
-            player.TotalCoins -= 5;
+            player.DeductCoins(5);
             moneyTextField.text = player.TotalCoins.ToString();
             player.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
         }

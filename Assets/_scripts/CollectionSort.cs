@@ -5,22 +5,34 @@ using System.Collections.Generic;
 public class CollectionSort : MonoBehaviour
 {
     #region public properties
-    public Vector3 gachaOffset = new Vector3(-2, -3, 0);
-    public Vector3 pageOffset = new Vector3(30, 0, 0);
-    public Vector3 pageDestination;
-    public Vector3 pageOrigin;
-    public Vector2 displaySize = new Vector2(2, 3);
+    public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
+    public Vector3 pageOffset;// = new Vector3(50, 0, 0);
+    public Vector2 displaySize;// = new Vector2(2, 3);
     public Material hiddenMaterial;
+    public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
+
     #endregion
 
     #region private fields
     List<List<GameObject>> collectionPages = new List<List<GameObject>>();
-
+    Vector3 cameraDestination;
+    Vector3 cameraOrigin;
+    Vector3 pageDestination;
+    Vector3 pageOrigin;
+    Ray ray;
+    RaycastHit hit;
+    float zoomLevelOrigin;
+    float zoomLevelDestination;
     float scrollStart = 0;
     float scrollTime = 20;
+    float zoomStart = 0;
+    float zoomTime = 20;
     int currentPage = 0;
     const int MAX_GACHA_PER_PAGE = 9;
     AudioSource buttonPress;
+    bool isZoomed = false;
+
+    Camera collectionCamera;
     private Player player;
     #endregion
 
@@ -30,8 +42,15 @@ public class CollectionSort : MonoBehaviour
         player = GameObject.FindObjectOfType<Player>();
         Debug.Assert(player != null, "no Player script in scene.");
         buttonPress = GetComponent<AudioSource>();
+
+        zoomLevelOrigin = 15;
+        zoomLevelDestination = zoomLevelOrigin;
         pageOrigin = transform.position;
-        pageDestination = transform.position;
+        pageDestination = pageOrigin;
+        cameraOrigin = cameraStartPosition;
+        cameraDestination = cameraOrigin;
+
+        collectionCamera = FindObjectOfType<Camera>();
 
         //todo use accessor for this collection
         if (GameManager.instance.masterGachaSetList.Count == 0)
@@ -66,9 +85,40 @@ public class CollectionSort : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
-            GameManager.instance.ChangeScene(GameManager.Menus.MAIN);
+            if (isZoomed)
+            {
+                isZoomed = false;
+                zoomStart = 0;
+                zoomLevelDestination = 15;
+                zoomLevelOrigin = collectionCamera.orthographicSize;
+                cameraOrigin = collectionCamera.transform.position;
+                cameraDestination = cameraStartPosition;
+                
+            }
+            else
+                GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+        }
+
+
+        //ray cast from screen position on left click release
+        //if hits gacha, zoom in on it, load and enable description text
+        //eventually enable rotate of the gacha
+        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
+        {
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if(Physics.Raycast(ray, out hit))
+            {
+                isZoomed = true;
+                cameraOrigin = collectionCamera.transform.position;
+                cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
+                zoomStart = 0;
+                zoomLevelOrigin = collectionCamera.orthographicSize;
+                zoomLevelDestination = 4.5f;
+            }
+            Toggle test;
+            
         }
 
         if (scrollStart < scrollTime)
@@ -77,6 +127,14 @@ public class CollectionSort : MonoBehaviour
             transform.position = new Vector3(Mathf.Lerp(pageOrigin.x, pageDestination.x, scrollStart / scrollTime), 0);
         }
 
+        if (zoomStart < zoomTime)
+        {
+            zoomStart++;
+            collectionCamera.transform.position = new Vector3(Mathf.Lerp(cameraOrigin.x, cameraDestination.x, zoomStart / zoomTime),
+                                                              Mathf.Lerp(cameraOrigin.y, cameraDestination.y, zoomStart / zoomTime),
+                                                              collectionCamera.transform.position.z);
+            collectionCamera.orthographicSize = Mathf.Lerp(zoomLevelOrigin, zoomLevelDestination, zoomStart / zoomTime);
+        }
     }
 
     #endregion
@@ -142,7 +200,11 @@ public class CollectionSort : MonoBehaviour
                 GameObject gachaObject = GetGachaGameObject(gachaID);
                 collectionPages[i].Add(gachaObject);
                 gachaObject.transform.position = offset + (pageOffset * i);
-               
+                
+                SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
+                gachaSphereCollider.center = new Vector3(0, 2, 0);
+                gachaSphereCollider.radius = 2.5f;
+                                
                 SetGachaMaterial(gachaObject, gachaID);
             }
         }
