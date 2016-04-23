@@ -8,11 +8,13 @@ public class BuyGacha : MonoBehaviour
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
+    
     #endregion
 
     #region private fields
     Player player;
-    AudioSource audioSource;
+    
+    
     #endregion
 
     #region unity lifecycle methods
@@ -24,8 +26,8 @@ public class BuyGacha : MonoBehaviour
         player = playerObject.GetComponent<Player>();
         Debug.Assert(player != null, "player script was not found.");
 
-        audioSource = GetComponent<AudioSource>();
-        Debug.Assert(audioSource != null, "audio source component was not found.");
+        //audioSource = GetComponent<AudioSource>();
+        //Debug.Assert(audioSource != null, "audio source component was not found.");
 
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
         Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
@@ -66,12 +68,12 @@ public class BuyGacha : MonoBehaviour
     #region UI Handlers
     public void HandleClick(GameManager.Scene scene)
     {
-        audioSource.Play();
-        GameManager.instance.ChangeScene(scene);
+        GameManager.instance.LoadScene(scene);
     }
 
     public void BuyLazy()
     {
+        GameManager.instance.PlaySound(GameManager.instance.fxBuyTwenty);
         for (int i = 0; i < 20; i++)
         {
             Buy();

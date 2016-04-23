@@ -9,8 +9,6 @@ public class GachaRotator : MonoBehaviour
     #region public properties
     public Text gachaDisplay;
     public Text moneyDisplay;
-    public AudioClip rotateSoundClip;
-    public AudioClip buttonPresssoundClip;
     public int selectedGacha = 0;
     public float rotateTime = 15; //in frames
     #endregion
@@ -20,7 +18,6 @@ public class GachaRotator : MonoBehaviour
     private GameObject[] gachaMachines;
     private Transform[] gachaTransforms;
     private float rotationInterval = 0;
-    private AudioSource audioSource;
     private float rotateStart = 15;
     private Player playerScript;
     private int gachaCount = 0;
@@ -36,15 +33,16 @@ void Start()
         Debug.Assert(playerScript != null, "Did not find Player script.");
 
 
-        audioSource = GetComponent<AudioSource>();
-        Debug.Assert(audioSource != null, "audio source component not found.");
+        //audioSource = GetComponent<AudioSource>();
+        //Debug.Assert(audioSource != null, "audio source component not found.");
 
         selectedGacha = playerScript.Selected;
-
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
         moneyDisplay.text = playerScript.TotalCoins.ToString();
 
         Debug.Assert(gachaDisplay != null, "gacha display text component not found, set in editor ?");
+
+    
 
         rotateStart = rotateTime;
 
@@ -77,7 +75,7 @@ void Start()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            LoadMainMenu();
+            GameManager.instance.LoadMainMenu();
         }
         if (rotateStart < rotateTime)
         {
@@ -119,7 +117,7 @@ void Start()
             }
 
             TextUpdate();
-            audioSource.PlayOneShot(rotateSoundClip);
+            GameManager.instance.PlaySound(GameManager.instance.fxRotate);            
         }
     }
 
@@ -142,23 +140,23 @@ void Start()
 
 
             TextUpdate();
-            audioSource.PlayOneShot(rotateSoundClip);
+            GameManager.instance.PlaySound(GameManager.instance.fxRotate);
         }
     }
-
-    //I'm not being dumb, it's used by a button
     public void LoadMainMenu()
     {
-
-        audioSource.PlayOneShot(buttonPresssoundClip);
 
         GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
+    //I'm not being dumb, it's used by a button
+    
     public void SelectGacha()
     {
         //pass selectedGacha to player
-        audioSource.PlayOneShot(buttonPresssoundClip);
+
+        
+
         playerScript.Selected = selectedGacha;
         GameManager.instance.ChangeScene(GameManager.Scene.GACHA);
     }

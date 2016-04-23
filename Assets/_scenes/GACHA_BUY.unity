@@ -825,6 +825,7 @@ MonoBehaviour:
   moneyTextField: {fileID: 2141842315}
   displayTextField: {fileID: 373315770}
   GachaSet: 0
+  buyTwenty: {fileID: 8300000, guid: 904a5b59d9795aa47b5142f88d9cb892, type: 3}
 --- !u!82 &947488982
 AudioSource:
   m_ObjectHideFlags: 0
