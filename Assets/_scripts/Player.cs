@@ -8,7 +8,8 @@ using System.IO;
 public class Player : MonoBehaviour
 {
     #region public properties
-    public int TotalCoins = 1000;
+    public int TotalCoins { get; private set; }
+
     [SerializeField]
     public List<GachaID> gachaCollection;
     public int Selected = 0;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour
 
     #region private fields
     Transform collectionParent;
+
     #endregion
 
     #region unity lifecycle methods
@@ -53,6 +55,19 @@ public class Player : MonoBehaviour
             return false;
         }
         return gachaCollection.Contains(gachaID);
+    }
+
+    public void AddCoins(int coins)
+    {
+        TotalCoins += coins;
+    }
+
+    public void DeductCoins(int coins)
+    {
+        int coinsLeft = TotalCoins - coins;
+        Debug.Assert(coinsLeft >= 0, string.Format("Trying to deduct {0} coins from total of {1} leaving {2} coins.", coins, TotalCoins, coinsLeft));
+        TotalCoins -= coins;
+
     }
     #endregion
 
