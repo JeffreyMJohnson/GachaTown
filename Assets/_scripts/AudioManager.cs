@@ -32,7 +32,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-   public bool BackgroundAudioMuted
+    public bool BackgroundAudioMuted
     {
         get { return _backgroundAudioMuted; }
         set
@@ -67,14 +67,24 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-   
-
     public bool SoundEffectsMuted { get; set; }
-   
+
     public static AudioManager Instance = null;
     #endregion
 
     #region public API
+    /// <summary>
+    /// Play given sound effect once. Note that if the sound effects are muted it will not play.
+    /// </summary>
+    /// <param name="effect"></param>
+    public void SoundEffectsPlay(SoundEffect effect)
+    {
+        if (!SoundEffectsMuted)
+        {
+            _soundEffectsSource.PlayOneShot(SoundEffects[(int)effect]);
+        }
+    }
+    
     /// <summary>
     /// Play background music for given scene.  Note that if BackgroundAusio is muted, will not play.
     /// </summary>
@@ -88,29 +98,6 @@ public class AudioManager : MonoBehaviour
             _backgroundSource.Play();
         }
     }
-
-    /// <summary>
-    /// Stop background music from playing.
-    /// </summary>
-    public void BackgroundAudioStop()
-    {
-        _backgroundSource.Stop();
-        _backgroundSource.clip = null;
-        _backgroundSource.loop = false;
-    }
-
-    /// <summary>
-    /// Play given sound effect once. Note that if the sound effects are muted it will not play.
-    /// </summary>
-    /// <param name="effect"></param>
-    public void SfxPlay(SoundEffect effect)
-    {
-        if (!SoundEffectsMuted)
-        {
-            _soundEffectsSource.PlayOneShot(SoundEffects[(int)effect]);
-        }
-    }
-
     #endregion
 
     #region private fields
@@ -119,12 +106,22 @@ public class AudioManager : MonoBehaviour
     private float _backgroundVolume = 1.0f;
     private bool _backgroundAudioMuted = false;
     private float _soundEffectsVolume = 1.0f;
-    
+
 
     #endregion
 
     #region private methods
 
+
+    /// <summary>
+    /// Stop background music from playing.
+    /// </summary>
+    private void BackgroundAudioStop()
+    {
+        _backgroundSource.Stop();
+        _backgroundSource.clip = null;
+        _backgroundSource.loop = false;
+    }
     #endregion
 
     #region unity life cycle methods

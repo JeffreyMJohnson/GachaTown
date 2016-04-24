@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
 
         //audioSource.Play();
-        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
         GameManager.Instance.ChangeScene(scene);
     }
 

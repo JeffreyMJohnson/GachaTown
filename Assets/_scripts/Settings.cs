@@ -45,8 +45,6 @@ public class Settings : MonoBehaviour
         AudioManager.Instance.BackgroundAudioMuted = value;
     }
 
-
-
     void HandleSoundEffectsMuteOnValueChangeEvent(bool value)
     {
         AudioManager.Instance.SoundEffectsMuted = value;
@@ -54,6 +52,6 @@ public class Settings : MonoBehaviour
 
     public void HandleSoundEffectsSliderButtonClickEvent()
     {
-        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
     }
 }
