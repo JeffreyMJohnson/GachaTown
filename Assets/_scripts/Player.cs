@@ -8,7 +8,13 @@ using System.IO;
 public class Player : MonoBehaviour
 {
     #region public properties
-    public int TotalCoins { get; private set; }
+
+    
+    public int TotalCoins
+    {
+        get { return _totalCoins; }
+        private set { _totalCoins = value; }
+    }
 
     [SerializeField]
     public List<GachaID> gachaCollection;
@@ -17,6 +23,8 @@ public class Player : MonoBehaviour
 
     #region private fields
     Transform collectionParent;
+    [SerializeField]
+    private int _totalCoins;
 
     #endregion
 
