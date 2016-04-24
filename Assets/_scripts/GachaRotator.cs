@@ -117,7 +117,7 @@ void Start()
             }
 
             TextUpdate();
-            AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.ROTATE);
+            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.ROTATE);
         }
     }
 
@@ -140,7 +140,7 @@ void Start()
 
 
             TextUpdate();
-            AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.ROTATE);
+            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.ROTATE);
         }
     }
     public void LoadMainMenu()

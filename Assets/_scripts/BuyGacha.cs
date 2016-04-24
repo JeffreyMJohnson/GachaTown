@@ -74,7 +74,7 @@ public class BuyGacha : MonoBehaviour
     public void BuyLazy()
     {
         //GameManager.Instance.PlaySoundEffect(GameManager.Instance.fxBuyTwenty);
-        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
         for (int i = 0; i < 20; i++)
         {
             Buy();
