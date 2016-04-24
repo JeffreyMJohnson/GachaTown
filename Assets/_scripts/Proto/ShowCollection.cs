@@ -31,7 +31,7 @@ public class ShowCollection : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
 
@@ -65,7 +65,7 @@ public class ShowCollection : MonoBehaviour
         for (int i = start; i < testCondition; i++)
         {
             GachaID gachaID = player.gachaCollection[i];
-            currentPage[i - start] = GameManager.instance.GetGachaPrefab(gachaID);
+            currentPage[i - start] = GameManager.Instance.GetGachaPrefab(gachaID);
         }
 
     }

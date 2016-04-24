@@ -34,7 +34,7 @@ public class BuyGacha : MonoBehaviour
 
         moneyTextField.text = player.TotalCoins.ToString();
 
-        displayTextField.text = GameManager.instance.GetGachaSet(GachaSet).name;
+        displayTextField.text = GameManager.Instance.GetGachaSet(GachaSet).name;
         GachaSet = player.Selected;
 
 
@@ -68,12 +68,13 @@ public class BuyGacha : MonoBehaviour
     #region UI Handlers
     public void HandleClick(GameManager.Scene scene)
     {
-        GameManager.instance.LoadScene(scene);
+        GameManager.Instance.ChangeScene(scene);
     }
 
     public void BuyLazy()
     {
-        GameManager.instance.PlaySound(GameManager.instance.fxBuyTwenty);
+        //GameManager.Instance.PlaySoundEffect(GameManager.Instance.fxBuyTwenty);
+        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
         for (int i = 0; i < 20; i++)
         {
             Buy();
@@ -89,7 +90,7 @@ public class BuyGacha : MonoBehaviour
         {
             player.DeductCoins(5);
             moneyTextField.text = player.TotalCoins.ToString();
-            player.AddGachaToList(GameManager.instance.GetRandomGacha(GachaSet));
+            player.AddGachaToList(GameManager.Instance.GetRandomGacha(GachaSet));
         }
 
     }

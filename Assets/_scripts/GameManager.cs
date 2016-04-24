@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 
 /// <summary>
 /// singleton class that is available from every scene (once instantiated in Main Menu scene). 
-/// Acess this class from the static instance property, do not instantiate your own.
-/// eg GameManager.instance.Foo();
+/// Acess this class from the static Instance property, do not instantiate your own.
+/// eg GameManager.Instance.Foo();
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
+    /*
     //Music
     public AudioSource bgmSource;
     public AudioSource fxSource;
@@ -29,11 +30,12 @@ public class GameManager : MonoBehaviour
     public AudioClip fxButton;
     public AudioClip fxBuyTwenty;
     public bool isMutedBGM = false;
-   public bool isMutedFX = false;
+    public bool isMutedFX = false;
+    */
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
-    public static GameManager instance;
+    public static GameManager Instance;
 
     /// <summary>
     /// Returns true if the device screen orientation is in portrait mode, else returns false.
@@ -56,12 +58,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
@@ -133,73 +135,50 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(Scene scene)
     {
         CurrentScene = scene;
+        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+        AudioManager.Instance.BackgroundAudioPlay(scene);
     }
 
-    public void PlayMusic(AudioClip music)
+   
+    /*
+    public void PlayBackgroundMusic(AudioClip music)
     {
-        
-            bgmSource.clip = music;
-            bgmSource.Play();
-        
-        
-    }
-    public void PlaySound(AudioClip fx)
-    {
-        
-            fxSource.PlayOneShot(fx);
-        
-        
+        bgmSource.clip = music;
+        bgmSource.Play();
     }
 
-    public void LoadMainMenu()
+    public void PlaySoundEffect(AudioClip effect)
     {
-        PlaySound(fxButton);
-        ChangeScene(Scene.MAIN);
-        PlayMusic(bgmMainMenu);
-    }
-    public void LoadBuyGacha()
-    {
-        PlaySound(fxButton);
-        ChangeScene(Scene.GACHA);
-        PlayMusic(bgmBuyGacha);
-    }
-    public void LoadSettings()
-    {
-        PlaySound(fxButton);
-        ChangeScene(Scene.SETTING);
-    }
-
-    public void LoadScene(Scene scene)
-    {
-        PlaySound(fxButton);
-        ChangeScene(scene);
-        PlayMusic(bgmMainMenu);
+        fxSource.PlayOneShot(effect);
     }
 
 
-    //Volume functions
-    
+
+#region volume methods
+
     public void RaiseVolumeMusic()
     {
-        PlaySound(fxButton);
-        bgmSource.volume += .1f;      
+        PlaySoundEffect(fxButton);
+        bgmSource.volume += .1f;
     }
     public void RaiseVolumeFX()
     {
-        PlaySound(fxButton);
-        fxSource.volume += .1f;        
-    }  
+        PlaySoundEffect(fxButton);
+        fxSource.volume += .1f;
+    }
     public void LowerVolumeMusic()
     {
-        PlaySound(fxButton);
-        bgmSource.volume -= .1f; 
+        PlaySoundEffect(fxButton);
+        bgmSource.volume -= .1f;
     }
     public void LowerVolumeFX()
     {
-        PlaySound(fxButton);
-        fxSource.volume -= .1f;      
+        PlaySoundEffect(fxButton);
+        fxSource.volume -= .1f;
     }
+    
+#endregion*/
 
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)

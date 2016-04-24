@@ -68,14 +68,14 @@ void Start()
         }
         TextUpdate();
 
-        maxGachaSetCount = GameManager.instance.masterGachaSetList.Count;
+        maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.instance.LoadMainMenu();
+            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
         if (rotateStart < rotateTime)
         {
@@ -117,7 +117,7 @@ void Start()
             }
 
             TextUpdate();
-            GameManager.instance.PlaySound(GameManager.instance.fxRotate);            
+            AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.ROTATE);
         }
     }
 
@@ -140,13 +140,13 @@ void Start()
 
 
             TextUpdate();
-            GameManager.instance.PlaySound(GameManager.instance.fxRotate);
+            AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.ROTATE);
         }
     }
     public void LoadMainMenu()
     {
 
-        GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
     //I'm not being dumb, it's used by a button
@@ -158,7 +158,7 @@ void Start()
         
 
         playerScript.Selected = selectedGacha;
-        GameManager.instance.ChangeScene(GameManager.Scene.GACHA);
+        GameManager.Instance.ChangeScene(GameManager.Scene.GACHA);
     }
     float GetDestinationRotation()
     {

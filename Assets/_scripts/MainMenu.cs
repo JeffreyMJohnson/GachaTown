@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
         InitButtonHandlers();
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audiosource component not found.");
-        GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
+        GameManager.Instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
         
         InitCanvas();
     }
@@ -31,7 +31,7 @@ public class MainMenu : MonoBehaviour
 
     void OnDestroy()
     {
-        GameManager.instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
+        GameManager.Instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
     }
     #endregion
 
@@ -40,8 +40,8 @@ public class MainMenu : MonoBehaviour
     {
 
         //audioSource.Play();
-        GameManager.instance.PlaySound(GameManager.instance.fxButton);
-        GameManager.instance.ChangeScene(scene);
+        AudioManager.Instance.SfxPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        GameManager.Instance.ChangeScene(scene);
     }
 
     #endregion
@@ -97,7 +97,7 @@ public class MainMenu : MonoBehaviour
     void SetOrientationCanvas()
     {
 
-        if (GameManager.instance.IsPortrait)
+        if (GameManager.Instance.IsPortrait)
         {
             portrait.gameObject.SetActive(true);
             landscape.gameObject.SetActive(false);

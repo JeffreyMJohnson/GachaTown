@@ -7,6 +7,7 @@ public class Gacha : MonoBehaviour
 {
     #region public properties
     public bool IsAnimated = false;
+    [Tooltip("Seconds between idle animation.")]
     public float idleAnimationTime;
 
     #endregion
@@ -37,7 +38,7 @@ public class Gacha : MonoBehaviour
 
        
 
-        if (GameManager.instance.CurrentScene == GameManager.Scene.TOWN && IsAnimated)
+        if (GameManager.Instance.CurrentScene == GameManager.Scene.TOWN && IsAnimated)
         {
             _idleAnimationTimer = new Timer(idleAnimationTime);
             _idleAnimationTimer.Start();
