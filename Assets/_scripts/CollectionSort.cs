@@ -53,7 +53,7 @@ public class CollectionSort : MonoBehaviour
         collectionCamera = FindObjectOfType<Camera>();
 
         //todo use accessor for this collection
-        if (GameManager.instance.masterGachaSetList.Count == 0)
+        if (GameManager.Instance.masterGachaSetList.Count == 0)
         {
             Debug.Log("setlist is empty");
         }
@@ -98,7 +98,7 @@ public class CollectionSort : MonoBehaviour
                 
             }
             else
-                GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+                GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
 
 
@@ -143,7 +143,7 @@ public class CollectionSort : MonoBehaviour
     void SetTitle()
     {
         Text title = GameObject.Find("PageTitle").GetComponent<Text>();
-        title.text = GameManager.instance.masterGachaSetList[currentPage].name;
+        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;
     }
     #endregion
 
@@ -162,7 +162,7 @@ public class CollectionSort : MonoBehaviour
     }
     public void Next()
     {
-        if (currentPage < GameManager.instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
+        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
         {
             buttonPress.Play();
             currentPage++;
@@ -177,11 +177,11 @@ public class CollectionSort : MonoBehaviour
 
     void InitCollectionPages()
     {
-        for (int i = 0; i < GameManager.instance.masterGachaSetList.Count; i++)
+        for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
         {
             collectionPages.Add(new List<GameObject>());
 
-            GachaSet set = GameManager.instance.masterGachaSetList[i];
+            GachaSet set = GameManager.Instance.masterGachaSetList[i];
             //case for when set contains less than Max count variable
             int currentPageCount = 0;
             if (MAX_GACHA_PER_PAGE > set.collection.Count)
@@ -222,7 +222,7 @@ public class CollectionSort : MonoBehaviour
         {
             //if the model has animations implemented the mesh componenets change so here is some checking to get through this
             //when all implemented will need a cleaner way I imagine
-            if (GameManager.instance.IsGachaAnimated(gachaObject))
+            if (GameManager.Instance.IsGachaAnimated(gachaObject))
             {
                 SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
                 Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
@@ -239,16 +239,16 @@ public class CollectionSort : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a GameObject instance from prefab matching GachaID.
+    /// returns a GameObject Instance from prefab matching GachaID.
     /// </summary>
     /// <param name="gachaID"></param>
     /// <returns></returns>
     GameObject GetGachaGameObject(GachaID gachaID)
     {
-        Debug.Assert(gachaID.SetIndex < GameManager.instance.masterGachaSetList.Count);
-        Debug.Assert(gachaID.GachaIndex < GameManager.instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
+        Debug.Assert(gachaID.SetIndex < GameManager.Instance.masterGachaSetList.Count);
+        Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
 
-        GameObject gachaPrefab = GameManager.instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
+        GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
         newGacha.transform.parent = transform;
         return newGacha;
