@@ -191,7 +191,8 @@ public class Town : MonoBehaviour
     {
         GameObject selectedGacha = GameManager.Instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
         gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(new GachaID(setList.value - 1, gachaList.value - 1)));
-        gachaToPlace.GetComponent<Gacha>().OnClickEvent.AddListener(HandleGachaOnClickEvent);
+        //gachaToPlace.GetComponent<Gacha>().OnClickEvent.AddListener(HandleGachaOnClickEvent);
+        gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
         ClearSelectionMenu();
     }
 
@@ -224,9 +225,13 @@ public class Town : MonoBehaviour
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
-    private void HandleGachaOnClickEvent()
+    private void HandleGachaOnClickEvent(Gacha clickedObject)
     {
         _player.AddCoins(CoinsPerTap);
+        if (clickedObject.IsAnimated)
+        {
+            clickedObject.Animator.SetTrigger("special");
+        }
     }
     
 

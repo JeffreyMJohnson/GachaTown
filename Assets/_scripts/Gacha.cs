@@ -3,6 +3,7 @@ using System.Collections;
 using Assets._scripts;
 using UnityEngine.Events;
 
+
 public class Gacha : MonoBehaviour
 {
     #region public properties
@@ -10,15 +11,19 @@ public class Gacha : MonoBehaviour
     [Tooltip("Seconds between idle animation.")]
     public float idleAnimationTime;
 
+    public Animator Animator { get; private set; }
+
     #endregion
 
     #region events
-    public UnityEvent OnClickEvent;
+
+    public class OnClickEvent : UnityEvent<Gacha>{}
+    public OnClickEvent OnClick;
+    //public UnityEvent OnClickEvent;
     #endregion
 
     #region private fields
     private Timer _idleAnimationTimer;
-    private Animator _animator;
     private Camera _mainCamera;
     #endregion
 
@@ -26,17 +31,17 @@ public class Gacha : MonoBehaviour
 
     void Awake()
     {
-        OnClickEvent = new UnityEvent();
+        OnClick = new OnClickEvent();
     }
     void Start()
     {
-         _animator = GetComponent<Animator>();
-        Debug.Assert(_animator != null, "No animator component found.");
-        IsAnimated = _animator.enabled;
+        Animator = GetComponent<Animator>();
+        Debug.Assert(Animator != null, "No animator component found.");
+        IsAnimated = Animator.enabled;
 
         _mainCamera = Camera.main;
 
-       
+
 
         if (GameManager.Instance.CurrentScene == GameManager.Scene.TOWN && IsAnimated)
         {
@@ -65,7 +70,7 @@ public class Gacha : MonoBehaviour
     /// </summary>
     void HandleIdleAnimationAlarmEvent()
     {
-        _animator.SetTrigger("Idle");
+        Animator.SetTrigger("Idle");
     }
 
     /// <summary>
@@ -91,14 +96,15 @@ public class Gacha : MonoBehaviour
     /// </summary>
     void UpdateClickEvent()
     {
-        if (Input.GetMouseButtonDown(0))
+        bool playingSpecialAnimation = IsAnimated && Animator.GetCurrentAnimatorStateInfo(0).IsName("special");
+        if (!playingSpecialAnimation && Input.GetMouseButtonDown(0))
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Gacha", "Ground");
+            LayerMask mask = LayerMask.GetMask("Gacha");
             if (Physics.Raycast(ray, out hit, 1000, mask))
             {
-                OnClickEvent.Invoke();
+                OnClick.Invoke(this);
             }
         }
     }
@@ -110,10 +116,10 @@ public class Gacha : MonoBehaviour
         {
             float speed = 5 * Time.deltaTime;
             transform.Translate(Vector3.forward * speed);
-            _animator.SetFloat("velocity", speed);
+            Animator.SetFloat("velocity", speed);
             yield return null;
         }
-        _animator.SetFloat("velocity", 0);
+        Animator.SetFloat("velocity", 0);
         _idleAnimationTimer.Start();
 
     }

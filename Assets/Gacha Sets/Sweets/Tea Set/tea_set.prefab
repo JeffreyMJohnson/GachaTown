@@ -12,6 +12,7 @@ GameObject:
   - 23: {fileID: 2398224}
   - 95: {fileID: 9580640}
   - 114: {fileID: 11452854}
+  - 65: {fileID: 6520528}
   m_Layer: 0
   m_Name: tea_set
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126700}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,6 +65,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 126700}
   m_Mesh: {fileID: 4300000, guid: fb86982afe610ae4e8e408cfb876e1d3, type: 3}
+--- !u!65 &6520528
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 126700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4, y: 2.01, z: 2.74}
+  m_Center: {x: -0.2751484, y: 1.0968078, z: -0.08851111}
 --- !u!95 &9580640
 Animator:
   serializedVersion: 3
@@ -92,6 +105,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25173b6c2b0b82f4cb69b726ab4a64fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsAnimated: 0
+  idleAnimationTime: 0
+  OnClickEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
