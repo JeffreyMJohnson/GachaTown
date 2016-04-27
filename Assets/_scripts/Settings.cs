@@ -3,67 +3,55 @@ using UnityEngine.UI;
 using System.Collections;
 
 
-public class Settings : MonoBehaviour {
+public class Settings : MonoBehaviour
+{
+    public Slider backgroundMusic;
+    public Slider soundEffects;
+    public Button soundEffectsHandle;
 
-    public Slider bgmSlider;
-    public Slider fxSlider;
-    public Button fxButton;
+    public Toggle muteBackground;
+    public Toggle muteSoundEffects;
 
-    public Toggle bgm;
-    public Toggle fx;
-    bool playedSound = false;
-    // Use this for initialization
-    void Start() {
-        bgmSlider.value = GameManager.instance.bgmSource.volume;
-        fxSlider.value = GameManager.instance.fxSource.volume;
-        fxButton.onClick.AddListener(HandleFXSliderButtonClickEvent);
-    }
 
-    // Update is called once per frame
-    void Update() {
-        GameManager.instance.bgmSource.volume = bgmSlider.value;
-        GameManager.instance.fxSource.volume = fxSlider.value;
-        if (bgm.isOn == false)
-        {
-            MuteBGM();
-        }
-        else
-        {
-            UnmuteBGM();
-        }
-        if (fx.isOn == false)
-        {
-            MuteFX();
-        }
-        else
-        {
-            
-            UnmuteFX();
-        }
-    }
-
-    
-    public void MuteBGM()
+    void Start()
     {
-        GameManager.instance.bgmSource.enabled = false;            
-    }
-    public void UnmuteBGM()
-    {
-        GameManager.instance.bgmSource.enabled = true;
+        backgroundMusic.value = AudioManager.Instance.BackgroundAudioVolume;
+        backgroundMusic.onValueChanged.AddListener(HandleBackgroundVolumeOnValueChangeEvent);
+
+        soundEffects.value = AudioManager.Instance.SoundEffectsVolume;
+        soundEffects.onValueChanged.AddListener(HandleSoundEffectsVolumeOnValueChangedEvent);
+
+        soundEffectsHandle.onClick.AddListener(HandleSoundEffectsSliderButtonClickEvent);
+
+        muteBackground.isOn = AudioManager.Instance.BackgroundAudioMuted;
+        muteBackground.onValueChanged.AddListener(HandleBackgroundMuteOnValueChangeEvent);
+
+        muteSoundEffects.isOn = AudioManager.Instance.SoundEffectsMuted;
+        muteSoundEffects.onValueChanged.AddListener(HandleSoundEffectsMuteOnValueChangeEvent);
     }
 
-    public void MuteFX()
+    void HandleBackgroundVolumeOnValueChangeEvent(float value)
     {
-        GameManager.instance.fxSource.enabled = false;
-    }
-    
-    public void UnmuteFX()
-    {
-        GameManager.instance.fxSource.enabled = true;        
+        AudioManager.Instance.BackgroundAudioVolume = value;
     }
 
-    public void HandleFXSliderButtonClickEvent()
+    void HandleSoundEffectsVolumeOnValueChangedEvent(float value)
     {
-        GameManager.instance.PlaySound(GameManager.instance.fxButton);
+        AudioManager.Instance.SoundEffectsVolume = value;
+    }
+
+    void HandleBackgroundMuteOnValueChangeEvent(bool value)
+    {
+        AudioManager.Instance.BackgroundAudioMuted = value;
+    }
+
+    void HandleSoundEffectsMuteOnValueChangeEvent(bool value)
+    {
+        AudioManager.Instance.SoundEffectsMuted = value;
+    }
+
+    public void HandleSoundEffectsSliderButtonClickEvent()
+    {
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
     }
 }

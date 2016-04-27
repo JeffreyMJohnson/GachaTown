@@ -7,19 +7,17 @@ using UnityEngine.Networking;
 
 /// <summary>
 /// singleton class that is available from every scene (once instantiated in Main Menu scene). 
-/// Acess this class from the static instance property, do not instantiate your own.
-/// eg GameManager.instance.Foo();
+/// Acess this class from the static Instance property, do not instantiate your own.
+/// eg GameManager.Instance.Foo();
 /// </summary>
-public class 
-    
-    
-    GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    public enum Menus { SPLASH, MAIN, GACHA, TOWN, COLLECTION, GACHACHOOSE, HOW_TO_PLAY, SETTING }   
-    
+    public enum Scene { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
+
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
+    /*
     //Music
     public AudioSource bgmSource;
     public AudioSource fxSource;
@@ -32,20 +30,24 @@ public class
     public AudioClip fxButton;
     public AudioClip fxBuyTwenty;
     public bool isMutedBGM = false;
-   public bool isMutedFX = false;
+    public bool isMutedFX = false;
+    */
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
-    public static GameManager instance;
+    public static GameManager Instance;
 
     /// <summary>
     /// Returns true if the device screen orientation is in portrait mode, else returns false.
     /// </summary>
     public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
+    public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
+
     #endregion
 
     #region private fields
     private DeviceOrientationController orientationController = new DeviceOrientationController();
+    private Scene _currentScene;
     #endregion
 
     #region unity lifecycle methods
@@ -56,12 +58,12 @@ public class
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
@@ -130,91 +132,59 @@ public class
     /// Global change scene method. Note this adds a pause before scene change to allow for audio playing
     /// </summary>
     /// <param name="scene"></param>
-    public void ChangeScene(Menus scene)
+    public void ChangeScene(Scene scene)
     {
+        CurrentScene = scene;
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
-        //StartCoroutine(WaitForAudio(scene));
-
+        AudioManager.Instance.BackgroundAudioPlay(scene);
     }
 
-    public void PlayMusic(AudioClip music)
+   
+    /*
+    public void PlayBackgroundMusic(AudioClip music)
     {
-        
-            bgmSource.clip = music;
-            bgmSource.Play();
-        
-        
-    }
-    public void PlaySound(AudioClip fx)
-    {
-        
-            fxSource.PlayOneShot(fx);
-        
-        
+        bgmSource.clip = music;
+        bgmSource.Play();
     }
 
-    public void LoadMainMenu()
+    public void PlaySoundEffect(AudioClip effect)
     {
-        PlaySound(fxButton);
-        ChangeScene(Menus.MAIN);
-        PlayMusic(bgmMainMenu);
-    }
-    public void LoadBuyGacha()
-    {
-        PlaySound(fxButton);
-        ChangeScene(Menus.GACHA);
-        PlayMusic(bgmBuyGacha);
-    }
-    public void LoadSettings()
-    {
-        PlaySound(fxButton);
-        ChangeScene(Menus.SETTING);
-    }
-
-    public void LoadScene(Menus scene)
-    {
-        PlaySound(fxButton);
-        ChangeScene(scene);
-        PlayMusic(bgmMainMenu);
+        fxSource.PlayOneShot(effect);
     }
 
 
-    //Volume functions
-    
+
+#region volume methods
+
     public void RaiseVolumeMusic()
     {
-        PlaySound(fxButton);
-        bgmSource.volume += .1f;      
+        PlaySoundEffect(fxButton);
+        bgmSource.volume += .1f;
     }
     public void RaiseVolumeFX()
     {
-        PlaySound(fxButton);
-        fxSource.volume += .1f;        
-    }  
+        PlaySoundEffect(fxButton);
+        fxSource.volume += .1f;
+    }
     public void LowerVolumeMusic()
     {
-        PlaySound(fxButton);
-        bgmSource.volume -= .1f; 
+        PlaySoundEffect(fxButton);
+        bgmSource.volume -= .1f;
     }
     public void LowerVolumeFX()
     {
-        PlaySound(fxButton);
-        fxSource.volume -= .1f;      
+        PlaySoundEffect(fxButton);
+        fxSource.volume -= .1f;
     }
     
-
-
-
-    //private IEnumerator WaitForAudio(Menus scene)
-    //{
-    //    yield return new WaitForSeconds(Constants.SCENE_CHANGE_WAIT_TIME);
-    //    UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
-    //}
+#endregion*/
 
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)
     {
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
+        //animator needs to be enabled/disabled manually in the prefab
     }
 }

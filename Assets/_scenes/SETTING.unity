@@ -281,7 +281,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 943088564}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 160, y: 90}
@@ -623,7 +623,7 @@ GameObject:
   - 224: {fileID: 575151039}
   - 114: {fileID: 575151040}
   m_Layer: 5
-  m_Name: ToggleFX
+  m_Name: Sound Effects Mute
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,7 +642,7 @@ RectTransform:
   - {fileID: 582226370}
   - {fileID: 1928109690}
   m_Father: {fileID: 943088564}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 240, y: 7}
@@ -804,7 +804,7 @@ GameObject:
   - 224: {fileID: 873510466}
   - 114: {fileID: 873510467}
   m_Layer: 5
-  m_Name: BGMSlider
+  m_Name: Background Music Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -824,7 +824,7 @@ RectTransform:
   - {fileID: 1533199101}
   - {fileID: 1470959609}
   m_Father: {fileID: 943088564}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 97}
@@ -1036,12 +1036,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 2122863742}
-  - {fileID: 1477495106}
   - {fileID: 191966489}
   - {fileID: 1459546731}
   - {fileID: 873510466}
-  - {fileID: 1400195699}
   - {fileID: 1725543637}
+  - {fileID: 1400195699}
   - {fileID: 575151039}
   m_Father: {fileID: 0}
   m_RootOrder: 1
@@ -1061,11 +1060,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ee44494fb23bc34994e8e6f5056dc51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmSlider: {fileID: 873510467}
-  fxSlider: {fileID: 1400195700}
-  fxButton: {fileID: 2051157970}
-  bgm: {fileID: 1725543638}
-  fx: {fileID: 575151040}
+  backgroundMusic: {fileID: 873510467}
+  soundEffects: {fileID: 1400195700}
+  soundEffectsHandle: {fileID: 2051157970}
+  muteBackground: {fileID: 1725543638}
+  muteSoundEffects: {fileID: 575151040}
 --- !u!1 &1155778742
 GameObject:
   m_ObjectHideFlags: 0
@@ -1271,7 +1270,7 @@ GameObject:
   - 224: {fileID: 1400195699}
   - 114: {fileID: 1400195700}
   m_Layer: 5
-  m_Name: FXSlider
+  m_Name: Sound Effects Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1373,7 +1372,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 943088564}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 160, y: 0}
@@ -1451,79 +1450,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1477495105
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 1477495106}
-  - 222: {fileID: 1477495108}
-  - 114: {fileID: 1477495107}
-  m_Layer: 5
-  m_Name: Instructions
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1477495106
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1477495105}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 943088564}
-  m_RootOrder: 1
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 40, y: 120}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1477495107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1477495105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 0
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: Drag to adjust
---- !u!222 &1477495108
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1477495105}
 --- !u!1 &1533199100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1560,7 @@ GameObject:
   - 224: {fileID: 1725543637}
   - 114: {fileID: 1725543638}
   m_Layer: 5
-  m_Name: ToggleBGM
+  m_Name: Music Mute
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1653,7 +1579,7 @@ RectTransform:
   - {fileID: 70179333}
   - {fileID: 876697305}
   m_Father: {fileID: 943088564}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 240, y: 97}

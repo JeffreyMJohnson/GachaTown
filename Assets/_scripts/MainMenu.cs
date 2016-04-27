@@ -16,7 +16,7 @@ public class MainMenu : MonoBehaviour
         InitButtonHandlers();
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audiosource component not found.");
-        GameManager.instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
+        GameManager.Instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
         
         InitCanvas();
     }
@@ -31,17 +31,17 @@ public class MainMenu : MonoBehaviour
 
     void OnDestroy()
     {
-        GameManager.instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
+        GameManager.Instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
     }
     #endregion
 
     #region UI handlers
-    public void HandleClick(GameManager.Menus scene)
+    public void HandleClick(GameManager.Scene scene)
     {
 
         //audioSource.Play();
-        GameManager.instance.PlaySound(GameManager.instance.fxButton);
-        GameManager.instance.ChangeScene(scene);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        GameManager.Instance.ChangeScene(scene);
     }
 
     #endregion
@@ -51,20 +51,20 @@ public class MainMenu : MonoBehaviour
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
         {
-            GameManager.Menus scene = GameManager.Menus.MAIN;
+            GameManager.Scene scene = GameManager.Scene.MAIN;
             switch (button.name)
             {
                 case "Gacha Machines":
-                    scene = GameManager.Menus.GACHACHOOSE;
+                    scene = GameManager.Scene.GACHACHOOSE;
                     break;
                 case "Visit Town":
-                    scene = GameManager.Menus.TOWN;
+                    scene = GameManager.Scene.TOWN;
                     break;
                 case "View Collection":
-                    scene = GameManager.Menus.COLLECTION;
+                    scene = GameManager.Scene.COLLECTION;
                     break;
                 case "Settings":
-                    scene = GameManager.Menus.SETTING;
+                    scene = GameManager.Scene.SETTING;
                     break;
                //case "How To Play":
                     //continue;
@@ -97,7 +97,7 @@ public class MainMenu : MonoBehaviour
     void SetOrientationCanvas()
     {
 
-        if (GameManager.instance.IsPortrait)
+        if (GameManager.Instance.IsPortrait)
         {
             portrait.gameObject.SetActive(true);
             landscape.gameObject.SetActive(false);
