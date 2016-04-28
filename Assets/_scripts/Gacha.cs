@@ -17,21 +17,39 @@ public class Gacha : MonoBehaviour
 
     #region events
 
+    [System.Serializable]
     public class OnClickEvent : UnityEvent<Gacha>{}
+
+    [SerializeField]
     public OnClickEvent OnClick;
+
     //public UnityEvent OnClickEvent;
     #endregion
 
     #region private fields
     private Timer _idleAnimationTimer;
     private Camera _mainCamera;
+    private GameObject _specialAnimationEffectPrefab;
     #endregion
+
+    #region public API
+
+    public void PlaySpecialAnimationEffect(GameObject effectPrefab)
+    {
+        GameObject particleFab = GameObject.Instantiate<GameObject>(effectPrefab);
+        ParticleSystem effects = particleFab.GetComponent<ParticleSystem>();
+        particleFab.transform.parent = transform;
+        //effect.Play();
+    }
+#endregion
 
     #region unity lifecycle methods
 
     void Awake()
     {
         OnClick = new OnClickEvent();
+        _specialAnimationEffectPrefab = GameObject.Find("special animation effect");
+        Debug.Assert(_specialAnimationEffectPrefab != null, "could not load special animation effect prefab.");
     }
     void Start()
     {
