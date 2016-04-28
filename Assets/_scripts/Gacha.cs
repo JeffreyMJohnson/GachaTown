@@ -17,21 +17,40 @@ public class Gacha : MonoBehaviour
 
     #region events
 
+    [System.Serializable]
     public class OnClickEvent : UnityEvent<Gacha>{}
+
+    [SerializeField]
     public OnClickEvent OnClick;
+
     //public UnityEvent OnClickEvent;
     #endregion
 
     #region private fields
     private Timer _idleAnimationTimer;
     private Camera _mainCamera;
+    private Collider _collider;
     #endregion
+
+    #region public API
+
+    public void PlaySpecialAnimationEffect(GameObject effectPrefab)
+    {
+        GameObject particleInstance = GameObject.Instantiate<GameObject>(effectPrefab);
+        ParticleSystem effects = particleInstance.GetComponent<ParticleSystem>();
+        particleInstance.transform.position = transform.position;
+        effects.Play();
+        Destroy(particleInstance, effects.duration);
+    }
+#endregion
 
     #region unity lifecycle methods
 
     void Awake()
     {
         OnClick = new OnClickEvent();
+        _collider = GetComponent<Collider>();
+        Debug.Assert(_collider != null, "collider not found.");
     }
     void Start()
     {
@@ -93,6 +112,7 @@ public class Gacha : MonoBehaviour
 
     /// <summary>
     /// fires OnClickEvent if this gacha is clicked.
+    /// note the Gacha prefab needs layer to be 'Gacha'and a 3d collider for this to work
     /// </summary>
     void UpdateClickEvent()
     {
@@ -102,7 +122,7 @@ public class Gacha : MonoBehaviour
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Gacha");
-            if (Physics.Raycast(ray, out hit, 1000, mask))
+            if (Physics.Raycast(ray, out hit, 1000, mask) && hit.collider == _collider)
             {
                 OnClick.Invoke(this);
             }
