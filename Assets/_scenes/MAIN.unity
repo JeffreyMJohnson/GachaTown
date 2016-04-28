@@ -628,6 +628,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaCollection: []
   Selected: 1
+  _totalCoins: 0
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1902,6 +1903,7 @@ MonoBehaviour:
   SoundEffects:
   - {fileID: 8300000, guid: 408a57d115adf8546980a9165e1d7627, type: 3}
   - {fileID: 8300000, guid: 5354e22b9c34f844c8eb92aceb5c74fe, type: 3}
+  - {fileID: 8300000, guid: 81efce4b41b0d4e4aad104670ea84d84, type: 3}
   BackgroundAudio:
   - {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}
   - {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}

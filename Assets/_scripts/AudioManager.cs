@@ -9,7 +9,8 @@ public class AudioManager : MonoBehaviour
     public enum SoundEffect
     {
         BUTTON_PRESS,
-        ROTATE
+        ROTATE,
+        COIN_DROP
     }
     #region public properties
     public AudioClip[] SoundEffects;
