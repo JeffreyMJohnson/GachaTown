@@ -8,14 +8,14 @@ public class CoinDrag : MonoBehaviour
     //cached reference to child prefab for instantiating when dragged
     GameObject coinPrefab;
     BuyGacha machine;
-    AudioSource coinDrop;
+    
     
 
     void Start()
     {
         coinPrefab = transform.FindChild("Coin_1").gameObject;
         machine = FindObjectOfType<BuyGacha>();
-        coinDrop = GetComponent<AudioSource>();
+        
     }
 
     void OnMouseDrag()
@@ -39,10 +39,10 @@ public class CoinDrag : MonoBehaviour
             foreach (RaycastHit hit in hits)
             {
                 //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
-                if (hit.collider.gameObject.name == "coinslot" && draggedCoin != null)
+                if (hit.collider.gameObject.name == "gachamachine_coinslot" && draggedCoin != null)
                 {
                     machine.Buy();
-                    coinDrop.Play();
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                 }
             }
             //either way destroy the coin clone when button released.

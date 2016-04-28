@@ -231,7 +231,7 @@ public class Town : MonoBehaviour
         _player.AddCoins(CoinsPerTap);
         if (clickedObject.IsAnimated)
         {
-            clickedObject.Animator.SetTrigger("special");
+            clickedObject.PlayAnimation(Gacha.Animation.Special);
 
         }
     }
