@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(Scene scene)
     {
         CurrentScene = scene;
-        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS_POP);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
         AudioManager.Instance.BackgroundAudioPlay(scene);
     }

@@ -28,6 +28,15 @@ public class Settings : MonoBehaviour
 
         muteSoundEffects.isOn = AudioManager.Instance.SoundEffectsMuted;
         muteSoundEffects.onValueChanged.AddListener(HandleSoundEffectsMuteOnValueChangeEvent);
+        
+    }
+
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+        }
     }
 
     void HandleBackgroundVolumeOnValueChangeEvent(float value)
@@ -52,6 +61,6 @@ public class Settings : MonoBehaviour
 
     public void HandleSoundEffectsSliderButtonClickEvent()
     {
-        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS_POP);
     }
 }

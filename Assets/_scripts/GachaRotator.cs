@@ -117,7 +117,7 @@ void Start()
             }
 
             TextUpdate();
-            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.ROTATE);
+            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
         }
     }
 
@@ -140,7 +140,7 @@ void Start()
 
 
             TextUpdate();
-            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.ROTATE);
+            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
         }
     }
     public void LoadMainMenu()
