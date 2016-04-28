@@ -13,7 +13,7 @@ public class BuyGacha : MonoBehaviour
 
     #region private fields
     Player player;
-    
+    GameObject gachaMachine;
     
     #endregion
 
@@ -25,6 +25,11 @@ public class BuyGacha : MonoBehaviour
 
         player = playerObject.GetComponent<Player>();
         Debug.Assert(player != null, "player script was not found.");
+
+
+        GameObject gachaObject = GameObject.FindGameObjectWithTag("GachaMachine");
+        gachaMachine = gachaObject.GetComponent<GameObject>();
+        
 
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audio source component was not found.");
@@ -62,6 +67,8 @@ public class BuyGacha : MonoBehaviour
         {
             HandleClick(GameManager.Scene.MAIN);
         }
+        
+
     }
     #endregion
 
@@ -74,7 +81,7 @@ public class BuyGacha : MonoBehaviour
     public void BuyLazy()
     {
         //GameManager.Instance.PlaySoundEffect(GameManager.Instance.fxBuyTwenty);
-        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS);
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CHACHING);
         for (int i = 0; i < 20; i++)
         {
             Buy();
@@ -96,5 +103,5 @@ public class BuyGacha : MonoBehaviour
     }
     #endregion
 
-
+    
 }

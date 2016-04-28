@@ -762,6 +762,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 17fc4c060f8e520428262453368f25f4, type: 2}
+    - target: {fileID: 100000, guid: 2c2faa8188cbfce40bbf9bc3275bcd9c, type: 3}
+      propertyPath: m_TagString
+      value: GachaMachine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2c2faa8188cbfce40bbf9bc3275bcd9c, type: 3}
   m_IsPrefabParent: 0

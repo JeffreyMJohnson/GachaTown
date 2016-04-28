@@ -42,7 +42,7 @@ public class CoinDrag : MonoBehaviour
                 if (hit.collider.gameObject.name == "gachamachine_coinslot" && draggedCoin != null)
                 {
                     machine.Buy();
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.COIN_DROP);
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                 }
             }
             //either way destroy the coin clone when button released.

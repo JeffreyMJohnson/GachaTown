@@ -8,9 +8,12 @@ public class AudioManager : MonoBehaviour
     //as effects are added to the SoundEffects array, this enum needs to be updated as well to match index
     public enum SoundEffect
     {
-        BUTTON_PRESS,
-        ROTATE,
-        COIN_DROP
+        BUTTON_PRESS_POP,
+        MECHANICAL_KACHUNK,
+        MECHANICAL_CLICK,
+        MONEY_CLINK,
+        MONEY_CHACHING,
+
     }
     #region public properties
     public AudioClip[] SoundEffects;
