@@ -10,7 +10,7 @@ public class Gacha : MonoBehaviour
     public bool IsAnimated = false;
     [Tooltip("Seconds between idle animation.")]
     public float idleAnimationTime;
-
+    public GachaID ID;
     public Animator Animator { get; private set; }
 
     #endregion
