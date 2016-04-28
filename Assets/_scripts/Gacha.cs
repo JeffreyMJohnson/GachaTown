@@ -29,17 +29,18 @@ public class Gacha : MonoBehaviour
     #region private fields
     private Timer _idleAnimationTimer;
     private Camera _mainCamera;
-    private GameObject _specialAnimationEffectPrefab;
+    private Collider _collider;
     #endregion
 
     #region public API
 
     public void PlaySpecialAnimationEffect(GameObject effectPrefab)
     {
-        GameObject particleFab = GameObject.Instantiate<GameObject>(effectPrefab);
-        ParticleSystem effects = particleFab.GetComponent<ParticleSystem>();
-        particleFab.transform.parent = transform;
-        //effect.Play();
+        GameObject particleInstance = GameObject.Instantiate<GameObject>(effectPrefab);
+        ParticleSystem effects = particleInstance.GetComponent<ParticleSystem>();
+        particleInstance.transform.position = transform.position;
+        effects.Play();
+        Destroy(particleInstance, effects.duration);
     }
 #endregion
 
@@ -48,8 +49,8 @@ public class Gacha : MonoBehaviour
     void Awake()
     {
         OnClick = new OnClickEvent();
-        _specialAnimationEffectPrefab = GameObject.Find("special animation effect");
-        Debug.Assert(_specialAnimationEffectPrefab != null, "could not load special animation effect prefab.");
+        _collider = GetComponent<Collider>();
+        Debug.Assert(_collider != null, "collider not found.");
     }
     void Start()
     {
@@ -111,6 +112,7 @@ public class Gacha : MonoBehaviour
 
     /// <summary>
     /// fires OnClickEvent if this gacha is clicked.
+    /// note the Gacha prefab needs layer to be 'Gacha'and a 3d collider for this to work
     /// </summary>
     void UpdateClickEvent()
     {
@@ -120,7 +122,7 @@ public class Gacha : MonoBehaviour
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Gacha");
-            if (Physics.Raycast(ray, out hit, 1000, mask))
+            if (Physics.Raycast(ray, out hit, 1000, mask) && hit.collider == _collider)
             {
                 OnClick.Invoke(this);
             }

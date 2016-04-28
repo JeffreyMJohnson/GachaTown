@@ -11,6 +11,7 @@ public class AudioManager : MonoBehaviour
         BUTTON_PRESS,
         ROTATE
     }
+
     #region public properties
     public AudioClip[] SoundEffects;
 
@@ -84,18 +85,23 @@ public class AudioManager : MonoBehaviour
             _soundEffectsSource.PlayOneShot(SoundEffects[(int)effect]);
         }
     }
-    
+
     /// <summary>
-    /// Play background music for given scene.  Note that if BackgroundAusio is muted, will not play.
+    /// Play background music for given scene.  Note that if BackgroundAudio is muted, will not play.
+    /// If the scene music is the same as playing will not restart the loop.
     /// </summary>
     /// <param name="scene"></param>
     public void BackgroundAudioPlay(GameManager.Scene scene)
     {
         if (!BackgroundAudioMuted)
         {
-            _backgroundSource.clip = BackgroundAudio[(int)scene];
-            _backgroundSource.loop = true;
-            _backgroundSource.Play();
+            AudioClip newBackgroundClip = BackgroundAudio[(int)scene];
+            if (_backgroundSource.clip != newBackgroundClip)
+            {
+                _backgroundSource.clip = newBackgroundClip;
+                _backgroundSource.loop = true;
+                _backgroundSource.Play();
+            }
         }
     }
     #endregion

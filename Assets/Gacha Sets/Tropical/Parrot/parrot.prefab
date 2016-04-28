@@ -10,7 +10,7 @@ GameObject:
   - 224: {fileID: 22413970}
   - 222: {fileID: 22278904}
   - 114: {fileID: 11450282}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: placeholder text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ GameObject:
   - 223: {fileID: 22376608}
   - 114: {fileID: 11441460}
   - 114: {fileID: 11458852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Debug Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,7 @@ GameObject:
   - 95: {fileID: 9562886}
   - 114: {fileID: 11456514}
   - 136: {fileID: 13653732}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: parrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ GameObject:
   - 224: {fileID: 22410890}
   - 222: {fileID: 22230346}
   - 114: {fileID: 11423424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 22497026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,9 +140,9 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 170420}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: cde4fe23ac9a4de4d8c08a8454db3d00, type: 3}
-  m_Controller: {fileID: 9100000, guid: 66064bb38a38edf4f86cad786afdd998, type: 2}
+  m_Controller: {fileID: 9100000, guid: a05b10e55707a6443b8565515da4ec15, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -243,11 +243,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  idleAnimationTime: 30
-  OnClickEvent:
+  idleAnimationTime: 60
+  OnClick:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+    m_TypeName: Gacha+OnClickEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!114 &11458852
 MonoBehaviour:
@@ -388,19 +388,23 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 66064bb38a38edf4f86cad786afdd998, type: 2}
+      objectReference: {fileID: 9100000, guid: a05b10e55707a6443b8565515da4ec15, type: 2}
     - target: {fileID: 0}
       propertyPath: idleAnimationTime
-      value: 10
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_LocalPosition.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
