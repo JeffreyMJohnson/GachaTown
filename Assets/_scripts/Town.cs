@@ -19,6 +19,7 @@ public class Town : MonoBehaviour
     private Button selectGacha = null;
     private GameObject gachaToPlace = null;
     private Player _player = null;
+    
     #endregion
 
     #region unity lifecycle methods
@@ -230,7 +231,8 @@ public class Town : MonoBehaviour
         _player.AddCoins(CoinsPerTap);
         if (clickedObject.IsAnimated)
         {
-            clickedObject.Animator.SetTrigger("special");
+            clickedObject.PlayAnimation(Gacha.Animation.Special);
+
         }
     }
     
