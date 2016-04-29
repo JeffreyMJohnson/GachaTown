@@ -17,44 +17,21 @@ public class GameManager : MonoBehaviour
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
 
-    /*
-    //Music
-    public AudioSource bgmSource;
-    public AudioSource fxSource;
-
-    public AudioClip bgmMainMenu;
-    public AudioClip bgmBuyGacha;
-    public AudioClip bgmALT;
-
-    public AudioClip fxRotate;
-    public AudioClip fxButton;
-    public AudioClip fxBuyTwenty;
-    public bool isMutedBGM = false;
-    public bool isMutedFX = false;
-    */
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
     public static GameManager Instance;
 
-    /// <summary>
-    /// Returns true if the device screen orientation is in portrait mode, else returns false.
-    /// </summary>
-    public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
     public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
 
     #endregion
 
     #region private fields
-    private DeviceOrientationController orientationController = new DeviceOrientationController();
+    //private DeviceOrientationController orientationController = new DeviceOrientationController();
     private Scene _currentScene;
     #endregion
 
     #region unity lifecycle methods
-    private void Update()
-    {
-        orientationController.Update();
-    }
 
     private void Awake()
     {
@@ -69,29 +46,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    #endregion
-
-    #region device screen orientation logic
-    /// <summary>
-    /// Register a callback method that will be called whenever the device orientation changes from portrait
-    /// or landscape.
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void AddOrientationChangeEventListener(UnityAction callBack)
-    {
-        orientationController.OrientationChangeEvent.AddListener(callBack);
-    }
-
-    /// <summary>
-    /// Un-register a callback method that will be called whenever the device orientation changes from portrait
-    /// or landscape.
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void RemoveOrientationChangeEventListener(UnityAction callBack)
-    {
-        orientationController.OrientationChangeEvent.RemoveListener(callBack);
-    }
-
     #endregion
 
     #region Gacha collection access
@@ -139,46 +93,6 @@ public class GameManager : MonoBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
         AudioManager.Instance.BackgroundAudioPlay(scene);
     }
-
-   
-    /*
-    public void PlayBackgroundMusic(AudioClip music)
-    {
-        bgmSource.clip = music;
-        bgmSource.Play();
-    }
-
-    public void PlaySoundEffect(AudioClip effect)
-    {
-        fxSource.PlayOneShot(effect);
-    }
-
-
-
-#region volume methods
-
-    public void RaiseVolumeMusic()
-    {
-        PlaySoundEffect(fxButton);
-        bgmSource.volume += .1f;
-    }
-    public void RaiseVolumeFX()
-    {
-        PlaySoundEffect(fxButton);
-        fxSource.volume += .1f;
-    }
-    public void LowerVolumeMusic()
-    {
-        PlaySoundEffect(fxButton);
-        bgmSource.volume -= .1f;
-    }
-    public void LowerVolumeFX()
-    {
-        PlaySoundEffect(fxButton);
-        fxSource.volume -= .1f;
-    }
-    
-#endregion*/
 
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)

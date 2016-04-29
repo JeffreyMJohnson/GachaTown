@@ -14,11 +14,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         InitButtonHandlers();
-        //audioSource = GetComponent<AudioSource>();
-        //Debug.Assert(audioSource != null, "audiosource component not found.");
-        GameManager.Instance.AddOrientationChangeEventListener(HandleScreenOrientationChange);
-        
-        InitCanvas();
     }
 
     void Update()
@@ -28,11 +23,7 @@ public class MainMenu : MonoBehaviour
             Application.Quit();
         }
     }
-
-    void OnDestroy()
-    {
-        GameManager.Instance.RemoveOrientationChangeEventListener(HandleScreenOrientationChange);
-    }
+    
     #endregion
 
     #region UI handlers
@@ -75,45 +66,5 @@ public class MainMenu : MonoBehaviour
         }
     }
     
-    #region Handle Screen Orientation Change
-    void InitCanvas()
-    {
-        Canvas[] canvasSiblings = FindObjectsOfType<Canvas>();
-        foreach (Canvas canvas in canvasSiblings)
-        {
-            if (canvas.name == "Canvas Portrait")
-            {
-                portrait = canvas;
-            }
-            else
-            {
-                landscape = canvas;
-            }
-        }
-        Debug.Assert(landscape != null && portrait != null, "Landscape and Portrait canvas' did not initialize.");
-        SetOrientationCanvas();
-    }
-
-    void SetOrientationCanvas()
-    {
-
-        if (GameManager.Instance.IsPortrait)
-        {
-            portrait.gameObject.SetActive(true);
-            landscape.gameObject.SetActive(false);
-        }
-        else
-        {
-            portrait.gameObject.SetActive(false);
-            landscape.gameObject.SetActive(true);
-        }
-    }
-
-
-
-    void HandleScreenOrientationChange()
-    {
-        SetOrientationCanvas();
-    }
-    #endregion
+   
 }
