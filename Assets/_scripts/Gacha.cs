@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Gacha : MonoBehaviour
 {
+    
     public enum Animation { Idle, Walk, Special}
     #region public properties
     public bool IsAnimated = false;
