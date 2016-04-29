@@ -183,6 +183,9 @@ public class GameManager : MonoBehaviour
     //todo this needs to find a better home
     public bool IsGachaAnimated(GameObject gachaGameObject)
     {
+        SkinnedMeshRenderer mesh = gachaGameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (mesh == null)
+            return false;
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
         //animator needs to be enabled/disabled manually in the prefab
