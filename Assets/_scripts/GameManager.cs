@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region private fields
+
     //private DeviceOrientationController orientationController = new DeviceOrientationController();
     private Scene _currentScene;
     #endregion
