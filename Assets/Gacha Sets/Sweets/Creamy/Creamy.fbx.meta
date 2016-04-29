@@ -1,125 +1,75 @@
 fileFormatVersion: 2
-guid: ff0dc4746729a7c42926f47b68eb5666
-timeCreated: 1460068650
+guid: 408f22e3958e3b44da2e9b6bd408e49a
+timeCreated: 1461259329
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: character
-    100002: clavicle
-    100004: Controls
-    100006: //RootNode
-    100008: Creamy
-    100010: Creamy_Bod
-    100012: Creamy_Fluff
-    100014: elbow_l
-    100016: elbow_r
-    100018: feather
-    100020: foot_l
-    100022: foot_l 1
-    100024: foot_r
-    100026: foot_r 1
-    100028: hand_l
-    100030: hand_r
-    100032: head
-    100034: Hip
-    100036: leg_l
-    100038: leg_r
-    100040: neck
-    100042: pCone1
-    100044: pCone2
-    100046: pCone3
-    100048: pCone4
-    100050: pCube1
-    100052: polySurface1
-    100054: polySurface2
-    100056: polySurface3
-    100058: pSphere1
-    100060: pSphere2
-    100062: pSphere3
-    100064: shin_l
-    100066: shin_r
-    100068: shoulder_l
-    100070: shoulder_r
-    100072: spine_1
-    100074: spine_2
-    100076: tail_base
-    100078: tail_end
-    100080: tail_middle
-    100082: toe_l
-    100084: toe_r
-    100086: transform1
-    100088: transform10
-    100090: transform11
-    100092: transform12
-    100094: transform2
-    100096: transform3
-    100098: transform4
-    100100: transform5
-    100102: transform6
-    100104: transform7
-    100106: transform8
-    100108: transform9
-    400000: character
-    400002: clavicle
-    400004: Controls
-    400006: //RootNode
-    400008: Creamy
-    400010: Creamy_Bod
-    400012: Creamy_Fluff
-    400014: elbow_l
-    400016: elbow_r
-    400018: feather
-    400020: foot_l
-    400022: foot_l 1
-    400024: foot_r
-    400026: foot_r 1
-    400028: hand_l
-    400030: hand_r
-    400032: head
-    400034: Hip
-    400036: leg_l
-    400038: leg_r
-    400040: neck
-    400042: pCone1
-    400044: pCone2
-    400046: pCone3
-    400048: pCone4
-    400050: pCube1
-    400052: polySurface1
-    400054: polySurface2
-    400056: polySurface3
-    400058: pSphere1
-    400060: pSphere2
-    400062: pSphere3
-    400064: shin_l
-    400066: shin_r
-    400068: shoulder_l
-    400070: shoulder_r
-    400072: spine_1
-    400074: spine_2
-    400076: tail_base
-    400078: tail_end
-    400080: tail_middle
-    400082: toe_l
-    400084: toe_r
-    400086: transform1
-    400088: transform10
-    400090: transform11
-    400092: transform12
-    400094: transform2
-    400096: transform3
-    400098: transform4
-    400100: transform5
-    400102: transform6
-    400104: transform7
-    400106: transform8
-    400108: transform9
-    4300000: Creamy_Bod
-    4300002: Creamy_Fluff
+    100000: clavicle
+    100002: controls
+    100004: //RootNode
+    100006: elbow_l
+    100008: elbow_r
+    100010: feather
+    100012: foot_l
+    100014: foot_l 1
+    100016: foot_r
+    100018: foot_r 1
+    100020: hand_l
+    100022: hand_r
+    100024: head
+    100026: Hip
+    100028: leg_l
+    100030: leg_r
+    100032: neck
+    100034: polySurface2
+    100036: pSphere4
+    100038: shin_l
+    100040: shin_r
+    100042: shoulder_l
+    100044: shoulder_r
+    100046: spine_1
+    100048: spine_2
+    100050: tail_base
+    100052: tail_end
+    100054: tail_middle
+    100056: toe_l
+    100058: toe_r
+    400000: clavicle
+    400002: controls
+    400004: //RootNode
+    400006: elbow_l
+    400008: elbow_r
+    400010: feather
+    400012: foot_l
+    400014: foot_l 1
+    400016: foot_r
+    400018: foot_r 1
+    400020: hand_l
+    400022: hand_r
+    400024: head
+    400026: Hip
+    400028: leg_l
+    400030: leg_r
+    400032: neck
+    400034: polySurface2
+    400036: pSphere4
+    400038: shin_l
+    400040: shin_r
+    400042: shoulder_l
+    400044: shoulder_r
+    400046: spine_1
+    400048: spine_2
+    400050: tail_base
+    400052: tail_end
+    400054: tail_middle
+    400056: toe_l
+    400058: toe_r
+    4300000: polySurface2
+    4300002: pSphere4
     9500000: //RootNode
-    13700000: Creamy_Bod
-    13700002: Creamy_Fluff
+    13700000: polySurface2
+    13700002: pSphere4
   materials:
     importMaterials: 1
     materialName: 0
@@ -144,7 +94,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 25
+    globalScale: 30
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

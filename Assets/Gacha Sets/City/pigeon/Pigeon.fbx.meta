@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: e91963f0b4951dc4e8f1dc5fb70aec68
+timeCreated: 1461869765
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: case1
+    100002: clavicle
+    100004: elbow_l
+    100006: elbow_r
+    100008: feather
+    100010: foot_l
+    100012: foot_l 1
+    100014: foot_r
+    100016: foot_r 1
+    100018: hand_l
+    100020: hand_r
+    100022: head
+    100024: Hip
+    100026: leg_l
+    100028: leg_r
+    100030: neck
+    100032: //RootNode
+    100034: pigeon1
+    100036: shin_l
+    100038: shin_r
+    100040: shoulder_l
+    100042: shoulder_r
+    100044: spine_1
+    100046: spine_2
+    100048: tail_base
+    100050: tail_end
+    100052: tail_middle
+    100054: toe_l
+    100056: toe_r
+    400000: case1
+    400002: clavicle
+    400004: elbow_l
+    400006: elbow_r
+    400008: feather
+    400010: foot_l
+    400012: foot_l 1
+    400014: foot_r
+    400016: foot_r 1
+    400018: hand_l
+    400020: hand_r
+    400022: head
+    400024: Hip
+    400026: leg_l
+    400028: leg_r
+    400030: neck
+    400032: //RootNode
+    400034: pigeon1
+    400036: shin_l
+    400038: shin_r
+    400040: shoulder_l
+    400042: shoulder_r
+    400044: spine_1
+    400046: spine_2
+    400048: tail_base
+    400050: tail_end
+    400052: tail_middle
+    400054: toe_l
+    400056: toe_r
+    2300000: case1
+    3300000: case1
+    4300000: case1
+    4300002: pigeon1
+    9500000: //RootNode
+    13700000: pigeon1
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 30
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
