@@ -12,7 +12,7 @@ public class GachaRotator : MonoBehaviour
     public int selectedGacha = 0;
     public float rotateTime = 15; //in frames
     #endregion
-
+    
     #region private fields
     private int maxGachaSetCount;
     private GameObject[] gachaMachines;
@@ -42,8 +42,6 @@ void Start()
 
         Debug.Assert(gachaDisplay != null, "gacha display text component not found, set in editor ?");
 
-    
-
         rotateStart = rotateTime;
 
         gachaMachines = new GameObject[transform.childCount];
@@ -62,9 +60,9 @@ void Start()
             gachaTransforms[i].Rotate(0, rotationInterval * i, 0);
         }
 
-        for (int i = 0; i < playerScript.Selected; i++)
+        for (int i = 0; i < selectedGacha; i++)
         {
-            transform.Rotate(0, rotationInterval, 0);
+            transform.Rotate(0,-rotationInterval, 0);
         }
         TextUpdate();
 
@@ -83,19 +81,13 @@ void Start()
             rotateStart++;
 
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
-
         }
-
-
     }
     #endregion
 
-
-
-
     void TextUpdate()
     {
-        gachaDisplay.text = "MACHINE NO. " + selectedGacha + "\nCOST 5";
+        gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5";
     }
 
     /// <summary>
@@ -138,7 +130,6 @@ void Start()
                 selectedGacha = maxGachaSetCount - 1;
             }
 
-
             TextUpdate();
             AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
         }
@@ -155,8 +146,6 @@ void Start()
     {
         //pass selectedGacha to player
 
-        
-
         playerScript.Selected = selectedGacha;
         GameManager.Instance.ChangeScene(GameManager.Scene.GACHA);
     }
@@ -169,6 +158,4 @@ void Start()
             toReturn = 360;
         return toReturn;
     }
-
-   
 }
