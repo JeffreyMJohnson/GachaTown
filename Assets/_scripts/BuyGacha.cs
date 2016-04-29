@@ -36,9 +36,8 @@ public class BuyGacha : MonoBehaviour
 
         moneyTextField.text = player.TotalCoins.ToString();
 
-        displayTextField.text = GameManager.Instance.GetGachaSet(GachaSet).name;
         GachaSet = player.Selected;
-
+        displayTextField.text = GameManager.Instance.GetGachaSet(GachaSet).name;
 
         //add onclick event for menu button
         Button[] buttons = FindObjectsOfType<Button>();

@@ -1,35 +1,87 @@
 fileFormatVersion: 2
-guid: cde4fe23ac9a4de4d8c08a8454db3d00
-timeCreated: 1460053079
+guid: 45faf735ddf3d6846bbeb3750fc74e19
+timeCreated: 1460064370
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: pCube14
-    100004: polySurface1
-    100006: polySurface2
-    100008: polySurface3
-    100010: polySurface3 1
-    100012: transform1
-    100014: transform2
-    100016: transform3
-    400000: //RootNode
-    400002: pCube14
-    400004: polySurface1
-    400006: polySurface2
-    400008: polySurface3
-    400010: polySurface3 1
-    400012: transform1
-    400014: transform2
-    400016: transform3
-    2300000: polySurface3
-    2300002: //RootNode
-    3300000: polySurface3
-    3300002: //RootNode
-    4300000: polySurface3
-    4300002: parrot
+    100000: clavicle
+    100002: Controls
+    100004: elbow_l
+    100006: elbow_r
+    100008: feather
+    100010: foot_l
+    100012: foot_l 1
+    100014: foot_r
+    100016: foot_r 1
+    100018: hand_l
+    100020: hand_r
+    100022: head
+    100024: Hip
+    100026: ikHandle1
+    100028: ikHandle2
+    100030: ikHandle3
+    100032: ikHandle4
+    100034: leg_l
+    100036: leg_r
+    100038: locator1
+    100040: locator2
+    100042: locator3
+    100044: locator4
+    100046: neck
+    100048: //RootNode
+    100050: Parrot 1
+    100052: shin_l
+    100054: shin_r
+    100056: shoulder_l
+    100058: shoulder_r
+    100060: spine_1
+    100062: spine_2
+    100064: tail_base
+    100066: tail_end
+    100068: tail_middle
+    100070: toe_l
+    100072: toe_r
+    400000: clavicle
+    400002: Controls
+    400004: elbow_l
+    400006: elbow_r
+    400008: feather
+    400010: foot_l
+    400012: foot_l 1
+    400014: foot_r
+    400016: foot_r 1
+    400018: hand_l
+    400020: hand_r
+    400022: head
+    400024: Hip
+    400026: ikHandle1
+    400028: ikHandle2
+    400030: ikHandle3
+    400032: ikHandle4
+    400034: leg_l
+    400036: leg_r
+    400038: locator1
+    400040: locator2
+    400042: locator3
+    400044: locator4
+    400046: neck
+    400048: //RootNode
+    400050: Parrot 1
+    400052: shin_l
+    400054: shin_r
+    400056: shoulder_l
+    400058: shoulder_r
+    400060: spine_1
+    400062: spine_2
+    400064: tail_base
+    400066: tail_end
+    400068: tail_middle
+    400070: toe_l
+    400072: toe_r
+    4300000: Parrot
     9500000: //RootNode
+    13700000: Parrot 1
   materials:
     importMaterials: 1
     materialName: 0
@@ -54,7 +106,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 50
+    globalScale: 40
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

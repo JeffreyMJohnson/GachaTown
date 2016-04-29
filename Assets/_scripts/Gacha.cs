@@ -11,6 +11,7 @@ public class Gacha : MonoBehaviour
     public bool IsAnimated = false;
     [Tooltip("Seconds between idle animation.")]
     public float idleAnimationTime;
+    public GachaID ID;
     #endregion
 
     #region events
@@ -56,7 +57,7 @@ public class Gacha : MonoBehaviour
         switch (animation)
         {
             case Animation.Idle:
-                _animator.SetTrigger("idle");
+                _animator.SetTrigger("Idle");
                 break;
                 case Animation.Special:
                 _animator.SetTrigger("special");

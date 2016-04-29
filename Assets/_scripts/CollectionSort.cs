@@ -108,8 +108,9 @@ public class CollectionSort : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit) && player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID)) //the gacha was hit and we have the gacha
             {
+                //enable the description text here
                 isZoomed = true;
                 cameraOrigin = collectionCamera.transform.position;
                 cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
@@ -117,7 +118,6 @@ public class CollectionSort : MonoBehaviour
                 zoomLevelOrigin = collectionCamera.orthographicSize;
                 zoomLevelDestination = 4.5f;
             }
-            Toggle test;
             
         }
 
@@ -201,10 +201,14 @@ public class CollectionSort : MonoBehaviour
                 collectionPages[i].Add(gachaObject);
                 gachaObject.transform.position = offset + (pageOffset * i);
                 
+                //instantiate the text objects here
+                //fill the text objects with description text, changes if we own it or not
+                //disable the description text
+
                 SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
                 gachaSphereCollider.center = new Vector3(0, 2, 0);
                 gachaSphereCollider.radius = 2.5f;
-                                
+
                 SetGachaMaterial(gachaObject, gachaID);
             }
         }
@@ -215,7 +219,7 @@ public class CollectionSort : MonoBehaviour
     /// </summary>
     /// <param name="gachaObject"></param>
     /// <param name="gachaID"></param>
-    public void SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
+    public bool SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
     {
         bool gachaInCollection = player.InCollection(gachaID);
         if (!gachaInCollection)
@@ -234,8 +238,9 @@ public class CollectionSort : MonoBehaviour
                 Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
                 mesh.material = hiddenMaterial;
             }
-            
+            return gachaInCollection;
         }
+        return gachaInCollection;
     }
 
     /// <summary>
@@ -251,6 +256,7 @@ public class CollectionSort : MonoBehaviour
         GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
         newGacha.transform.parent = transform;
+        newGacha.GetComponent<Gacha>().ID = gachaID;
         return newGacha;
     }
 
