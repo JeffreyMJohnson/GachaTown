@@ -7,8 +7,8 @@ using UnityEngine.Networking;
 
 /// <summary>
 /// singleton class that is available from every scene (once instantiated in Main Menu scene). 
-/// Acess this class from the static instance property, do not instantiate your own.
-/// eg GameManager.instance.Foo();
+/// Acess this class from the static Instance property, do not instantiate your own.
+/// eg GameManager.Instance.Foo();
 /// </summary>
 public class GameManager : MonoBehaviour
 {
@@ -20,63 +20,32 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
-    public static GameManager instance;
+    public static GameManager Instance;
 
-    /// <summary>
-    /// Returns true if the device screen orientation is in portrait mode, else returns false.
-    /// </summary>
-    public bool IsPortrait { get { return orientationController.CurrentOrientation == DeviceOrientationController.Orientation.PORTRAIT; } }
     public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
 
     #endregion
 
     #region private fields
-    private DeviceOrientationController orientationController = new DeviceOrientationController();
+    //private DeviceOrientationController orientationController = new DeviceOrientationController();
     private Scene _currentScene;
     #endregion
 
     #region unity lifecycle methods
-    private void Update()
-    {
-        orientationController.Update();
-    }
 
     private void Awake()
     {
-        if (instance == null)
+        if (Instance == null)
         {
             DontDestroyOnLoad(gameObject);
-            instance = this;
+            Instance = this;
         }
-        else if (instance != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
 
     }
-    #endregion
-
-    #region device screen orientation logic
-    /// <summary>
-    /// Register a callback method that will be called whenever the device orientation changes from portrait
-    /// or landscape.
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void AddOrientationChangeEventListener(UnityAction callBack)
-    {
-        orientationController.OrientationChangeEvent.AddListener(callBack);
-    }
-
-    /// <summary>
-    /// Un-register a callback method that will be called whenever the device orientation changes from portrait
-    /// or landscape.
-    /// </summary>
-    /// <param name="callBack"></param>
-    public void RemoveOrientationChangeEventListener(UnityAction callBack)
-    {
-        orientationController.OrientationChangeEvent.RemoveListener(callBack);
-    }
-
     #endregion
 
     #region Gacha collection access
@@ -120,7 +89,9 @@ public class GameManager : MonoBehaviour
     public void ChangeScene(Scene scene)
     {
         CurrentScene = scene;
+        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS_POP);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
+        AudioManager.Instance.BackgroundAudioPlay(scene);
     }
 
     //todo this needs to find a better home
@@ -130,5 +101,4 @@ public class GameManager : MonoBehaviour
         return (anim == null) || (anim.enabled);
         //animator needs to be enabled/disabled manually in the prefab
     }
-
 }

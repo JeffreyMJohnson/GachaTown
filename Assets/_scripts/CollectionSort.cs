@@ -29,6 +29,7 @@ public class CollectionSort : MonoBehaviour
     float zoomTime = 20;
     int currentPage = 0;
     const int MAX_GACHA_PER_PAGE = 9;
+    AudioSource buttonPress;
     bool isZoomed = false;
 
     Camera collectionCamera;
@@ -40,6 +41,7 @@ public class CollectionSort : MonoBehaviour
     {
         player = GameObject.FindObjectOfType<Player>();
         Debug.Assert(player != null, "no Player script in scene.");
+        buttonPress = GetComponent<AudioSource>();
 
         zoomLevelOrigin = 15;
         zoomLevelDestination = zoomLevelOrigin;
@@ -51,7 +53,7 @@ public class CollectionSort : MonoBehaviour
         collectionCamera = FindObjectOfType<Camera>();
 
         //todo use accessor for this collection
-        if (GameManager.instance.masterGachaSetList.Count == 0)
+        if (GameManager.Instance.masterGachaSetList.Count == 0)
         {
             Debug.Log("setlist is empty");
         }
@@ -96,7 +98,7 @@ public class CollectionSort : MonoBehaviour
                 
             }
             else
-                GameManager.instance.ChangeScene(GameManager.Scene.MAIN);
+                GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
 
 
@@ -106,8 +108,9 @@ public class CollectionSort : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit) && player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID)) //the gacha was hit and we have the gacha
             {
+                //enable the description text here
                 isZoomed = true;
                 cameraOrigin = collectionCamera.transform.position;
                 cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
@@ -115,7 +118,6 @@ public class CollectionSort : MonoBehaviour
                 zoomLevelOrigin = collectionCamera.orthographicSize;
                 zoomLevelDestination = 4.5f;
             }
-            Toggle test;
             
         }
 
@@ -141,7 +143,7 @@ public class CollectionSort : MonoBehaviour
     void SetTitle()
     {
         Text title = GameObject.Find("PageTitle").GetComponent<Text>();
-        title.text = GameManager.instance.masterGachaSetList[currentPage].name;
+        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;
     }
     #endregion
 
@@ -150,6 +152,7 @@ public class CollectionSort : MonoBehaviour
     {
         if (currentPage != 0 && scrollStart == scrollTime)
         {
+            buttonPress.Play();
             currentPage--;
             SetTitle();
             scrollStart = 0;
@@ -159,8 +162,9 @@ public class CollectionSort : MonoBehaviour
     }
     public void Next()
     {
-        if (currentPage < GameManager.instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
+        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
         {
+            buttonPress.Play();
             currentPage++;
             SetTitle();
             scrollStart = 0;
@@ -173,11 +177,11 @@ public class CollectionSort : MonoBehaviour
 
     void InitCollectionPages()
     {
-        for (int i = 0; i < GameManager.instance.masterGachaSetList.Count; i++)
+        for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
         {
             collectionPages.Add(new List<GameObject>());
 
-            GachaSet set = GameManager.instance.masterGachaSetList[i];
+            GachaSet set = GameManager.Instance.masterGachaSetList[i];
             //case for when set contains less than Max count variable
             int currentPageCount = 0;
             if (MAX_GACHA_PER_PAGE > set.collection.Count)
@@ -197,10 +201,14 @@ public class CollectionSort : MonoBehaviour
                 collectionPages[i].Add(gachaObject);
                 gachaObject.transform.position = offset + (pageOffset * i);
                 
+                //instantiate the text objects here
+                //fill the text objects with description text, changes if we own it or not
+                //disable the description text
+
                 SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
                 gachaSphereCollider.center = new Vector3(0, 2, 0);
                 gachaSphereCollider.radius = 2.5f;
-                                
+
                 SetGachaMaterial(gachaObject, gachaID);
             }
         }
@@ -211,14 +219,14 @@ public class CollectionSort : MonoBehaviour
     /// </summary>
     /// <param name="gachaObject"></param>
     /// <param name="gachaID"></param>
-    public void SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
+    public bool SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
     {
         bool gachaInCollection = player.InCollection(gachaID);
         if (!gachaInCollection)
         {
             //if the model has animations implemented the mesh componenets change so here is some checking to get through this
             //when all implemented will need a cleaner way I imagine
-            if (GameManager.instance.IsGachaAnimated(gachaObject))
+            if (GameManager.Instance.IsGachaAnimated(gachaObject))
             {
                 SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
                 Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
@@ -230,23 +238,25 @@ public class CollectionSort : MonoBehaviour
                 Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
                 mesh.material = hiddenMaterial;
             }
-            
+            return gachaInCollection;
         }
+        return gachaInCollection;
     }
 
     /// <summary>
-    /// returns a GameObject instance from prefab matching GachaID.
+    /// returns a GameObject Instance from prefab matching GachaID.
     /// </summary>
     /// <param name="gachaID"></param>
     /// <returns></returns>
     GameObject GetGachaGameObject(GachaID gachaID)
     {
-        Debug.Assert(gachaID.SetIndex < GameManager.instance.masterGachaSetList.Count);
-        Debug.Assert(gachaID.GachaIndex < GameManager.instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
+        Debug.Assert(gachaID.SetIndex < GameManager.Instance.masterGachaSetList.Count);
+        Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
 
-        GameObject gachaPrefab = GameManager.instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
+        GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
         newGacha.transform.parent = transform;
+        newGacha.GetComponent<Gacha>().ID = gachaID;
         return newGacha;
     }
 

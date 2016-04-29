@@ -184,6 +184,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
+  - time: 0
+    functionName: PlaySpecialAnimationEffect
+    data: 
+    objectReferenceParameter: {fileID: 125948, guid: d820e281993a92f4fb12d5d6ad80403d,
+      type: 2}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1
     functionName: HandleSpecialAnimationCompleteEvent
     data: 

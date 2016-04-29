@@ -12,7 +12,8 @@ GameObject:
   - 23: {fileID: 2341280}
   - 95: {fileID: 9565058}
   - 114: {fileID: 11423208}
-  m_Layer: 0
+  - 65: {fileID: 6547256}
+  m_Layer: 8
   m_Name: haunted house
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64,6 +65,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115398}
   m_Mesh: {fileID: 4300000, guid: 45a672931d6edfe49a9d3c030874c205, type: 3}
+--- !u!65 &6547256
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 115398}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.49, y: 3.71, z: 3.21}
+  m_Center: {x: 0, y: 1.88, z: -0.28}
 --- !u!95 &9565058
 Animator:
   serializedVersion: 3
@@ -71,9 +84,9 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 115398}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 45a672931d6edfe49a9d3c030874c205, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70b926c31a21a7b498bb1f95d9bdec46, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -93,6 +106,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
+  idleAnimationTime: 60
+  OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Gacha+OnClickEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -102,12 +121,24 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 62f488e9d043e7948943d0b380b12ba7, type: 2}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 70b926c31a21a7b498bb1f95d9bdec46, type: 2}
+    - target: {fileID: 0}
+      propertyPath: idleAnimationTime
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 115398}
