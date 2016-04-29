@@ -8,13 +8,12 @@ public class BuyGacha : MonoBehaviour
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
-    
+
     #endregion
 
     #region private fields
     Player player;
-    GameObject gachaMachine;
-    
+    Animator controller;
     #endregion
 
     #region unity lifecycle methods
@@ -26,10 +25,8 @@ public class BuyGacha : MonoBehaviour
         player = playerObject.GetComponent<Player>();
         Debug.Assert(player != null, "player script was not found.");
 
+        controller = GetComponent<Animator>();
 
-        GameObject gachaObject = GameObject.FindGameObjectWithTag("GachaMachine");
-        gachaMachine = gachaObject.GetComponent<GameObject>();
-        
 
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audio source component was not found.");
@@ -67,7 +64,7 @@ public class BuyGacha : MonoBehaviour
         {
             HandleClick(GameManager.Scene.MAIN);
         }
-        
+        RotateDial();
 
     }
     #endregion
@@ -103,5 +100,23 @@ public class BuyGacha : MonoBehaviour
     }
     #endregion
 
-    
+    public void RotateDial()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider.gameObject.name == "gachamachine_dial")
+                {
+                    Debug.Log("fooo");
+                    controller.SetTrigger("RotateDial");
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
+                }
+            }
+        }
+    }
+
 }
