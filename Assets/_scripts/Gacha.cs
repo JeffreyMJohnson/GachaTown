@@ -58,7 +58,7 @@ public class Gacha : MonoBehaviour
         switch (animation)
         {
             case Animation.Idle:
-                _animator.SetTrigger("idle");
+                _animator.SetTrigger("Idle");
                 break;
                 case Animation.Special:
                 _animator.SetTrigger("special");
