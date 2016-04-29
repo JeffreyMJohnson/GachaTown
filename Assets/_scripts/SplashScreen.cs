@@ -14,7 +14,8 @@ public class SplashScreen : MonoBehaviour {
     {
         if (Input.anyKey)
         {
-            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            //GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
         if (Input.GetKey(KeyCode.Escape))
         {
