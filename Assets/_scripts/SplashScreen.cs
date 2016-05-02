@@ -1,25 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SplashScreen : MonoBehaviour {
+public class SplashScreen : MonoBehaviour
+{
+    public float SplashWaitTimer = 1;
 
-	// Use this for initialization
-	void Start ()
+    void Start()
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        StartCoroutine(LoadMainMenu(SplashWaitTimer));
+    }
+
+    IEnumerator LoadMainMenu(float seconds)
     {
-        if (Input.anyKey)
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
-            //GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
-        }
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        yield return new WaitForSeconds(seconds);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(1);
     }
 }
