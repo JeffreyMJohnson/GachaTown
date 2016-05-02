@@ -4,16 +4,17 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    #region private fields
-    Canvas portrait;
-    Canvas landscape;
-    //AudioSource audioSource;
-    #endregion
-
     #region unity lifecycle methods
     void Start()
     {
         InitButtonHandlers();
+
+        //edge case for first load without using gamemanager class
+        if (!AudioManager.Instance.BackgroundAudioMuted && AudioManager.Instance &&
+            !AudioManager.Instance.IsBackgroundPlaying)
+        {
+            AudioManager.Instance.BackgroundAudioPlay(GameManager.Scene.MAIN);
+        }
     }
 
     void Update()
