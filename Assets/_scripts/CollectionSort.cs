@@ -110,13 +110,20 @@ public class CollectionSort : MonoBehaviour
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit) && player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID)) //the gacha was hit and we have the gacha
             {
-                //enable the description text here
-                isZoomed = true;
-                cameraOrigin = collectionCamera.transform.position;
-                cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
-                zoomStart = 0;
-                zoomLevelOrigin = collectionCamera.orthographicSize;
-                zoomLevelDestination = 4.5f;
+                if (!isZoomed)//zoom in
+                {
+                    //enable the description text here
+                    isZoomed = true;
+                    cameraOrigin = collectionCamera.transform.position;
+                    cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
+                    zoomStart = 0;
+                    zoomLevelOrigin = collectionCamera.orthographicSize;
+                    zoomLevelDestination = 4.5f;
+                }
+                else //play animation
+                {
+                    hit.transform.gameObject.GetComponent<Gacha>().PlayAnimation(Gacha.Animation.Special);
+                }
             }
             
         }

@@ -1,0 +1,217 @@
+fileFormatVersion: 2
+guid: 41b4682a734d5a94b86164c4a9955567
+timeCreated: 1461873680
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: case1
+    100002: clavicle
+    100004: elbow_l
+    100006: elbow_r
+    100008: feather
+    100010: foot_l
+    100012: foot_l 1
+    100014: foot_r
+    100016: foot_r 1
+    100018: hand_l
+    100020: hand_r
+    100022: head
+    100024: Hip
+    100026: leg_l
+    100028: leg_r
+    100030: neck
+    100032: //RootNode
+    100034: shin_l
+    100036: shin_r
+    100038: shoulder_l
+    100040: shoulder_r
+    100042: spine_1
+    100044: spine_2
+    100046: tail_base
+    100048: tail_end
+    100050: tail_middle
+    100052: toe_l
+    100054: toe_r
+    400000: case1
+    400002: clavicle
+    400004: elbow_l
+    400006: elbow_r
+    400008: feather
+    400010: foot_l
+    400012: foot_l 1
+    400014: foot_r
+    400016: foot_r 1
+    400018: hand_l
+    400020: hand_r
+    400022: head
+    400024: Hip
+    400026: leg_l
+    400028: leg_r
+    400030: neck
+    400032: //RootNode
+    400034: shin_l
+    400036: shin_r
+    400038: shoulder_l
+    400040: shoulder_r
+    400042: spine_1
+    400044: spine_2
+    400046: tail_base
+    400048: tail_end
+    400050: tail_middle
+    400052: toe_l
+    400054: toe_r
+    2300000: case1
+    3300000: case1
+    4300000: case1
+    7400000: walk
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: walk
+      takeName: Take 001
+      firstFrame: 2
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: case1
+        weight: 1
+      - path: Hip
+        weight: 1
+      - path: Hip/leg_l
+        weight: 1
+      - path: Hip/leg_l/shin_l
+        weight: 1
+      - path: Hip/leg_l/shin_l/foot_l
+        weight: 1
+      - path: Hip/leg_l/shin_l/foot_l/foot_l 1
+        weight: 1
+      - path: Hip/leg_l/shin_l/foot_l/foot_l 1/toe_l
+        weight: 1
+      - path: Hip/leg_r
+        weight: 1
+      - path: Hip/leg_r/shin_r
+        weight: 1
+      - path: Hip/leg_r/shin_r/foot_r
+        weight: 1
+      - path: Hip/leg_r/shin_r/foot_r/foot_r 1
+        weight: 1
+      - path: Hip/leg_r/shin_r/foot_r/foot_r 1/toe_r
+        weight: 1
+      - path: Hip/spine_1
+        weight: 1
+      - path: Hip/spine_1/spine_2
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/neck
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/neck/head
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/neck/head/feather
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_l
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_l/elbow_l
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_l/elbow_l/hand_l
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_r
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_r/elbow_r
+        weight: 1
+      - path: Hip/spine_1/spine_2/clavicle/shoulder_r/elbow_r/hand_r
+        weight: 1
+      - path: Hip/tail_base
+        weight: 1
+      - path: Hip/tail_base/tail_middle
+        weight: 1
+      - path: Hip/tail_base/tail_middle/tail_end
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 30
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e91963f0b4951dc4e8f1dc5fb70aec68,
+    type: 3}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

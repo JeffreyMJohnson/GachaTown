@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEditor;
+using System.Security.Policy;
+//using UnityEditor;
 using UnityEngine.Events;
 
 public class AudioManager : MonoBehaviour
@@ -58,6 +59,8 @@ public class AudioManager : MonoBehaviour
 
         }
     }
+
+    public bool IsBackgroundPlaying { get { return _backgroundSource.isPlaying; } }
 
     /// <summary>
     /// MasterVolume scale for sound effects in relation to master volume
@@ -155,6 +158,10 @@ public class AudioManager : MonoBehaviour
         _soundEffectsSource = gameObject.AddComponent<AudioSource>();
         _soundEffectsSource.loop = false;
         _soundEffectsSource.playOnAwake = false;
+
+#if DEBUG
+        BackgroundAudioMuted = true;
+#endif
     }
 
     #endregion

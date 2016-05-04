@@ -6,18 +6,16 @@ using Assets._scripts;
 public class Town : MonoBehaviour
 {
     #region public properties
-
     public int CoinsPerTap = 5;
 
     #endregion
 
     #region private fields
-    private Animator anim = null;
-    private Canvas canvas = null;
-    private Dropdown setList = null;
-    private Dropdown gachaList = null;
-    private Button selectGacha = null;
-    private GameObject gachaToPlace = null;
+    private Canvas _canvas = null;
+    private Dropdown _setList = null;
+    private Dropdown _gachaList = null;
+    private Button _selectGacha = null;
+    private GameObject _gachaToPlace = null;
     private Player _player = null;
     
     #endregion
@@ -26,8 +24,8 @@ public class Town : MonoBehaviour
 
     void Start()
     {
-        canvas = FindObjectOfType<Canvas>();
-        Debug.Assert(canvas != null, "canvas not found.");
+        _canvas = FindObjectOfType<Canvas>();
+        Debug.Assert(_canvas != null, "_canvas not found.");
 
         _player = GameManager.Instance.gameObject.GetComponentInChildren<Player>();
         Debug.Assert(_player != null, "player not found.");
@@ -65,13 +63,13 @@ public class Town : MonoBehaviour
     #region GUI
     void InitMenu()
     {
-        Button[] buttons = canvas.GetComponentsInChildren<Button>();
+        Button[] buttons = _canvas.GetComponentsInChildren<Button>();
         Button mainMenu = null;
         foreach (Button button in buttons)
         {
             if (button.name == "Select Gacha")
             {
-                selectGacha = button;
+                _selectGacha = button;
             }
             else
             {
@@ -81,25 +79,24 @@ public class Town : MonoBehaviour
 
 
         mainMenu.onClick.AddListener(HandleMenuButtonClick);
-        selectGacha.onClick.AddListener(HandlePlaceButtonClick);
+        _selectGacha.onClick.AddListener(HandlePlaceButtonClick);
 
-        Dropdown[] dropdowns = canvas.GetComponentsInChildren<Dropdown>();
+        Dropdown[] dropdowns = _canvas.GetComponentsInChildren<Dropdown>();
         foreach (Dropdown dropdown in dropdowns)
         {
             if (dropdown.name == "Set List")
             {
-                setList = dropdown;
+                _setList = dropdown;
             }
             else
             {
-                gachaList = dropdown;
+                _gachaList = dropdown;
             }
         }
-        setList.onValueChanged.AddListener(HandleGachaSetSelection);
-        gachaList.onValueChanged.AddListener(HandleGachaSelection);
+        _setList.onValueChanged.AddListener(HandleGachaSetSelection);
+        _gachaList.onValueChanged.AddListener(HandleGachaSelection);
 
         LoadGachaSetDropDown();
-        //ClearSelectionMenu();
     }
 
     /// <summary>
@@ -109,12 +106,12 @@ public class Town : MonoBehaviour
     {
         List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
 
-        setList.value = 0;
+        _setList.value = 0;
 
 
-        gachaList.ClearOptions();
-        gachaList.enabled = false;
-        selectGacha.enabled = false;
+        _gachaList.ClearOptions();
+        _gachaList.enabled = false;
+        _selectGacha.enabled = false;
     }
 
     /// <summary>
@@ -123,16 +120,16 @@ public class Town : MonoBehaviour
     void LoadGachaSetDropDown()
     {
         List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
-        setList.ClearOptions();
-        setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
+        _setList.ClearOptions();
+        _setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
         for (int i = 0; i < setCollection.Count; i++)
         {
             GachaSet gachaSet = setCollection[i];
-            setList.options.Add(new Dropdown.OptionData(gachaSet.name));
+            _setList.options.Add(new Dropdown.OptionData(gachaSet.name));
         }
 
         //note this will fire the onValueChange event and is taken into account there.
-        setList.value = 0;
+        _setList.value = 0;
     }
 
     /// <summary>
@@ -141,17 +138,17 @@ public class Town : MonoBehaviour
     /// <param name="gachaSetIndex"></param>
     void LoadGachaDropDown(int gachaSetIndex)
     {
-        gachaList.ClearOptions();
+        _gachaList.ClearOptions();
         List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
         GachaSet gachaSet = setCollection[gachaSetIndex];
-        gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
+        _gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
         foreach (GameObject gacha in gachaSet.collection)
         {
-            gachaList.options.Add(new Dropdown.OptionData(gacha.name));
+            _gachaList.options.Add(new Dropdown.OptionData(gacha.name));
         }
-        gachaList.enabled = true;
+        _gachaList.enabled = true;
         //note this will fire the onValueChange event and is taken into account there.
-        gachaList.value = 0;
+        _gachaList.value = 0;
     }
     #endregion
 
@@ -167,7 +164,7 @@ public class Town : MonoBehaviour
         {
             return;
         }
-        selectGacha.enabled = true;
+        _selectGacha.enabled = true;
 
     }
 
@@ -190,10 +187,9 @@ public class Town : MonoBehaviour
     /// </summary>
     public void HandlePlaceButtonClick()
     {
-        GameObject selectedGacha = GameManager.Instance.masterGachaSetList[setList.value - 1].collection[gachaList.value - 1];//subtract one to account for placeholder in dropdown
-        gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(new GachaID(setList.value - 1, gachaList.value - 1)));
-        //gachaToPlace.GetComponent<Gacha>().OnClickEvent.AddListener(HandleGachaOnClickEvent);
-        gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
+        GameObject selectedGacha = GameManager.Instance.masterGachaSetList[_setList.value - 1].collection[_gachaList.value - 1];//subtract one to account for placeholder in dropdown
+        _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(new GachaID(_setList.value - 1, _gachaList.value - 1)));
+        _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
         ClearSelectionMenu();
     }
 
@@ -202,17 +198,17 @@ public class Town : MonoBehaviour
     /// </summary>
     private void UpdateGachaDrag()
     {
-        if (gachaToPlace != null)
+        if (_gachaToPlace != null)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             LayerMask mask = LayerMask.GetMask("Ground");
             if (Physics.Raycast(ray, out hit, 100, mask))
             {
-                gachaToPlace.transform.position = hit.point;
+                _gachaToPlace.transform.position = hit.point;
                 if (Input.GetMouseButtonDown(0))
                 {
-                    gachaToPlace = null;
+                    _gachaToPlace = null;
                 }
             }
         }

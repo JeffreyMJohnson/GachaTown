@@ -35,3 +35,7 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+#p4merge files
+*_BACKUP_*
+*_REMOTE_*
