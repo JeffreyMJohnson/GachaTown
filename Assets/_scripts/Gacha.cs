@@ -10,8 +10,6 @@ public class Gacha : MonoBehaviour
     public enum Animation { Idle, Walk, Special}
     #region public properties
     public bool IsAnimated = false;
-    [Tooltip("Seconds between idle animation.")]
-    public float idleAnimationTime;
     public GachaID ID;
     #endregion
 
@@ -27,7 +25,6 @@ public class Gacha : MonoBehaviour
     #endregion
 
     #region private fields
-    private Timer _idleAnimationTimer;
     private Camera _mainCamera;
     private Collider _collider;
     private Animator _animator;
@@ -83,26 +80,11 @@ public class Gacha : MonoBehaviour
 
         _mainCamera = Camera.main;
     }
-
-    void Start()
-    {
-        if (GameManager.Instance.CurrentScene == GameManager.Scene.TOWN && IsAnimated)
-        {
-            _idleAnimationTimer = new Timer(idleAnimationTime);
-            _idleAnimationTimer.Start();
-            _idleAnimationTimer.onRaiseAlarmEvent += HandleIdleAnimationAlarmEvent;
-        }
-    }
-
+    
     void Update()
     {
 
         UpdateClickEvent();
-
-        if (_idleAnimationTimer != null)
-        {
-            _idleAnimationTimer.Update(Time.deltaTime);
-        }
     }
     #endregion
 
@@ -114,15 +96,6 @@ public class Gacha : MonoBehaviour
     void HandleIdleAnimationAlarmEvent()
     {
         PlayAnimation(Animation.Idle);
-    }
-
-    /// <summary>
-    /// idle animation finished event handler 
-    /// (fired at end of animation clip)
-    /// </summary>
-    void HandleIdleAnimationCompleteEvent()
-    {
-        _idleAnimationTimer.Start();
     }
 
     /// <summary>
@@ -164,7 +137,6 @@ public class Gacha : MonoBehaviour
             yield return null;
         }
         _animator.SetFloat("velocity", 0);
-        _idleAnimationTimer.Start();
 
     }
 }

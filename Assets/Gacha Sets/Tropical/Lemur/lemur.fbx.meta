@@ -1,25 +1,25 @@
 fileFormatVersion: 2
-guid: 4ba6528894de43e47bb5376efb9e9ab8
-timeCreated: 1460050278
+guid: 47686f7be87e7ed4194fb0f4c141dbe8
+timeCreated: 1461890776
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: clavicle
-    100002: controls
-    100004: ear_l
-    100006: ear_r
-    100008: elbow_l
-    100010: elbow_r
-    100012: foot_l
-    100014: foot_l 1
-    100016: foot_r
-    100018: foot_r 1
-    100020: hand_l
-    100022: hand_r
-    100024: head
-    100026: Hip
-    100028: joint4
+    100002: ear_l
+    100004: ear_r
+    100006: elbow_l
+    100008: elbow_r
+    100010: foot_l
+    100012: foot_l 1
+    100014: foot_r
+    100016: foot_r 1
+    100018: hand_l
+    100020: hand_r
+    100022: head
+    100024: Hip
+    100026: joint4
+    100028: joints1
     100030: leg_l
     100032: leg_r
     100034: //RootNode
@@ -42,20 +42,20 @@ ModelImporter:
     100068: toe_l
     100070: toe_r
     400000: clavicle
-    400002: controls
-    400004: ear_l
-    400006: ear_r
-    400008: elbow_l
-    400010: elbow_r
-    400012: foot_l
-    400014: foot_l 1
-    400016: foot_r
-    400018: foot_r 1
-    400020: hand_l
-    400022: hand_r
-    400024: head
-    400026: Hip
-    400028: joint4
+    400002: ear_l
+    400004: ear_r
+    400006: elbow_l
+    400008: elbow_r
+    400010: foot_l
+    400012: foot_l 1
+    400014: foot_r
+    400016: foot_r 1
+    400018: hand_l
+    400020: hand_r
+    400022: head
+    400024: Hip
+    400026: joint4
+    400028: joints1
     400030: leg_l
     400032: leg_r
     400034: //RootNode
@@ -104,9 +104,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 50
+    globalScale: 2
     meshCompression: 0
-    addColliders: 1
+    addColliders: 0
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
