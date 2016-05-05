@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Assets._scripts;
+using System.Linq;
+using System.Security.Cryptography;
+using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
     #region public properties
     public int CoinsPerTap = 5;
+    public GameObject GachaUIPrefab;
 
     #endregion
 
     #region private fields
     private Canvas _canvas = null;
-    private Dropdown _setList = null;
-    private Dropdown _gachaList = null;
-    private Button _selectGacha = null;
+    private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
     private Player _player = null;
     
@@ -22,18 +25,29 @@ public class Town : MonoBehaviour
 
     #region unity lifecycle methods
 
-    void Start()
+    void Awake()
     {
         _canvas = FindObjectOfType<Canvas>();
         Debug.Assert(_canvas != null, "_canvas not found.");
 
-        _player = GameManager.Instance.gameObject.GetComponentInChildren<Player>();
-        Debug.Assert(_player != null, "player not found.");
-
-        InitMenu();
-
+        foreach (RectTransform child in _canvas.GetComponentsInChildren<RectTransform>())
+        {
+            if (child.name == "Content")
+            {
+                _scrollViewContent = child;
+            }
+        }
+        Debug.Assert(_scrollViewContent != null);
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
+    }
+
+    void Start()
+    {
+        _player = GameManager.Instance.gameObject.GetComponentInChildren<Player>();
+        Debug.Assert(_player != null, "player not found.");
+        InitMenu();
+
     }
 
     void Update()
@@ -41,6 +55,8 @@ public class Town : MonoBehaviour
         UpdateEscapeKey();
 
         UpdateGachaDrag();
+
+
     }
 
     void OnDestroy()
@@ -63,134 +79,46 @@ public class Town : MonoBehaviour
     #region GUI
     void InitMenu()
     {
-        Button[] buttons = _canvas.GetComponentsInChildren<Button>();
-        Button mainMenu = null;
-        foreach (Button button in buttons)
+        //this linq query returns only unique entries from player collection
+        var query =
+            from gacha in _player.gachaCollection.Distinct()
+            select gacha;
+
+
+        foreach (GachaID gachaId in query)
         {
-            if (button.name == "Select Gacha")
-            {
-                _selectGacha = button;
-            }
-            else
-            {
-                mainMenu = button;
-            }
+            GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
+            gachaUIInstance.transform.SetParent(_scrollViewContent);
+            GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
+            gachaUI.onGachaDrag.AddListener(GachaDragEventHandler);
+            gachaUI.onGachaDrop.AddListener(GachaDropEventHandler);
         }
+        ScrollRect scrollRect = _scrollViewContent.GetComponentInParent<ScrollRect>();
+        scrollRect.horizontalNormalizedPosition = 0;
 
-
-        mainMenu.onClick.AddListener(HandleMenuButtonClick);
-        _selectGacha.onClick.AddListener(HandlePlaceButtonClick);
-
-        Dropdown[] dropdowns = _canvas.GetComponentsInChildren<Dropdown>();
-        foreach (Dropdown dropdown in dropdowns)
-        {
-            if (dropdown.name == "Set List")
-            {
-                _setList = dropdown;
-            }
-            else
-            {
-                _gachaList = dropdown;
-            }
-        }
-        _setList.onValueChanged.AddListener(HandleGachaSetSelection);
-        _gachaList.onValueChanged.AddListener(HandleGachaSelection);
-
-        LoadGachaSetDropDown();
     }
-
-    /// <summary>
-    /// Clears the gacha selection dropdown, and disables it as well as the select gacha button.
-    /// </summary>
-    void ClearSelectionMenu()
-    {
-        List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
-
-        _setList.value = 0;
-
-
-        _gachaList.ClearOptions();
-        _gachaList.enabled = false;
-        _selectGacha.enabled = false;
-    }
-
-    /// <summary>
-    /// Sets the option items in the Gacha set dropdown, placing a placeholder at index 0
-    /// </summary>
-    void LoadGachaSetDropDown()
-    {
-        List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
-        _setList.ClearOptions();
-        _setList.options.Add(new Dropdown.OptionData("Select Gacha Set"));
-        for (int i = 0; i < setCollection.Count; i++)
-        {
-            GachaSet gachaSet = setCollection[i];
-            _setList.options.Add(new Dropdown.OptionData(gachaSet.name));
-        }
-
-        //note this will fire the onValueChange event and is taken into account there.
-        _setList.value = 0;
-    }
-
-    /// <summary>
-    /// Loads the option items in the Gacha select dropdown, placing a placeholder at index 0.
-    /// </summary>
-    /// <param name="gachaSetIndex"></param>
-    void LoadGachaDropDown(int gachaSetIndex)
-    {
-        _gachaList.ClearOptions();
-        List<GachaSet> setCollection = GameManager.Instance.masterGachaSetList;
-        GachaSet gachaSet = setCollection[gachaSetIndex];
-        _gachaList.options.Add(new Dropdown.OptionData("Select Gacha"));
-        foreach (GameObject gacha in gachaSet.collection)
-        {
-            _gachaList.options.Add(new Dropdown.OptionData(gacha.name));
-        }
-        _gachaList.enabled = true;
-        //note this will fire the onValueChange event and is taken into account there.
-        _gachaList.value = 0;
-    }
+    
     #endregion
 
     #region UI Handlers
-    /// <summary>
-    /// Gacha Selection dropdown OnValueChange event handler.
-    /// </summary>
-    /// <param name="value"></param>
-    public void HandleGachaSelection(int value)
-    {
-        //when setting the dropdown value to 0 to clear the 'selected' choice it fires this event, want to ignore it in this case.
-        if (value == 0)
-        {
-            return;
-        }
-        _selectGacha.enabled = true;
-
-    }
 
     /// <summary>
-    /// Gacha set dropdown OnValueChanged evcent handler.
+    /// Handle the Drag event fired by GachaUI object
     /// </summary>
-    /// <param name="value"></param>
-    public void HandleGachaSetSelection(int value)
+    /// <param name="eventData"></param>
+    void GachaDragEventHandler(GachaID draggedGachaId)
     {
-        //when setting the dropdown value to 0 to clear the 'selected' choice it fires this event, want to ignore it in this case.
-        if (value == 0)
-        {
-            return;
-        }
-        LoadGachaDropDown(value - 1);//subtract 1 to account for placeholder in list at index 0 in dropdown
-    }
-
-    /// <summary>
-    /// gacha select button click event handler.
-    /// </summary>
-    public void HandlePlaceButtonClick()
-    {
-        GameObject selectedGacha = GameManager.Instance.masterGachaSetList[_setList.value - 1].collection[_gachaList.value - 1];//subtract one to account for placeholder in dropdown
-        _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(new GachaID(_setList.value - 1, _gachaList.value - 1)));
+         _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
         _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
-        ClearSelectionMenu();
+    }
+
+    /// <summary>
+    /// Handle drop event fired by GachaUI
+    /// </summary>
+    /// <param name="eventData"></param>
+    void GachaDropEventHandler(PointerEventData eventData)
+    {
+       _gachaToPlace = null;
     }
 
     /// <summary>
@@ -206,10 +134,6 @@ public class Town : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100, mask))
             {
                 _gachaToPlace.transform.position = hit.point;
-                if (Input.GetMouseButtonDown(0))
-                {
-                    _gachaToPlace = null;
-                }
             }
         }
     }
@@ -231,9 +155,7 @@ public class Town : MonoBehaviour
 
         }
     }
-    
-
-
-
     #endregion
+
+
 }

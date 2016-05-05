@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
     #endregion
 
     #region private fields
-    Transform collectionParent;
     [SerializeField]
     private int _totalCoins;
 
@@ -31,7 +30,6 @@ public class Player : MonoBehaviour
     #region unity lifecycle methods
     void Awake()
     {
-        collectionParent = GameObject.Find("Collection").transform;
         LoadState();
     }
 
@@ -83,7 +81,7 @@ public class Player : MonoBehaviour
     private void SaveState()
     {
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
-        string s = JsonUtility.ToJson(this);
+        //string s = JsonUtility.ToJson(this);
         writer.Write(JsonUtility.ToJson(this));
         writer.Close();
     }

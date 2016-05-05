@@ -4,6 +4,7 @@ using System.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 /// <summary>
 /// singleton class that is available from every scene (once instantiated in Main Menu scene). 
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     #region public properties
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
-
+    public GameObject gachaUIPrefab;
     /// <summary>
     /// Accessor property for this class.
     /// </summary>
@@ -80,6 +81,35 @@ public class GameManager : MonoBehaviour
     public GameObject GetGachaPrefab(GachaID gachaID)
     {
         return masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex];
+    }
+
+    /// <summary>
+    /// return the name of the gacha prefab object of given id
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public string GetGachaName(GachaID id)
+    {
+        return masterGachaSetList[id.SetIndex].collection[id.GachaIndex].name;
+    }
+
+    /// <summary>
+    /// returns Instance of GachaUI prefab with sprite and image set if gacha has them.
+    /// </summary>
+    /// <param name="gachaID"></param>
+    /// <returns></returns>
+    public GameObject GetGachaUI(GachaID gachaID)
+    {
+        GameObject newGachaUI = Instantiate<GameObject>(gachaUIPrefab);
+        newGachaUI.GetComponent<GachaUI>().ID = gachaID;
+        Gacha gacha = masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex].GetComponent<Gacha>();
+        if (gacha.gachaUI != null)
+        {
+            newGachaUI.GetComponentInChildren<Image>().sprite = gacha.gachaUI;
+        }
+        newGachaUI.GetComponentInChildren<Text>().text = gacha.gameObject.name;
+        newGachaUI.name = gacha.name;
+        return newGachaUI;
     }
     #endregion
 
