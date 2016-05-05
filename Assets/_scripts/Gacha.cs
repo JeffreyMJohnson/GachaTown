@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Assets._scripts;
 using UnityEngine.Events;
@@ -10,6 +11,7 @@ public class Gacha : MonoBehaviour
     public enum Animation { Idle, Walk, Special}
     #region public properties
     public bool IsAnimated = false;
+    public Sprite gachaUI = null;
     public GachaID ID;
     #endregion
 
