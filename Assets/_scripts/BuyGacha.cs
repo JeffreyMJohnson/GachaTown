@@ -8,12 +8,13 @@ public class BuyGacha : MonoBehaviour
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
-
+    
     #endregion
 
     #region private fields
     Player player;
     Animator controller;
+    CoinDrag coin;
     #endregion
 
     #region unity lifecycle methods
@@ -27,6 +28,8 @@ public class BuyGacha : MonoBehaviour
 
         controller = GetComponent<Animator>();
 
+
+        coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audio source component was not found.");
@@ -108,11 +111,19 @@ public class BuyGacha : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.name == "gachamachine_dial")
+                if (hit.collider.gameObject.name == "gachamachine_dial"&& coin.isInSlot)
                 {
-                    Debug.Log("fooo");
+                    
                     controller.SetTrigger("RotateDial");
                     AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
+
+                  
+                        Buy();
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
+                        
+                        coin.isInSlot = false;
+                    
+
                 }
             }
         }

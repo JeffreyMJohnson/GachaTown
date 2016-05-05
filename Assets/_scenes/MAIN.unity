@@ -274,7 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gachaCollection: []
   Selected: 1
-  _totalCoins: 0
+  _totalCoins: 10000
 --- !u!1 &522788046
 GameObject:
   m_ObjectHideFlags: 0
