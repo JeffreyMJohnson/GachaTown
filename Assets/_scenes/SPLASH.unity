@@ -240,10 +240,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2012819161}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: -24, y: 0}
-  m_SizeDelta: {x: 794, y: 688}
+  m_SizeDelta: {x: 794, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &945463788
 MonoBehaviour:
@@ -289,7 +289,7 @@ GameObject:
   - 222: {fileID: 1285473162}
   - 114: {fileID: 1285473161}
   m_Layer: 5
-  m_Name: Image
+  m_Name: logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
