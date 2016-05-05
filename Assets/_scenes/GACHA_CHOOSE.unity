@@ -1993,7 +1993,7 @@ Transform:
   - {fileID: 558280975}
   - {fileID: 1526870675}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 1
+  m_RootOrder: 3
 --- !u!1001 &1417162076
 Prefab:
   m_ObjectHideFlags: 0
@@ -2321,9 +2321,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 38293515}
-  - {fileID: 1409490276}
-  - {fileID: 232730258}
   - {fileID: 2115183519}
+  - {fileID: 232730258}
+  - {fileID: 1409490276}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &1615481061
@@ -2905,4 +2905,4 @@ Transform:
   - {fileID: 1417162077}
   - {fileID: 1964519119}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 3
+  m_RootOrder: 1
