@@ -156,7 +156,7 @@ public class CollectionSort : MonoBehaviour
     #region UI handlers
     public void Previous()
     {
-        if (currentPage != 0 && scrollStart == scrollTime)
+        if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
         {
             buttonPress.Play();
             currentPage--;
@@ -168,7 +168,7 @@ public class CollectionSort : MonoBehaviour
     }
     public void Next()
     {
-        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime)
+        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
         {
             buttonPress.Play();
             currentPage++;
