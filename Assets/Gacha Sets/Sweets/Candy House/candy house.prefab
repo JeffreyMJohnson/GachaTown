@@ -106,7 +106,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  idleAnimationTime: 60
+  gachaUI: {fileID: 21300000, guid: 362869835be1d3844a31d85066e41181, type: 3}
+  ID:
+    _setIndex: 0
+    _gachaIndex: 0
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -135,6 +138,11 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: b42e7a0db27bc8e41aba2d1be14c8c11, type: 2}
+    - target: {fileID: 0}
+      propertyPath: gachaUI
+      value: 
+      objectReference: {fileID: 21300000, guid: 362869835be1d3844a31d85066e41181,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 165128}
