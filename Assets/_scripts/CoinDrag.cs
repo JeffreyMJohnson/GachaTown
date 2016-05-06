@@ -55,8 +55,6 @@ public class CoinDrag : MonoBehaviour
                     isInSlot = true;
                 }
                 
-                    
-                
             }
             //either way destroy the coin clone when button released.
 

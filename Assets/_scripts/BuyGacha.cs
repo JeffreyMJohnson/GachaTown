@@ -127,32 +127,13 @@ public class BuyGacha : MonoBehaviour
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                         
                         coin.isInSlot = false;
+                    capsule.useGravity = !capsule.useGravity;
 
-
-                    //WinGacha();
                 }
             }
         }
     }
-    public void WinGacha()
-    {
-
-   
-        
-
-            
-        
-
-        if (capsule.velocity.x ==0 && capsule.velocity.y ==0 && capsule.velocity.z ==0&&seperator==null)
-        {
-            capsule.transform.position = new Vector3(-8,0,0);
-            capsule.transform.rotation = Quaternion.Euler(Vector3.up);
-            Debug.Log("sadfkljhsdlfkj");
-            capsule.useGravity = false;
-        }
-        
-
-    }
+    
 
     
 
