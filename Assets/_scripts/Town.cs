@@ -9,6 +9,8 @@ using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
+
+
     #region public properties
     public int CoinsPerTap = 5;
     public GameObject GachaUIPrefab;
@@ -20,6 +22,7 @@ public class Town : MonoBehaviour
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
     private Player _player = null;
+    private List<Player.PlacedGachaData> _placedGachas;
     
     #endregion
 
@@ -45,9 +48,9 @@ public class Town : MonoBehaviour
     void Start()
     {
         _player = Player.Instance;
-        Debug.Assert(_player != null, "player not found.");
+        _placedGachas = _player.placedInTownGachas;
         InitMenu();
-
+        LoadPlacedGachas();
     }
 
     void Update()
@@ -64,6 +67,8 @@ public class Town : MonoBehaviour
         Screen.orientation = ScreenOrientation.Landscape;
     }
 
+
+    #endregion
     /// <summary>
     /// Change to Menu scene when excape key is pressed.
     /// </summary>
@@ -74,7 +79,18 @@ public class Town : MonoBehaviour
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
-    #endregion
+
+    private void LoadPlacedGachas()
+    {
+        foreach (Player.PlacedGachaData data in _placedGachas)
+        {
+            GameObject newGacha = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(data.id));
+            newGacha.transform.position = data.position;
+            newGacha.transform.rotation = data.rotation;
+            newGacha.transform.localScale = data.scale;
+            newGacha.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
+        }
+    }
 
     #region GUI
     void InitMenu()
@@ -109,6 +125,7 @@ public class Town : MonoBehaviour
     void GachaDragEventHandler(GachaID draggedGachaId)
     {
          _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
+        _gachaToPlace.GetComponent<Gacha>().ID = draggedGachaId;
         _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
     }
 
@@ -118,7 +135,11 @@ public class Town : MonoBehaviour
     /// <param name="eventData"></param>
     void GachaDropEventHandler(PointerEventData eventData)
     {
-       _gachaToPlace = null;
+        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,  
+            _gachaToPlace.transform.position,
+            _gachaToPlace.transform.rotation,
+            _gachaToPlace.transform.localScale));
+        _gachaToPlace = null;
     }
 
     /// <summary>

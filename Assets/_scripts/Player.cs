@@ -7,6 +7,23 @@ using System.IO;
 
 public class Player : MonoBehaviour
 {
+    [Serializable]
+    public struct PlacedGachaData
+    {
+        public GachaID id;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale;
+
+        public PlacedGachaData(GachaID a_id, Vector3 a_position, Quaternion a_rotation, Vector3 a_scale)
+        {
+            id = a_id;
+            position = a_position;
+            rotation = a_rotation;
+            scale = a_scale;
+        }
+
+    }
     #region public properties
 
 
@@ -19,7 +36,7 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public List<GachaID> gachaCollection;
-    public List<GachaID> placedInTownGachas = new List<GachaID>();
+    public List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
     public int Selected = 0;
     #endregion
 
