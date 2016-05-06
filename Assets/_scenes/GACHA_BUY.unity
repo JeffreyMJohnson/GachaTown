@@ -1274,34 +1274,38 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.17465183
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.079141796
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.40508336
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.89394677
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.17465183
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.079141796
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.40508336
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_LocalRotation.w
+      value: 0.89394677
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -68,7 +68,7 @@ public class BuyGacha : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            HandleClick(GameManager.Scene.MAIN);
+            HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
         

@@ -24,7 +24,7 @@ public class GachaBall : MonoBehaviour
     {
         if (collision.transform.gameObject.name == "GachaWin")
         {
-            canWin = !canWin;
+            canWin = true;
         }
     }
 
@@ -40,7 +40,8 @@ public class GachaBall : MonoBehaviour
         if (capsule.velocity.x <.1&& capsule.velocity.x>-.1&&canWin)
         {
             capsule.transform.position = new Vector3(-8, 0, 0);
-            capsule.transform.rotation = Quaternion.Euler(Vector3.up);           
+            capsule.transform.rotation = Quaternion.Euler(Vector3.up);
+            capsule.transform.rotation = Quaternion.Euler(Vector3.forward);    
             capsule.useGravity = false;
             capsule.isKinematic = true;
             animator.SetTrigger("OpenGacha");
