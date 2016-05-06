@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
         {
             AudioManager.Instance.BackgroundAudioPlay(GameManager.Scene.MAIN);
         }
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()

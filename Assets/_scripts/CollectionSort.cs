@@ -39,8 +39,7 @@ public class CollectionSort : MonoBehaviour
     #region unity lifecycle methods
     void Start()
     {
-        player = GameObject.FindObjectOfType<Player>();
-        Debug.Assert(player != null, "no Player script in scene.");
+        player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
 
         zoomLevelOrigin = 15;

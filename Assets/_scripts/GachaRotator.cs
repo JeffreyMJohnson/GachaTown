@@ -10,31 +10,26 @@ public class GachaRotator : MonoBehaviour
     public Text gachaDisplay;
     public Text moneyDisplay;
     public int selectedGacha = 0;
-    public float rotateTime = 15; //in frames
+    public int rotateTime = 15; //in frames
     #endregion
-    
+
     #region private fields
     private int maxGachaSetCount;
     private GameObject[] gachaMachines;
     private Transform[] gachaTransforms;
     private float rotationInterval = 0;
-    private float rotateStart = 15;
+    private int rotateStart = 15;
     private Player playerScript;
     private int gachaCount = 0;
     #endregion
 
     #region unity lifecycle methods
-void Start()
+    void Start()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        Debug.Assert(playerObject != null, "player gameObject nout found.");
+        GameObject playerObject = Player.Instance.gameObject;
 
-        playerScript = playerObject.GetComponent<Player>();
-        Debug.Assert(playerScript != null, "Did not find Player script.");
-
-
-        //audioSource = GetComponent<AudioSource>();
-        //Debug.Assert(audioSource != null, "audio source component not found.");
+        playerScript = Player.Instance;
+        
 
         selectedGacha = playerScript.Selected;
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
@@ -62,11 +57,13 @@ void Start()
 
         for (int i = 0; i < selectedGacha; i++)
         {
-            transform.Rotate(0,-rotationInterval, 0);
+            transform.Rotate(0, -rotationInterval, 0);
         }
         TextUpdate();
 
         maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()
@@ -80,14 +77,14 @@ void Start()
             //bug add deltaTime for timing not frame count.  if you want frame count use an int
             rotateStart++;
 
-            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), rotateStart / rotateTime) - transform.eulerAngles.y, 0);
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
     }
     #endregion
 
     void TextUpdate()
     {
-        gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5";
+        gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5\n" + GameManager.Instance.masterGachaSetList[selectedGacha].name;
     }
 
     /// <summary>
@@ -141,7 +138,7 @@ void Start()
     }
 
     //I'm not being dumb, it's used by a button
-    
+
     public void SelectGacha()
     {
         //pass selectedGacha to player

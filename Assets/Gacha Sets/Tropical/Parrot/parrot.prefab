@@ -915,7 +915,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 169594}
-  m_LocalRotation: {x: 0.99176633, y: -0.12806067, z: 0.00026123182, w: 0.00028640343}
+  m_LocalRotation: {x: 0.9917662, y: -0.12806065, z: 0.0002612318, w: 0.0002864034}
   m_LocalPosition: {x: -0.52057487, y: 5.287437e-16, z: -4.763803e-18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1068,6 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 1
+  gachaUI: {fileID: 21300000, guid: bca60789075ef8d43a2fded20903be0c, type: 3}
   ID:
     _setIndex: 0
     _gachaIndex: 0
@@ -1158,7 +1159,12 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: gachaUI
+      value: 
+      objectReference: {fileID: 21300000, guid: bca60789075ef8d43a2fded20903be0c,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 105412}

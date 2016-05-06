@@ -26,11 +26,10 @@ public class BuyGacha : MonoBehaviour
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
 
-        player = playerObject.GetComponent<Player>();
-        Debug.Assert(player != null, "player script was not found.");
+        player = Player.Instance;
 
         controller = GetComponent<Animator>();
-
+        
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
@@ -62,6 +61,7 @@ public class BuyGacha : MonoBehaviour
             }
         }
 
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()

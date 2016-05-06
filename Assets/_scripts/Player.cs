@@ -7,31 +7,55 @@ using System.IO;
 
 public class Player : MonoBehaviour
 {
+    [Serializable]
+    public struct PlacedGachaData
+    {
+        public GachaID id;
+        public Vector3 position;
+        public Quaternion rotation;
+        public Vector3 scale;
+
+        public PlacedGachaData(GachaID a_id, Vector3 a_position, Quaternion a_rotation, Vector3 a_scale)
+        {
+            id = a_id;
+            position = a_position;
+            rotation = a_rotation;
+            scale = a_scale;
+        }
+
+    }
     #region public properties
 
-    
+
     public int TotalCoins
     {
         get { return _totalCoins; }
         private set { _totalCoins = value; }
     }
 
-    [SerializeField]
+    public static Player Instance;
+
     public List<GachaID> gachaCollection;
+    public List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
     public int Selected = 0;
     #endregion
 
     #region private fields
-    Transform collectionParent;
     [SerializeField]
     private int _totalCoins;
-
     #endregion
 
     #region unity lifecycle methods
     void Awake()
     {
-        collectionParent = GameObject.Find("Collection").transform;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
         LoadState();
     }
 
@@ -42,6 +66,8 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Public API
+
+
     public void AddGachaToList(GachaID gachaID)
     {
         if (gachaCollection == null)
@@ -83,7 +109,7 @@ public class Player : MonoBehaviour
     private void SaveState()
     {
         StreamWriter writer = new StreamWriter(Application.persistentDataPath + Constants.PLAYER_STATE_PATH);
-        string s = JsonUtility.ToJson(this);
+        //string s = JsonUtility.ToJson(this);
         writer.Write(JsonUtility.ToJson(this));
         writer.Close();
     }

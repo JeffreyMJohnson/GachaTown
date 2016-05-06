@@ -8,6 +8,7 @@ public class SplashScreen : MonoBehaviour
     void Start()
     {
         StartCoroutine(LoadMainMenu(SplashWaitTimer));
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     IEnumerator LoadMainMenu(float seconds)
