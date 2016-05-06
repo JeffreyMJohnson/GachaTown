@@ -8,12 +8,16 @@ public class BuyGacha : MonoBehaviour
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
-
+    public Rigidbody capsule;
+    public GameObject seperator;
+    GameObject instanceSep = null;
     #endregion
 
     #region private fields
     Player player;
     Animator controller;
+    CoinDrag coin;
+    
     #endregion
 
     #region unity lifecycle methods
@@ -25,7 +29,9 @@ public class BuyGacha : MonoBehaviour
         player = Player.Instance;
 
         controller = GetComponent<Animator>();
+        
 
+        coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
         //audioSource = GetComponent<AudioSource>();
         //Debug.Assert(audioSource != null, "audio source component was not found.");
@@ -54,16 +60,18 @@ public class BuyGacha : MonoBehaviour
                     break;
             }
         }
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            HandleClick(GameManager.Scene.MAIN);
+            HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
-
+        
     }
     #endregion
 
@@ -107,14 +115,26 @@ public class BuyGacha : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.name == "gachamachine_dial")
+                if (hit.collider.gameObject.name == "gachamachine_dial"&& coin.isInSlot)
                 {
-                    Debug.Log("fooo");
+                    Destroy(seperator);
+                    seperator = null;
                     controller.SetTrigger("RotateDial");
                     AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
+
+                  
+                        Buy();
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
+                        
+                        coin.isInSlot = false;
+                    capsule.useGravity = !capsule.useGravity;
+
                 }
             }
         }
     }
+    
+
+    
 
 }
