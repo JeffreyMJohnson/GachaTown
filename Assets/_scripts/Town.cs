@@ -44,7 +44,7 @@ public class Town : MonoBehaviour
 
     void Start()
     {
-        _player = GameManager.Instance.gameObject.GetComponentInChildren<Player>();
+        _player = Player.Instance;
         Debug.Assert(_player != null, "player not found.");
         InitMenu();
 

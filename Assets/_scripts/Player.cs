@@ -9,27 +9,36 @@ public class Player : MonoBehaviour
 {
     #region public properties
 
-    
+
     public int TotalCoins
     {
         get { return _totalCoins; }
         private set { _totalCoins = value; }
     }
 
-    [SerializeField]
+    public static Player Instance;
+
     public List<GachaID> gachaCollection;
+    public List<GachaID> placedInTownGachas = new List<GachaID>();
     public int Selected = 0;
     #endregion
 
     #region private fields
     [SerializeField]
     private int _totalCoins;
-
     #endregion
 
     #region unity lifecycle methods
     void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
         LoadState();
     }
 
@@ -40,6 +49,8 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Public API
+
+
     public void AddGachaToList(GachaID gachaID)
     {
         if (gachaCollection == null)

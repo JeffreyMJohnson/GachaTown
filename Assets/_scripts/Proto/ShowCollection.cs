@@ -21,7 +21,7 @@ public class ShowCollection : MonoBehaviour
     #region unity lifecycle methods
     void Start()
     {
-        player = FindObjectOfType<Player>();
+        player = Player.Instance;
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
         SetCollection(currentPageNumber);

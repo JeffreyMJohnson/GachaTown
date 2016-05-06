@@ -12,7 +12,7 @@ public class GachaRotator : MonoBehaviour
     public int selectedGacha = 0;
     public int rotateTime = 15; //in frames
     #endregion
-    
+
     #region private fields
     private int maxGachaSetCount;
     private GameObject[] gachaMachines;
@@ -24,13 +24,12 @@ public class GachaRotator : MonoBehaviour
     #endregion
 
     #region unity lifecycle methods
-void Start()
+    void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject nout found.");
 
-        playerScript = playerObject.GetComponent<Player>();
-        Debug.Assert(playerScript != null, "Did not find Player script.");
+        playerScript = Player.Instance;
 
 
         //audioSource = GetComponent<AudioSource>();
@@ -62,7 +61,7 @@ void Start()
 
         for (int i = 0; i < selectedGacha; i++)
         {
-            transform.Rotate(0,-rotationInterval, 0);
+            transform.Rotate(0, -rotationInterval, 0);
         }
         TextUpdate();
 
@@ -141,7 +140,7 @@ void Start()
     }
 
     //I'm not being dumb, it's used by a button
-    
+
     public void SelectGacha()
     {
         //pass selectedGacha to player
