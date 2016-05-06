@@ -25,10 +25,7 @@ public class BuyGacha : MonoBehaviour
         player = Player.Instance;
 
         controller = GetComponent<Animator>();
-
-
-        //audioSource = GetComponent<AudioSource>();
-        //Debug.Assert(audioSource != null, "audio source component was not found.");
+        
 
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
         Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
@@ -54,6 +51,8 @@ public class BuyGacha : MonoBehaviour
                     break;
             }
         }
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()

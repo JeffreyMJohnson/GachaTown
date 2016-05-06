@@ -26,14 +26,10 @@ public class GachaRotator : MonoBehaviour
     #region unity lifecycle methods
     void Start()
     {
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        Debug.Assert(playerObject != null, "player gameObject nout found.");
+        GameObject playerObject = Player.Instance.gameObject;
 
         playerScript = Player.Instance;
-
-
-        //audioSource = GetComponent<AudioSource>();
-        //Debug.Assert(audioSource != null, "audio source component not found.");
+        
 
         selectedGacha = playerScript.Selected;
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
@@ -66,6 +62,8 @@ public class GachaRotator : MonoBehaviour
         TextUpdate();
 
         maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()

@@ -28,7 +28,8 @@ public class Settings : MonoBehaviour
 
         muteSoundEffects.isOn = AudioManager.Instance.SoundEffectsMuted;
         muteSoundEffects.onValueChanged.AddListener(HandleSoundEffectsMuteOnValueChangeEvent);
-        
+
+        Screen.orientation = ScreenOrientation.Portrait;
     }
 
     void Update()
