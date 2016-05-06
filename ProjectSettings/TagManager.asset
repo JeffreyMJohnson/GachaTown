@@ -7,6 +7,7 @@ TagManager:
   - GachaDisplay
   - GachaMachine
   - Coin
+  - GachaWin
   layers:
   - Default
   - TransparentFX

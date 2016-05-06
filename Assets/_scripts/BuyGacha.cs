@@ -8,13 +8,16 @@ public class BuyGacha : MonoBehaviour
     public Text moneyTextField;
     public Text displayTextField;
     public int GachaSet = 0;
-    
+    public Rigidbody capsule;
+    public GameObject seperator;
+    GameObject instanceSep = null;
     #endregion
 
     #region private fields
     Player player;
     Animator controller;
     CoinDrag coin;
+    
     #endregion
 
     #region unity lifecycle methods
@@ -58,6 +61,7 @@ public class BuyGacha : MonoBehaviour
                     break;
             }
         }
+
     }
 
     void Update()
@@ -67,7 +71,7 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.MAIN);
         }
         RotateDial();
-
+        
     }
     #endregion
 
@@ -113,7 +117,8 @@ public class BuyGacha : MonoBehaviour
             {
                 if (hit.collider.gameObject.name == "gachamachine_dial"&& coin.isInSlot)
                 {
-                    
+                    Destroy(seperator);
+                    seperator = null;
                     controller.SetTrigger("RotateDial");
                     AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
 
@@ -122,11 +127,33 @@ public class BuyGacha : MonoBehaviour
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                         
                         coin.isInSlot = false;
-                    
 
+
+                    //WinGacha();
                 }
             }
         }
     }
+    public void WinGacha()
+    {
+
+   
+        
+
+            
+        
+
+        if (capsule.velocity.x ==0 && capsule.velocity.y ==0 && capsule.velocity.z ==0&&seperator==null)
+        {
+            capsule.transform.position = new Vector3(-8,0,0);
+            capsule.transform.rotation = Quaternion.Euler(Vector3.up);
+            Debug.Log("sadfkljhsdlfkj");
+            capsule.useGravity = false;
+        }
+        
+
+    }
+
+    
 
 }
