@@ -13,5 +13,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collection:
   - {fileID: 170978, guid: af7c2cee576b62f47a7aedc5d0be5b0d, type: 2}
+  - {fileID: 195232, guid: a462d770bc19de64e9bdd7540f8d25f2, type: 2}
   name: City
   description: Welcome to Gotham
