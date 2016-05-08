@@ -25,12 +25,14 @@ public class GameManager : MonoBehaviour
 
     public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
 
+    public CameraContoller.CameraZoomCompleteEvent OnZoomComplete;
     #endregion
 
     #region private fields
 
     //private DeviceOrientationController orientationController = new DeviceOrientationController();
     private Scene _currentScene;
+    private CameraContoller _cameraController;
     #endregion
 
     #region unity lifecycle methods
@@ -47,6 +49,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        _cameraController = GetComponent<CameraContoller>();
+        OnZoomComplete = _cameraController.OnZoomComplete;
     }
     #endregion
 
@@ -123,6 +127,23 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.BUTTON_PRESS_POP);
         UnityEngine.SceneManagement.SceneManager.LoadScene((int)scene);
         AudioManager.Instance.BackgroundAudioPlay(scene);
+    }
+
+    /// <summary>
+    /// Zoom the current camera to closeup on given gacha
+    /// </summary>
+    /// <param name="gacha"></param>
+    public void ZoomToGacha(GameObject gacha)
+    {
+        _cameraController.Closeup(gacha);
+    }
+
+    /// <summary>
+    /// Return the zoomed camera to original position and rotation.
+    /// </summary>
+    public void CameraReturnToOriginal()
+    {
+        _cameraController.PullBackToOriginal();
     }
 
     //todo this needs to find a better home
