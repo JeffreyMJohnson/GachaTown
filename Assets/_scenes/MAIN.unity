@@ -273,6 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gachaCollection: []
+  placedInTownGachas: []
   Selected: 1
   _totalCoins: 0
 --- !u!1 &663162456
@@ -1250,6 +1251,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 2134826610}
   - 114: {fileID: 2134826611}
+  - 114: {fileID: 2134826612}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1287,6 +1289,23 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
   - {fileID: 11400000, guid: dac711c34e268094d8b15a8f4ec405c1, type: 2}
   gachaUIPrefab: {fileID: 153162, guid: 63d5144661fb0c94ea38f93e9e60c03f, type: 2}
+--- !u!114 &2134826612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2134826609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b480b271b53263141b27d29dca922a84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentOffset: {x: 0, y: 5, z: 5}
+  OnZoomReturn:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

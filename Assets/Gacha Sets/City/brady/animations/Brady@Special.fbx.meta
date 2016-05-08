@@ -53,7 +53,7 @@ ModelImporter:
     400042: spine_2
     400044: toe_l
     400046: toe_r
-    7400000: Take 001
+    7400000: Special
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -75,7 +75,98 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Special
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0
+        functionName: PlaySpecialAnimationEffect
+        data: 
+        objectReferenceParameter: {fileID: 125948, guid: d820e281993a92f4fb12d5d6ad80403d,
+          type: 2}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.99841017
+        functionName: SpecialAnimationComplete
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Controls
+        weight: 1
+      - path: Controls/Hip
+        weight: 1
+      - path: Controls/Hip/leg_l
+        weight: 1
+      - path: Controls/Hip/leg_l/shin_l
+        weight: 1
+      - path: Controls/Hip/leg_l/shin_l/foot_l
+        weight: 1
+      - path: Controls/Hip/leg_l/shin_l/foot_l/foot_l 1
+        weight: 1
+      - path: Controls/Hip/leg_l/shin_l/foot_l/foot_l 1/toe_l
+        weight: 1
+      - path: Controls/Hip/leg_r
+        weight: 1
+      - path: Controls/Hip/leg_r/shin_r
+        weight: 1
+      - path: Controls/Hip/leg_r/shin_r/foot_r
+        weight: 1
+      - path: Controls/Hip/leg_r/shin_r/foot_r/foot_r 1
+        weight: 1
+      - path: Controls/Hip/leg_r/shin_r/foot_r/foot_r 1/toe_r
+        weight: 1
+      - path: Controls/Hip/spine_1
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/neck
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/neck/head
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_l
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_l/elbow_l
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_l/elbow_l/hand_l
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_r
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_r/elbow_r
+        weight: 1
+      - path: Controls/Hip/spine_1/spine_2/clavicle/shoulder_r/elbow_r/hand_r
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []

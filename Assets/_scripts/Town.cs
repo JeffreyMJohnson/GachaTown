@@ -51,6 +51,7 @@ public class Town : MonoBehaviour
         _placedGachas = _player.placedInTownGachas;
         InitMenu();
         LoadPlacedGachas();
+        GameManager.Instance.OnZoomComplete.AddListener(HandleCameraZoomCompleteEvent);
     }
 
     void Update()
@@ -65,6 +66,7 @@ public class Town : MonoBehaviour
     void OnDestroy()
     {
         Screen.orientation = ScreenOrientation.Landscape;
+        GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
     }
 
 
@@ -79,6 +81,7 @@ public class Town : MonoBehaviour
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
+
 
     private void LoadPlacedGachas()
     {
@@ -172,9 +175,13 @@ public class Town : MonoBehaviour
         _player.AddCoins(CoinsPerTap);
         if (clickedObject.IsAnimated)
         {
-            clickedObject.PlayAnimation(Gacha.Animation.Special);
-
+            GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
         }
+    }
+
+    private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)
+    {
+        clickedGacha.PlayAnimation(Gacha.Animation.Special);
     }
     #endregion
 
