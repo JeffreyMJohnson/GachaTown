@@ -8,9 +8,8 @@ public class CoinDrag : MonoBehaviour
     //cached reference to child prefab for instantiating when dragged
     GameObject coinPrefab;
     BuyGacha machine;
+    public bool isInSlot = false;
     
-    
-
     void Start()
     {
         coinPrefab = transform.FindChild("Coin_1").gameObject;
@@ -20,35 +19,58 @@ public class CoinDrag : MonoBehaviour
 
     void OnMouseDrag()
     {
-         if (draggedCoin == null)
+        isInSlot = false;
+        if (draggedCoin == null)
         {
             draggedCoin = Instantiate<GameObject>(coinPrefab);
         }
         //todo this will need to be changed to z axis when the model facing issue is corrected.
         Vector3 coinPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector3.right * 3)-(Vector3.down*.5f) ;
+
         draggedCoin.transform.position = coinPosition;
+        draggedCoin.transform.localEulerAngles = new Vector3(90, 0, 90);
+
+
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0)&&!isInSlot)
         {
+            
+
             //doing raycast here to find drop point. the coinslot collider doesn't belong to this object so the OnMouseUp function wont work here
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray);
+           
             foreach (RaycastHit hit in hits)
             {
+                
                 //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
                 if (hit.collider.gameObject.name == "gachamachine_coinslot" && draggedCoin != null)
                 {
-                    machine.Buy();
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
+                   
+                    draggedCoin.transform.rotation = Quaternion.Euler(90.0f, 356f, 0f);
+                   
+                    isInSlot = true;
                 }
+                
             }
             //either way destroy the coin clone when button released.
-            Destroy(draggedCoin);
-            draggedCoin = null;
+
+            if (!isInSlot)
+            {
+                Destroy(draggedCoin);
+                draggedCoin = null;
+
+            }
+
+
         }
+        
+
+
+
     }
 
 }
