@@ -43,6 +43,15 @@ public class Town : MonoBehaviour
         Debug.Assert(_scrollViewContent != null);
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
+
+        //hack: this is dependent on the hearchy of the scrollview parent to stay the same. fuck with it and things will break.
+        //set handlers for expand/shrink button
+        RectTransform scrollview = _scrollViewContent.parent.parent as RectTransform;
+        Debug.Assert(scrollview.name == "Scroll View", "Didn't find the scroll view parent, did you move stuff around??");
+        ExpandShrinkButton button = scrollview.GetComponentInChildren<ExpandShrinkButton>();
+        Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
+        button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
+        button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
     }
 
     void Start()
@@ -182,6 +191,16 @@ public class Town : MonoBehaviour
     private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)
     {
         clickedGacha.PlayAnimation(Gacha.Animation.Special);
+    }
+
+    private void HandleExpandButtonClickEvent()
+    {
+        Debug.Log("Handle expand button click.");
+    }
+
+    private void HandleShrinkButtonClickEvent()
+    {
+        Debug.Log("Handle shrink button click.");
     }
     #endregion
 
