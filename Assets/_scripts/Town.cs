@@ -28,7 +28,7 @@ public class Town : MonoBehaviour
     private Player _player = null;
     private List<Player.PlacedGachaData> _placedGachas;
     private float _maxScrollViewWidth = 0;
-    
+
     #endregion
 
     #region unity lifecycle methods
@@ -38,30 +38,40 @@ public class Town : MonoBehaviour
         _canvas = FindObjectOfType<Canvas>();
         Debug.Assert(_canvas != null, "_canvas not found.");
 
+        Button backButton = null;
+
         foreach (RectTransform child in _canvas.GetComponentsInChildren<RectTransform>())
         {
-            if (child.name == "Content")
+            switch (child.name)
             {
-                _scrollViewContent = child;
+                case "Content":
+                    _scrollViewContent = child;
+                    break;
+                case "Scroll View":
+                    _scrollView = child;
+                    break;
+                case "Back":
+                    backButton = child.GetComponent<Button>();
+                    break;
             }
 
-            else if (child.name == "Scroll View")
-            {
-                _scrollView = child;
-            }
         }
         Debug.Assert(_scrollViewContent != null);
         Debug.Assert(_scrollView != null);
+        Debug.Assert(backButton != null);
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
 
         _maxScrollViewWidth = _scrollView.rect.width;
-       
+
         //set handlers for expand/shrink button
         ExpandShrinkButton button = _scrollView.GetComponentInChildren<ExpandShrinkButton>();
         Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
         button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
         button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
+
+        //set handler for back button
+        backButton.onClick.AddListener(HandleBackButtonClickEvent);
     }
 
     void Start()
@@ -78,7 +88,7 @@ public class Town : MonoBehaviour
         UpdateEscapeKey();
 
         UpdateGachaDrag();
-        
+
     }
 
     void OnDestroy()
@@ -134,7 +144,7 @@ public class Town : MonoBehaviour
         scrollRect.horizontalNormalizedPosition = 0;
 
     }
-    
+
     #endregion
 
     #region UI Handlers
@@ -145,7 +155,7 @@ public class Town : MonoBehaviour
     /// <param name="eventData"></param>
     void GachaDragEventHandler(GachaID draggedGachaId)
     {
-         _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
+        _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
         _gachaToPlace.GetComponent<Gacha>().ID = draggedGachaId;
         _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
     }
@@ -156,7 +166,7 @@ public class Town : MonoBehaviour
     /// <param name="eventData"></param>
     void GachaDropEventHandler(PointerEventData eventData)
     {
-        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,  
+        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,
             _gachaToPlace.transform.position,
             _gachaToPlace.transform.rotation,
             _gachaToPlace.transform.localScale));
@@ -214,6 +224,13 @@ public class Town : MonoBehaviour
         StartCoroutine(ShrinkScrollView());
     }
 
+    private void HandleBackButtonClickEvent()
+    {
+        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    #endregion
+    #region coroutines
     private IEnumerator ShrinkScrollView()
     {
         float t = 0;
@@ -245,6 +262,5 @@ public class Town : MonoBehaviour
 
     }
     #endregion
-
 
 }
