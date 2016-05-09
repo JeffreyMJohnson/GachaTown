@@ -281,6 +281,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CoinsPerTap: 5
   GachaUIPrefab: {fileID: 0}
+  ScrollviewShrinkStep: 0.03
 --- !u!224 &385542424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -975,7 +976,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 273284803}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.749499
+  m_Size: 0
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1308,11 +1309,11 @@ RectTransform:
   - {fileID: 1334528343}
   m_Father: {fileID: 1339449788}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 41.9, y: -90}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -55.19995, y: 350}
   m_SizeDelta: {x: 1213.8, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &2126993034
 MonoBehaviour:
   m_ObjectHideFlags: 0

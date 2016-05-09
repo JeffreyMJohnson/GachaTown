@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System;
 
 public class ExpandShrinkButton : MonoBehaviour,
     IPointerClickHandler

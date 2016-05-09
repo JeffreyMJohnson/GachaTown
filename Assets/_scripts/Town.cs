@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -15,14 +16,18 @@ public class Town : MonoBehaviour
     public int CoinsPerTap = 5;
     public GameObject GachaUIPrefab;
 
+    public float ScrollviewShrinkStep = .01f;
+
     #endregion
 
     #region private fields
     private Canvas _canvas = null;
+    private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
     private Player _player = null;
     private List<Player.PlacedGachaData> _placedGachas;
+    private float _maxScrollViewWidth = 0;
     
     #endregion
 
@@ -39,16 +44,21 @@ public class Town : MonoBehaviour
             {
                 _scrollViewContent = child;
             }
+
+            else if (child.name == "Scroll View")
+            {
+                _scrollView = child;
+            }
         }
         Debug.Assert(_scrollViewContent != null);
+        Debug.Assert(_scrollView != null);
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
 
-        //hack: this is dependent on the hearchy of the scrollview parent to stay the same. fuck with it and things will break.
+        _maxScrollViewWidth = _scrollView.rect.width;
+       
         //set handlers for expand/shrink button
-        RectTransform scrollview = _scrollViewContent.parent.parent as RectTransform;
-        Debug.Assert(scrollview.name == "Scroll View", "Didn't find the scroll view parent, did you move stuff around??");
-        ExpandShrinkButton button = scrollview.GetComponentInChildren<ExpandShrinkButton>();
+        ExpandShrinkButton button = _scrollView.GetComponentInChildren<ExpandShrinkButton>();
         Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
         button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
         button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
@@ -68,8 +78,7 @@ public class Town : MonoBehaviour
         UpdateEscapeKey();
 
         UpdateGachaDrag();
-
-
+        
     }
 
     void OnDestroy()
@@ -196,11 +205,44 @@ public class Town : MonoBehaviour
     private void HandleExpandButtonClickEvent()
     {
         Debug.Log("Handle expand button click.");
+        StartCoroutine(expandScrollView());
     }
 
     private void HandleShrinkButtonClickEvent()
     {
         Debug.Log("Handle shrink button click.");
+        StartCoroutine(ShrinkScrollView());
+    }
+
+    private IEnumerator ShrinkScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(_maxScrollViewWidth, 0, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+        //edge case for float math equality check.
+        _scrollView.sizeDelta = new Vector2(
+               0,
+               _scrollView.sizeDelta.y);
+    }
+
+    private IEnumerator expandScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(0, _maxScrollViewWidth, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+
     }
     #endregion
 
