@@ -10,7 +10,7 @@ public class GachaUI : MonoBehaviour,
     IEndDragHandler
 {
     public GachaID ID { get; set; }
-    public class OnGachaDragEvent : UnityEvent<GachaID> { }
+    public class OnGachaDragEvent : UnityEvent<GameObject> { }
     public class OnGachaDropEvent : UnityEvent<PointerEventData> { }
     public OnGachaDragEvent onGachaDrag = new OnGachaDragEvent();
     public OnGachaDropEvent onGachaDrop = new OnGachaDropEvent();
@@ -18,9 +18,7 @@ public class GachaUI : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        GameObject clickedObject = eventData.pointerDrag;
-        GachaUI script = clickedObject.GetComponent<GachaUI>();
-        onGachaDrag.Invoke(script.ID);
+        onGachaDrag.Invoke(eventData.pointerDrag);
     }
 
     public void OnDrag(PointerEventData eventData) { }

@@ -56,9 +56,9 @@ public class Town : MonoBehaviour
             }
 
         }
-        Debug.Assert(_scrollViewContent != null);
-        Debug.Assert(_scrollView != null);
-        Debug.Assert(backButton != null);
+        Debug.Assert(_scrollViewContent != null, "scroll view content not found.");
+        Debug.Assert(_scrollView != null, "scroll view not found.");
+        Debug.Assert(backButton != null, "back button not found.");
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
 
@@ -137,8 +137,8 @@ public class Town : MonoBehaviour
             GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
             gachaUIInstance.transform.SetParent(_scrollViewContent);
             GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
-            gachaUI.onGachaDrag.AddListener(GachaDragEventHandler);
-            gachaUI.onGachaDrop.AddListener(GachaDropEventHandler);
+            gachaUI.onGachaDrag.AddListener(HandleGachaUIDragEvent);
+            gachaUI.onGachaDrop.AddListener(HandleGachaUIDropEvent);
         }
         ScrollRect scrollRect = _scrollViewContent.GetComponentInParent<ScrollRect>();
         scrollRect.horizontalNormalizedPosition = 0;
@@ -149,27 +149,18 @@ public class Town : MonoBehaviour
 
     #region UI Handlers
 
-    /// <summary>
-    /// Handle the Drag event fired by GachaUI object
-    /// </summary>
-    /// <param name="eventData"></param>
-    void GachaDragEventHandler(GachaID draggedGachaId)
+    void HandleGachaUIDragEvent(GameObject draggedObject)
     {
-        _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
-        _gachaToPlace.GetComponent<Gacha>().ID = draggedGachaId;
-        _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
+        GachaUI gachaUIScript = draggedObject.GetComponent<GachaUI>();
+        _gachaToPlace = GameObject.Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(gachaUIScript.ID));
+        Gacha gachaScript = _gachaToPlace.GetComponent<Gacha>();
+        gachaScript.ID = gachaUIScript.ID;
+        gachaScript.OnClick.AddListener(HandleGachaOnClickEvent);
     }
 
-    /// <summary>
-    /// Handle drop event fired by GachaUI
-    /// </summary>
-    /// <param name="eventData"></param>
-    void GachaDropEventHandler(PointerEventData eventData)
+    void HandleGachaUIDropEvent(PointerEventData eventData)
     {
-        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,
-            _gachaToPlace.transform.position,
-            _gachaToPlace.transform.rotation,
-            _gachaToPlace.transform.localScale));
+        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace));
         _gachaToPlace = null;
     }
 
@@ -193,6 +184,7 @@ public class Town : MonoBehaviour
     /// <summary>
     /// return to menu button onclick event handler.
     /// </summary>
+    [Obsolete]
     private void HandleMenuButtonClick()
     {
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
@@ -200,11 +192,15 @@ public class Town : MonoBehaviour
 
     private void HandleGachaOnClickEvent(Gacha clickedObject)
     {
-        _player.AddCoins(CoinsPerTap);
-        if (clickedObject.IsAnimated)
+        if (_gachaToPlace == null)
         {
-            GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
+            _player.AddCoins(CoinsPerTap);
+            if (clickedObject.IsAnimated)
+            {
+                GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
+            }
         }
+
     }
 
     private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)

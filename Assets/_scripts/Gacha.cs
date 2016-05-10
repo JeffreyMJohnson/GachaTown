@@ -107,14 +107,6 @@ public class Gacha : MonoBehaviour
     {
         PlayAnimation(Animation.Idle);
     }
-
-    /// <summary>
-    /// special animation finished handler
-    /// </summary>
-    void HandleSpecialAnimationCompleteEvent()
-    {
-
-    }
     #endregion
 
     /// <summary>
@@ -124,7 +116,7 @@ public class Gacha : MonoBehaviour
     void UpdateClickEvent()
     {
         bool playingSpecialAnimation = IsAnimated && _animator.GetCurrentAnimatorStateInfo(0).IsName("special");
-        if (!playingSpecialAnimation && Input.GetMouseButtonUp(0))
+        if (!playingSpecialAnimation && Input.GetMouseButtonDown(0))
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
