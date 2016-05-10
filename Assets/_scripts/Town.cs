@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -15,15 +16,19 @@ public class Town : MonoBehaviour
     public int CoinsPerTap = 5;
     public GameObject GachaUIPrefab;
 
+    public float ScrollviewShrinkStep = .01f;
+
     #endregion
 
     #region private fields
     private Canvas _canvas = null;
+    private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
     private Player _player = null;
     private List<Player.PlacedGachaData> _placedGachas;
-    
+    private float _maxScrollViewWidth = 0;
+
     #endregion
 
     #region unity lifecycle methods
@@ -33,16 +38,40 @@ public class Town : MonoBehaviour
         _canvas = FindObjectOfType<Canvas>();
         Debug.Assert(_canvas != null, "_canvas not found.");
 
+        Button backButton = null;
+
         foreach (RectTransform child in _canvas.GetComponentsInChildren<RectTransform>())
         {
-            if (child.name == "Content")
+            switch (child.name)
             {
-                _scrollViewContent = child;
+                case "Content":
+                    _scrollViewContent = child;
+                    break;
+                case "Scroll View":
+                    _scrollView = child;
+                    break;
+                case "Back":
+                    backButton = child.GetComponent<Button>();
+                    break;
             }
+
         }
         Debug.Assert(_scrollViewContent != null);
+        Debug.Assert(_scrollView != null);
+        Debug.Assert(backButton != null);
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
+
+        _maxScrollViewWidth = _scrollView.rect.width;
+
+        //set handlers for expand/shrink button
+        ExpandShrinkButton button = _scrollView.GetComponentInChildren<ExpandShrinkButton>();
+        Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
+        button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
+        button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
+
+        //set handler for back button
+        backButton.onClick.AddListener(HandleBackButtonClickEvent);
     }
 
     void Start()
@@ -59,7 +88,6 @@ public class Town : MonoBehaviour
         UpdateEscapeKey();
 
         UpdateGachaDrag();
-
 
     }
 
@@ -116,7 +144,7 @@ public class Town : MonoBehaviour
         scrollRect.horizontalNormalizedPosition = 0;
 
     }
-    
+
     #endregion
 
     #region UI Handlers
@@ -127,7 +155,7 @@ public class Town : MonoBehaviour
     /// <param name="eventData"></param>
     void GachaDragEventHandler(GachaID draggedGachaId)
     {
-         _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
+        _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
         _gachaToPlace.GetComponent<Gacha>().ID = draggedGachaId;
         _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
     }
@@ -138,7 +166,7 @@ public class Town : MonoBehaviour
     /// <param name="eventData"></param>
     void GachaDropEventHandler(PointerEventData eventData)
     {
-        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,  
+        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,
             _gachaToPlace.transform.position,
             _gachaToPlace.transform.rotation,
             _gachaToPlace.transform.localScale));
@@ -183,7 +211,56 @@ public class Town : MonoBehaviour
     {
         clickedGacha.PlayAnimation(Gacha.Animation.Special);
     }
-    #endregion
 
+    private void HandleExpandButtonClickEvent()
+    {
+        Debug.Log("Handle expand button click.");
+        StartCoroutine(expandScrollView());
+    }
+
+    private void HandleShrinkButtonClickEvent()
+    {
+        Debug.Log("Handle shrink button click.");
+        StartCoroutine(ShrinkScrollView());
+    }
+
+    private void HandleBackButtonClickEvent()
+    {
+        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    #endregion
+    #region coroutines
+    private IEnumerator ShrinkScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(_maxScrollViewWidth, 0, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+        //edge case for float math equality check.
+        _scrollView.sizeDelta = new Vector2(
+               0,
+               _scrollView.sizeDelta.y);
+    }
+
+    private IEnumerator expandScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(0, _maxScrollViewWidth, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+
+    }
+    #endregion
 
 }
