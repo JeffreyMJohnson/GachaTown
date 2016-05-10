@@ -15,12 +15,13 @@ public class Player : MonoBehaviour
         public Quaternion rotation;
         public Vector3 scale;
 
-        public PlacedGachaData(GachaID a_id, Vector3 a_position, Quaternion a_rotation, Vector3 a_scale)
+        public PlacedGachaData(GameObject placedGacha)
         {
-            id = a_id;
-            position = a_position;
-            rotation = a_rotation;
-            scale = a_scale;
+            id = placedGacha.GetComponent<Gacha>().ID;
+            Transform gachaTransform = placedGacha.transform;
+            position = gachaTransform.position;
+            rotation = gachaTransform.rotation;
+            scale = gachaTransform.localScale;
         }
 
     }
