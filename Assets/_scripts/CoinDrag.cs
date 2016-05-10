@@ -51,7 +51,8 @@ public class CoinDrag : MonoBehaviour
                 {
                    
                     draggedCoin.transform.rotation = Quaternion.Euler(90.0f, 356f, 0f);
-                   
+                    draggedCoin.transform.position = new Vector3(-6.0f, 0.7f, -1.63f);
+
                     isInSlot = true;
                 }
                 

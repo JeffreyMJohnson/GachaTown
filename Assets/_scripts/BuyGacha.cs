@@ -127,7 +127,7 @@ public class BuyGacha : MonoBehaviour
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                         
                         coin.isInSlot = false;
-                    capsule.useGravity = !capsule.useGravity;
+                    capsule.isKinematic = !capsule.isKinematic;
 
                 }
             }
