@@ -469,6 +469,8 @@ MonoBehaviour:
   moneyTextField: {fileID: 0}
   displayTextField: {fileID: 0}
   GachaSet: 0
+  capsule: {fileID: 0}
+  seperator: {fileID: 0}
 --- !u!95 &818217488
 Animator:
   serializedVersion: 3

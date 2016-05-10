@@ -234,7 +234,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  idleAnimationTime: 60
+  gachaUI: {fileID: 0}
+  ID:
+    _setIndex: 0
+    _gachaIndex: 0
   OnClick:
     m_PersistentCalls:
       m_Calls: []

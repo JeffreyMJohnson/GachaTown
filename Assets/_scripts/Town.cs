@@ -56,9 +56,9 @@ public class Town : MonoBehaviour
             }
 
         }
-        Debug.Assert(_scrollViewContent != null);
-        Debug.Assert(_scrollView != null);
-        Debug.Assert(backButton != null);
+        Debug.Assert(_scrollViewContent != null, "scroll view content not found.");
+        Debug.Assert(_scrollView != null, "scroll view not found.");
+        Debug.Assert(backButton != null, "back button not found.");
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
 

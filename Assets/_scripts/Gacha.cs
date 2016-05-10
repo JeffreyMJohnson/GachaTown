@@ -107,14 +107,6 @@ public class Gacha : MonoBehaviour
     {
         PlayAnimation(Animation.Idle);
     }
-
-    /// <summary>
-    /// special animation finished handler
-    /// </summary>
-    void HandleSpecialAnimationCompleteEvent()
-    {
-
-    }
     #endregion
 
     /// <summary>
