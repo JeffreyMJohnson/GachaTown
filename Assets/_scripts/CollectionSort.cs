@@ -166,6 +166,7 @@ public class CollectionSort : MonoBehaviour
             pageDestination = transform.position + pageOffset;
         }
     }
+
     public void Next()
     {
         if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
