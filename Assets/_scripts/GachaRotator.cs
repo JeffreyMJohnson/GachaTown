@@ -26,7 +26,7 @@ public class GachaRotator : MonoBehaviour
     #region unity lifecycle methods
     void Start()
     {
-        GameObject playerObject = Player.Instance.gameObject;
+        //GameObject playerObject = Player.Instance.gameObject;
 
         playerScript = Player.Instance;
         

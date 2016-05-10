@@ -19,18 +19,20 @@ public class CollectionSort : MonoBehaviour
     Vector3 cameraOrigin;
     Vector3 pageDestination;
     Vector3 pageOrigin;
+    Text title;
+    List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
     Ray ray;
     RaycastHit hit;
     float zoomLevelOrigin;
     float zoomLevelDestination;
-    float scrollStart = 0;
-    float scrollTime = 20;
     float zoomStart = 0;
     float zoomTime = 20;
+    bool isZoomed = false;
+    float scrollStart = 0;
+    float scrollTime = 20;
     int currentPage = 0;
     const int MAX_GACHA_PER_PAGE = 9;
     AudioSource buttonPress;
-    bool isZoomed = false;
 
     Camera collectionCamera;
     private Player player;
@@ -41,15 +43,23 @@ public class CollectionSort : MonoBehaviour
     {
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
+        title = GameObject.Find("PageTitle").GetComponent<Text>();
 
-        zoomLevelOrigin = 15;
+        SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
+
+        foreach (SpriteRenderer spriterenderer in titleCardsToList)
+        {
+            spriterenderer.enabled = false;
+            titleCards.Add(spriterenderer);
+        }
+
+        collectionCamera = FindObjectOfType<Camera>();
+        zoomLevelOrigin = collectionCamera.orthographicSize;
         zoomLevelDestination = zoomLevelOrigin;
         pageOrigin = transform.position;
         pageDestination = pageOrigin;
         cameraOrigin = cameraStartPosition;
         cameraDestination = cameraOrigin;
-
-        collectionCamera = FindObjectOfType<Camera>();
 
         //todo use accessor for this collection
         if (GameManager.Instance.masterGachaSetList.Count == 0)
@@ -107,21 +117,25 @@ public class CollectionSort : MonoBehaviour
         if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit) && player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID)) //the gacha was hit and we have the gacha
+            if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
             {
-                if (!isZoomed)//zoom in
+                //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
+                if (player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID))
                 {
-                    //enable the description text here
-                    isZoomed = true;
-                    cameraOrigin = collectionCamera.transform.position;
-                    cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
-                    zoomStart = 0;
-                    zoomLevelOrigin = collectionCamera.orthographicSize;
-                    zoomLevelDestination = 4.5f;
-                }
-                else //play animation
-                {
-                    hit.transform.gameObject.GetComponent<Gacha>().PlayAnimation(Gacha.Animation.Special);
+                    if (!isZoomed)//zoom in
+                    {
+                        //enable the description text here
+                        isZoomed = true;
+                        cameraOrigin = collectionCamera.transform.position;
+                        cameraDestination = new Vector3(hit.transform.position.x, hit.transform.position.y + 1.5f, collectionCamera.transform.position.y);
+                        zoomStart = 0;
+                        zoomLevelOrigin = collectionCamera.orthographicSize;
+                        zoomLevelDestination = 4.5f;
+                    }
+                    else //play animation
+                    {
+                        hit.transform.gameObject.GetComponent<Gacha>().PlayAnimation(Gacha.Animation.Special);
+                    }
                 }
             }
             
@@ -148,7 +162,11 @@ public class CollectionSort : MonoBehaviour
     #region GUI
     void SetTitle()
     {
-        Text title = GameObject.Find("PageTitle").GetComponent<Text>();
+        for (int i = 0; i < titleCards.Count; i++)
+        {
+            titleCards[i].enabled = false;
+        }
+        titleCards[currentPage].enabled = true;
         title.text = GameManager.Instance.masterGachaSetList[currentPage].name;
     }
     #endregion
