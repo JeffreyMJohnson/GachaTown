@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -15,15 +16,19 @@ public class Town : MonoBehaviour
     public int CoinsPerTap = 5;
     public GameObject GachaUIPrefab;
 
+    public float ScrollviewShrinkStep = .01f;
+
     #endregion
 
     #region private fields
     private Canvas _canvas = null;
+    private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
     private Player _player = null;
     private List<Player.PlacedGachaData> _placedGachas;
-    
+    private float _maxScrollViewWidth = 0;
+
     #endregion
 
     #region unity lifecycle methods
@@ -33,16 +38,40 @@ public class Town : MonoBehaviour
         _canvas = FindObjectOfType<Canvas>();
         Debug.Assert(_canvas != null, "_canvas not found.");
 
+        Button backButton = null;
+
         foreach (RectTransform child in _canvas.GetComponentsInChildren<RectTransform>())
         {
-            if (child.name == "Content")
+            switch (child.name)
             {
-                _scrollViewContent = child;
+                case "Content":
+                    _scrollViewContent = child;
+                    break;
+                case "Scroll View":
+                    _scrollView = child;
+                    break;
+                case "Back":
+                    backButton = child.GetComponent<Button>();
+                    break;
             }
+
         }
-        Debug.Assert(_scrollViewContent != null);
+        Debug.Assert(_scrollViewContent != null, "scroll view content not found.");
+        Debug.Assert(_scrollView != null, "scroll view not found.");
+        Debug.Assert(backButton != null, "back button not found.");
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
+
+        _maxScrollViewWidth = _scrollView.rect.width;
+
+        //set handlers for expand/shrink button
+        ExpandShrinkButton button = _scrollView.GetComponentInChildren<ExpandShrinkButton>();
+        Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
+        button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
+        button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
+
+        //set handler for back button
+        backButton.onClick.AddListener(HandleBackButtonClickEvent);
     }
 
     void Start()
@@ -51,6 +80,7 @@ public class Town : MonoBehaviour
         _placedGachas = _player.placedInTownGachas;
         InitMenu();
         LoadPlacedGachas();
+        GameManager.Instance.OnZoomComplete.AddListener(HandleCameraZoomCompleteEvent);
     }
 
     void Update()
@@ -59,12 +89,12 @@ public class Town : MonoBehaviour
 
         UpdateGachaDrag();
 
-
     }
 
     void OnDestroy()
     {
         Screen.orientation = ScreenOrientation.Landscape;
+        GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
     }
 
 
@@ -79,6 +109,7 @@ public class Town : MonoBehaviour
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
     }
+
 
     private void LoadPlacedGachas()
     {
@@ -106,39 +137,30 @@ public class Town : MonoBehaviour
             GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
             gachaUIInstance.transform.SetParent(_scrollViewContent);
             GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
-            gachaUI.onGachaDrag.AddListener(GachaDragEventHandler);
-            gachaUI.onGachaDrop.AddListener(GachaDropEventHandler);
+            gachaUI.onGachaDrag.AddListener(HandleGachaUIDragEvent);
+            gachaUI.onGachaDrop.AddListener(HandleGachaUIDropEvent);
         }
         ScrollRect scrollRect = _scrollViewContent.GetComponentInParent<ScrollRect>();
         scrollRect.horizontalNormalizedPosition = 0;
 
     }
-    
+
     #endregion
 
     #region UI Handlers
 
-    /// <summary>
-    /// Handle the Drag event fired by GachaUI object
-    /// </summary>
-    /// <param name="eventData"></param>
-    void GachaDragEventHandler(GachaID draggedGachaId)
+    void HandleGachaUIDragEvent(GameObject draggedObject)
     {
-         _gachaToPlace = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(draggedGachaId));
-        _gachaToPlace.GetComponent<Gacha>().ID = draggedGachaId;
-        _gachaToPlace.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
+        GachaUI gachaUIScript = draggedObject.GetComponent<GachaUI>();
+        _gachaToPlace = GameObject.Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(gachaUIScript.ID));
+        Gacha gachaScript = _gachaToPlace.GetComponent<Gacha>();
+        gachaScript.ID = gachaUIScript.ID;
+        gachaScript.OnClick.AddListener(HandleGachaOnClickEvent);
     }
 
-    /// <summary>
-    /// Handle drop event fired by GachaUI
-    /// </summary>
-    /// <param name="eventData"></param>
-    void GachaDropEventHandler(PointerEventData eventData)
+    void HandleGachaUIDropEvent(PointerEventData eventData)
     {
-        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace.GetComponent<Gacha>().ID,  
-            _gachaToPlace.transform.position,
-            _gachaToPlace.transform.rotation,
-            _gachaToPlace.transform.localScale));
+        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace));
         _gachaToPlace = null;
     }
 
@@ -162,6 +184,7 @@ public class Town : MonoBehaviour
     /// <summary>
     /// return to menu button onclick event handler.
     /// </summary>
+    [Obsolete]
     private void HandleMenuButtonClick()
     {
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
@@ -169,14 +192,71 @@ public class Town : MonoBehaviour
 
     private void HandleGachaOnClickEvent(Gacha clickedObject)
     {
-        _player.AddCoins(CoinsPerTap);
-        if (clickedObject.IsAnimated)
+        if (_gachaToPlace == null)
         {
-            clickedObject.PlayAnimation(Gacha.Animation.Special);
-
+            _player.AddCoins(CoinsPerTap);
+            if (clickedObject.IsAnimated)
+            {
+                GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
+            }
         }
+
+    }
+
+    private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)
+    {
+        clickedGacha.PlayAnimation(Gacha.Animation.Special);
+    }
+
+    private void HandleExpandButtonClickEvent()
+    {
+        Debug.Log("Handle expand button click.");
+        StartCoroutine(expandScrollView());
+    }
+
+    private void HandleShrinkButtonClickEvent()
+    {
+        Debug.Log("Handle shrink button click.");
+        StartCoroutine(ShrinkScrollView());
+    }
+
+    private void HandleBackButtonClickEvent()
+    {
+        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    #endregion
+    #region coroutines
+    private IEnumerator ShrinkScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(_maxScrollViewWidth, 0, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+        //edge case for float math equality check.
+        _scrollView.sizeDelta = new Vector2(
+               0,
+               _scrollView.sizeDelta.y);
+    }
+
+    private IEnumerator expandScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(0, _maxScrollViewWidth, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+
     }
     #endregion
-
 
 }

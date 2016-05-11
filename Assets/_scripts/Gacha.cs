@@ -49,6 +49,14 @@ public class Gacha : MonoBehaviour
     }
 
     /// <summary>
+    /// Called when the animation sequence is done.
+    /// </summary>
+    public void SpecialAnimationComplete()
+    {
+        GameManager.Instance.CameraReturnToOriginal();
+    }
+
+    /// <summary>
     /// Play the given animation for this object
     /// </summary>
     /// <param name="animation"></param>
@@ -98,14 +106,6 @@ public class Gacha : MonoBehaviour
     void HandleIdleAnimationAlarmEvent()
     {
         PlayAnimation(Animation.Idle);
-    }
-
-    /// <summary>
-    /// special animation finished handler
-    /// </summary>
-    void HandleSpecialAnimationCompleteEvent()
-    {
-
     }
     #endregion
 
