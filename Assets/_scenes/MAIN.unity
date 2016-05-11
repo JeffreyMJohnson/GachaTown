@@ -273,9 +273,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gachaCollection: []
-  placedInTownGachas: []
   Selected: 1
   _totalCoins: 10000
+  placedInTownGachas: []
 --- !u!1 &663162456
 GameObject:
   m_ObjectHideFlags: 0
