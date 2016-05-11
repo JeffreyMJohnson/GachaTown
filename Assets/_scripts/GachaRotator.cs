@@ -162,7 +162,6 @@ public class GachaRotator : MonoBehaviour
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
-    //I'm not being dumb, it's used by a button
 
     public void SelectGacha()
     {

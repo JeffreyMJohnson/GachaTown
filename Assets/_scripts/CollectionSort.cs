@@ -25,13 +25,13 @@ public class CollectionSort : MonoBehaviour
     RaycastHit hit;
     float zoomLevelOrigin;
     float zoomLevelDestination;
-    float zoomStart = 0;
-    float zoomTime = 20;
     bool isZoomed = false;
-    float scrollStart = 0;
-    float scrollTime = 20;
-    int currentPage = 0;
-    const int MAX_GACHA_PER_PAGE = 9;
+    float scrollStart;// = 0;
+    float scrollTime;// = 20;
+    int currentPage;// = 0;
+    float zoomStart;// = 0;
+    float zoomTime;// = 20;
+    const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
     AudioSource buttonPress;
 
     Camera collectionCamera;
@@ -41,6 +41,15 @@ public class CollectionSort : MonoBehaviour
     #region unity lifecycle methods
     void Start()
     {
+
+        currentPage = 0;
+
+        scrollStart = 0;
+        scrollTime = 20;    //How many frames the lerp will last
+
+        zoomStart = 0;
+        zoomTime = 20;      //How many frames the lerp will last
+
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
         title = GameObject.Find("PageTitle").GetComponent<Text>();
