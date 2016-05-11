@@ -10,8 +10,6 @@ using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
-
-
     #region public properties
     public int CoinsPerTap = 5;
     public GameObject GachaUIPrefab;
@@ -25,9 +23,11 @@ public class Town : MonoBehaviour
     private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
+    private GameObject _gachaUIToDrop = null;
     private Player _player = null;
-    private List<Player.PlacedGachaData> _placedGachas;
+    private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
+    private bool _isPlaceable = false;
 
     #endregion
 
@@ -74,13 +74,18 @@ public class Town : MonoBehaviour
         backButton.onClick.AddListener(HandleBackButtonClickEvent);
     }
 
+    private float _townDistance;
     void Start()
     {
         _player = Player.Instance;
-        _placedGachas = _player.placedInTownGachas;
         InitMenu();
         LoadPlacedGachas();
         GameManager.Instance.OnZoomComplete.AddListener(HandleCameraZoomCompleteEvent);
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth * .5f, Camera.main.pixelHeight * .25f, 0)), out hit))
+        {
+            _townDistance = hit.distance;
+        }
     }
 
     void Update()
@@ -95,6 +100,7 @@ public class Town : MonoBehaviour
     {
         Screen.orientation = ScreenOrientation.Landscape;
         GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
+
     }
 
 
@@ -106,23 +112,37 @@ public class Town : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape))
         {
-            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+            HandleBackButtonClickEvent();
         }
     }
 
 
     private void LoadPlacedGachas()
     {
-        foreach (Player.PlacedGachaData data in _placedGachas)
+        foreach (Player.PlacedGachaData data in Player.Instance.GetTownData())
         {
             GameObject newGacha = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(data.id));
             newGacha.transform.position = data.position;
             newGacha.transform.rotation = data.rotation;
             newGacha.transform.localScale = data.scale;
-            newGacha.GetComponent<Gacha>().OnClick.AddListener(HandleGachaOnClickEvent);
+            Gacha script = newGacha.GetComponent<Gacha>();
+            script.OnClick.AddListener(HandleGachaOnClickEvent);
+            script.ID = data.id;
+            _placedGachas.Add(newGacha);
         }
     }
 
+    private void ClearScrollViewContent()
+    {
+        foreach (Transform child in _scrollViewContent.GetComponentsInChildren<Transform>())
+        {
+            if (child != _scrollViewContent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+        }
+    }
     #region GUI
     void InitMenu()
     {
@@ -130,15 +150,19 @@ public class Town : MonoBehaviour
         var query =
             from gacha in _player.gachaCollection.Distinct()
             select gacha;
-
+        //clear the scroll view children in case this isn't the first init
+        ClearScrollViewContent();
 
         foreach (GachaID gachaId in query)
         {
-            GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
-            gachaUIInstance.transform.SetParent(_scrollViewContent);
-            GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
-            gachaUI.onGachaDrag.AddListener(HandleGachaUIDragEvent);
-            gachaUI.onGachaDrop.AddListener(HandleGachaUIDropEvent);
+            if (!IsPlaced(gachaId))
+            {
+                GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
+                gachaUIInstance.transform.SetParent(_scrollViewContent);
+                GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
+                gachaUI.onGachaDrag.AddListener(HandleGachaUIDragEvent);
+                gachaUI.onGachaDrop.AddListener(HandleGachaUIDropEvent);
+            }
         }
         ScrollRect scrollRect = _scrollViewContent.GetComponentInParent<ScrollRect>();
         scrollRect.horizontalNormalizedPosition = 0;
@@ -160,8 +184,18 @@ public class Town : MonoBehaviour
 
     void HandleGachaUIDropEvent(PointerEventData eventData)
     {
-        _placedGachas.Add(new Player.PlacedGachaData(_gachaToPlace));
+        if (_isPlaceable)
+        {
+            _placedGachas.Add(_gachaToPlace);
+            _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.white);
+            InitMenu();
+        }
+        else
+        {
+            Destroy(_gachaToPlace);
+        }
         _gachaToPlace = null;
+
     }
 
     /// <summary>
@@ -169,25 +203,66 @@ public class Town : MonoBehaviour
     /// </summary>
     private void UpdateGachaDrag()
     {
+
         if (_gachaToPlace != null)
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            LayerMask mask = LayerMask.GetMask("Ground");
-            if (Physics.Raycast(ray, out hit, 100, mask))
-            {
-                _gachaToPlace.transform.position = hit.point;
-            }
-        }
-    }
 
-    /// <summary>
-    /// return to menu button onclick event handler.
-    /// </summary>
-    [Obsolete]
-    private void HandleMenuButtonClick()
-    {
-        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+            Vector3 colliderSize = _gachaToPlace.GetComponent<Collider>().bounds.size;
+            float radius = Mathf.Max(colliderSize.x, colliderSize.z);
+            RaycastHit[] hits = Physics.SphereCastAll(Camera.main.ScreenPointToRay(Input.mousePosition), radius, 1000, LayerMask.GetMask("Ground", "Gacha"));
+
+            _isPlaceable = false;
+            Vector3 groundHitPoint = Vector3.zero;
+            foreach (RaycastHit sphereHit in hits)
+            {
+                //ignore self
+                if (sphereHit.collider.gameObject == _gachaToPlace)
+                {
+                    continue;
+                }
+                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Gacha"))
+                {
+                    _isPlaceable = false;
+                    break;
+                }
+                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                {
+                    _isPlaceable = true;
+                    groundHitPoint = sphereHit.point;
+                }
+
+            }
+
+
+
+            if (_isPlaceable)
+            {
+                _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.green);
+                _gachaToPlace.transform.position = groundHitPoint;
+            }
+            else
+            {
+                _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.red);
+
+                _gachaToPlace.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+                    _townDistance));
+            }
+            /* _gachaToPlace.transform.position =
+                 Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
+                     _townDistance));
+             //
+             //Vector3 mouseScreenPosition = Input.mousePosition;
+             //Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+             //Debug.Log(mouseWorldPosition); 
+
+             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+             RaycastHit hit;
+             LayerMask mask = LayerMask.GetMask("Ground");
+             if (Physics.Raycast(ray, out hit, 100, mask))
+             {
+                 _gachaToPlace.transform.position = hit.point;
+             }*/
+        }
     }
 
     private void HandleGachaOnClickEvent(Gacha clickedObject)
@@ -210,18 +285,17 @@ public class Town : MonoBehaviour
 
     private void HandleExpandButtonClickEvent()
     {
-        Debug.Log("Handle expand button click.");
         StartCoroutine(expandScrollView());
     }
 
     private void HandleShrinkButtonClickEvent()
     {
-        Debug.Log("Handle shrink button click.");
         StartCoroutine(ShrinkScrollView());
     }
 
     private void HandleBackButtonClickEvent()
     {
+        Player.Instance.SaveTownData(_placedGachas.ToArray());
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
@@ -258,5 +332,10 @@ public class Town : MonoBehaviour
 
     }
     #endregion
+
+    private bool IsPlaced(GachaID id)
+    {
+        return _placedGachas.Any(gacha => gacha.GetComponent<Gacha>().ID == id);
+    }
 
 }

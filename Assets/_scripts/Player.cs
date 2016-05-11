@@ -37,13 +37,16 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public List<GachaID> gachaCollection;
-    public List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
+    
     public int Selected = 0;
     #endregion
 
     #region private fields
     [SerializeField]
     private int _totalCoins;
+    [SerializeField]
+    private List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
+    private bool _allGachasMode = true;
     #endregion
 
     #region unity lifecycle methods
@@ -58,6 +61,17 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
         LoadState();
+
+       
+    }
+
+    void Start()
+    {
+        if (_allGachasMode)
+        {
+            gachaCollection.Clear();
+            gachaCollection = GameManager.Instance.GetAllGachaIds();
+        }
     }
 
     void OnDestroy()
@@ -103,6 +117,20 @@ public class Player : MonoBehaviour
         Debug.Assert(coinsLeft >= 0, string.Format("Trying to deduct {0} coins from total of {1} leaving {2} coins.", coins, TotalCoins, coinsLeft));
         TotalCoins -= coins;
 
+    }
+
+    public void SaveTownData(GameObject[] placedGachas)
+    {
+        placedInTownGachas.Clear();
+        foreach (GameObject gacha in placedGachas)
+        {
+            placedInTownGachas.Add(new PlacedGachaData(gacha));
+        }
+    }
+
+    public PlacedGachaData[] GetTownData()
+    {
+        return placedInTownGachas.ToArray();
     }
     #endregion
 

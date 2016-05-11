@@ -7,8 +7,8 @@ using UnityEngine.Events;
 
 public class Gacha : MonoBehaviour
 {
-    
-    public enum Animation { Idle, Walk, Special}
+
+    public enum Animation { Idle, Walk, Special }
     #region public properties
     public bool IsAnimated = false;
     public Sprite gachaUI = null;
@@ -18,7 +18,7 @@ public class Gacha : MonoBehaviour
     #region events
 
     [System.Serializable]
-    public class OnClickEvent : UnityEvent<Gacha>{}
+    public class OnClickEvent : UnityEvent<Gacha> { }
 
     [SerializeField]
     public OnClickEvent OnClick;
@@ -30,6 +30,8 @@ public class Gacha : MonoBehaviour
     private Camera _mainCamera;
     private Collider _collider;
     private Animator _animator;
+    private MeshRenderer _meshRenderer;
+    private SkinnedMeshRenderer _skinnedMeshRenderer;
     #endregion
 
     #region public API
@@ -67,12 +69,24 @@ public class Gacha : MonoBehaviour
             case Animation.Idle:
                 _animator.SetTrigger("Idle");
                 break;
-                case Animation.Special:
+            case Animation.Special:
                 _animator.SetTrigger("special");
                 break;
         }
     }
-#endregion
+
+    public void ChangeColor(Color color)
+    {
+        if (_meshRenderer != null)
+        {
+            _meshRenderer.material.color = color;
+        }
+        else
+        {
+            _skinnedMeshRenderer.material.color = color;
+        }
+    }
+    #endregion
 
     #region unity lifecycle methods
 
@@ -89,8 +103,16 @@ public class Gacha : MonoBehaviour
         IsAnimated = _animator.enabled;
 
         _mainCamera = Camera.main;
+
+        _meshRenderer = GetComponentInChildren<MeshRenderer>();
+        if (_meshRenderer == null)
+        {
+            _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        }
+        Debug.Assert(_meshRenderer != null || _skinnedMeshRenderer != null, "Could not find mesh renderer or skinned mesh renderer on this object.");
+
     }
-    
+
     void Update()
     {
 
