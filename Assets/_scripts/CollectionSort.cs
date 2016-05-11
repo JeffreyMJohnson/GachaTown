@@ -46,7 +46,7 @@ public class CollectionSort : MonoBehaviour
         title = GameObject.Find("PageTitle").GetComponent<Text>();
 
         SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
-
+        //getting all of the spriterenderers for the title images so we can switch between them
         foreach (SpriteRenderer spriterenderer in titleCardsToList)
         {
             spriterenderer.enabled = false;
@@ -86,6 +86,9 @@ public class CollectionSort : MonoBehaviour
                 case "next":
                     button.onClick.AddListener(Next);
                     break;
+                case "home":
+                    button.onClick.AddListener(Home);
+                    break;
                 default:
                     break;
             }
@@ -96,18 +99,7 @@ public class CollectionSort : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            if (isZoomed)
-            {
-                isZoomed = false;
-                zoomStart = 0;
-                zoomLevelDestination = 15;
-                zoomLevelOrigin = collectionCamera.orthographicSize;
-                cameraOrigin = collectionCamera.transform.position;
-                cameraDestination = cameraStartPosition;
-                
-            }
-            else
-                GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+            Home();
         }
 
 
@@ -185,6 +177,22 @@ public class CollectionSort : MonoBehaviour
         }
     }
 
+    public void Home()
+    {
+        if (isZoomed)
+        {
+            isZoomed = false;
+            zoomStart = 0;
+            zoomLevelDestination = 15;
+            zoomLevelOrigin = collectionCamera.orthographicSize;
+            cameraOrigin = collectionCamera.transform.position;
+            cameraDestination = cameraStartPosition;
+
+        }
+        else
+            GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+    
     public void Next()
     {
         if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)

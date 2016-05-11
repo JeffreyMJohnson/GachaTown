@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class GachaRotator : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class GachaRotator : MonoBehaviour
     #endregion
 
     #region private fields
+    private List<SpriteRenderer> titleImages = new List<SpriteRenderer>();
     private int maxGachaSetCount;
     private GameObject[] gachaMachines;
     private Transform[] gachaTransforms;
@@ -31,11 +32,21 @@ public class GachaRotator : MonoBehaviour
         playerScript = Player.Instance;
         
 
+
         selectedGacha = playerScript.Selected;
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
         moneyDisplay.text = playerScript.TotalCoins.ToString();
 
         Debug.Assert(gachaDisplay != null, "gacha display text component not found, set in editor ?");
+
+        SpriteRenderer[] titleImagesToList = gachaDisplay.GetComponentsInChildren<SpriteRenderer>(true);
+
+        foreach (SpriteRenderer spriterenderer in titleImagesToList)
+        {
+            spriterenderer.enabled = false;
+            titleImages.Add(spriterenderer);
+        }
+        titleImages[selectedGacha].enabled = true;
 
         rotateStart = rotateTime;
 
@@ -97,6 +108,7 @@ public class GachaRotator : MonoBehaviour
             rotateStart = 0;
 
             selectedGacha++;
+
             //if (selectedGacha == -1)
             //    selectedGacha = gachaCount - 1;
             //selectedGacha = selectedGacha % gachaCount;
@@ -104,6 +116,12 @@ public class GachaRotator : MonoBehaviour
             {
                 selectedGacha = 0;
             }
+
+            for (int i = 0; i < titleImages.Count; i++)
+            {
+                titleImages[i].enabled = false;
+            }
+            titleImages[selectedGacha].enabled = true;
 
             TextUpdate();
             AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
@@ -121,11 +139,18 @@ public class GachaRotator : MonoBehaviour
             rotateStart = 0;
 
             selectedGacha--;
+
             //selectedGacha = selectedGacha % gachaCount;
             if (selectedGacha < 0)
             {
                 selectedGacha = maxGachaSetCount - 1;
             }
+
+            for (int i = 0; i < titleImages.Count; i++)
+            {
+                titleImages[i].enabled = false;
+            }
+            titleImages[selectedGacha].enabled = true;
 
             TextUpdate();
             AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
