@@ -115,6 +115,19 @@ public class GameManager : MonoBehaviour
         newGachaUI.name = gacha.name;
         return newGachaUI;
     }
+
+    public List<GachaID> GetAllGachaIds()
+    {
+        List<GachaID> result = new List<GachaID>();
+        for (int setIndex = 0; setIndex < masterGachaSetList.Count; setIndex++)
+        {
+            for (int gachaIndex = 0; gachaIndex < masterGachaSetList[setIndex].collection.Count; gachaIndex++)
+            {
+                result.Add(new GachaID(setIndex, gachaIndex));
+            }
+        }
+        return result;
+    } 
     #endregion
 
     /// <summary>
@@ -155,5 +168,10 @@ public class GameManager : MonoBehaviour
         Animator anim = gachaGameObject.GetComponent<Animator>();
         return (anim == null) || (anim.enabled);
         //animator needs to be enabled/disabled manually in the prefab
+    }
+
+    public void ClearTown()
+    {
+        
     }
 }
