@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class GachaBall : MonoBehaviour
 {
@@ -12,14 +13,13 @@ public class GachaBall : MonoBehaviour
     float currentTimeAbove = 0f;
     float timeToMove = 2f;
     Vector3 startPos;
-    Vector3 endPos = new Vector3(-8, 0, 0);
+    Vector3 endPos = new Vector3(-8, 2, 0);
     Vector3 startRotation;
     Vector3 endRotation;
-    Player gacha;
     List<Material> gachaMats = new List<Material>();
     bool shouldMakeTransparent = false;
     List<Color> startColor = new List<Color>();
-
+    GachaID newGachaID;
     // Use this for initialization
     void Start()
     {
@@ -64,12 +64,6 @@ public class GachaBall : MonoBehaviour
 
     public void WinGacha()
     {
-
-
-
-
-
-
 
         if (canWin)
         {
@@ -125,16 +119,27 @@ public class GachaBall : MonoBehaviour
                 mat.color = newColor;
                 if (currentTimeAbove > 1)
                 {
+                    SpawnGacha();
                     shouldMakeTransparent = false;
                     currentTimeAbove = 0;
                     mat.color = startColor[0];
                     mat.color = startColor[1];
+                   
                 }
                
             }
 
         }
 
+
+
+    }
+    public void SpawnGacha()
+    {
+        Debug.Log("shoudl spawn something");
+        newGachaID = Player.Instance.gachaCollection.Last();//[Player.Instance.gachaCollection.Count];
+        Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left,Vector3.up));
+        GameManager.Instance.GetGachaPrefab(newGachaID).transform.localScale = new Vector3(.5f,.5f,.5f);
 
 
     }
