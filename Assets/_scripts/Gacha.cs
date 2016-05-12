@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using Assets._scripts;
@@ -75,6 +76,11 @@ public class Gacha : MonoBehaviour
         }
     }
 
+   
+    /// <summary>
+    /// Change the color of this gacha to the given color if disable is false, else ignores color and set to default texture.
+    /// </summary>
+    /// <param name="color"></param>
     public void ChangeColor(Color color)
     {
         if (_meshRenderer != null)
@@ -85,6 +91,7 @@ public class Gacha : MonoBehaviour
         {
             _skinnedMeshRenderer.material.color = color;
         }
+
     }
     #endregion
 

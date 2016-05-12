@@ -28,6 +28,9 @@ public class Town : MonoBehaviour
     private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
     private bool _isPlaceable = false;
+    private Material _redMaterial;
+    private Material _greenMaterial;
+
 
     #endregion
 
@@ -72,6 +75,11 @@ public class Town : MonoBehaviour
 
         //set handler for back button
         backButton.onClick.AddListener(HandleBackButtonClickEvent);
+
+        _redMaterial = Resources.Load<Material>("materials/red");
+        _greenMaterial = Resources.Load<Material>("materials/green");
+        Debug.Assert(_redMaterial != null, "could not find red material in resources.");
+        Debug.Assert(_greenMaterial != null, "could not find green material in resources.");
     }
 
     private float _townDistance;
@@ -243,25 +251,9 @@ public class Town : MonoBehaviour
             else
             {
                 _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.red);
-
                 _gachaToPlace.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
                     _townDistance));
             }
-            /* _gachaToPlace.transform.position =
-                 Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                     _townDistance));
-             //
-             //Vector3 mouseScreenPosition = Input.mousePosition;
-             //Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
-             //Debug.Log(mouseWorldPosition); 
-
-             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-             RaycastHit hit;
-             LayerMask mask = LayerMask.GetMask("Ground");
-             if (Physics.Raycast(ray, out hit, 100, mask))
-             {
-                 _gachaToPlace.transform.position = hit.point;
-             }*/
         }
     }
 
