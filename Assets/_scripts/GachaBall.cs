@@ -9,8 +9,9 @@ public class GachaBall : MonoBehaviour
     Rigidbody capsule;
     Animator animator;
     bool canWin = false;
-    float currentTimeBelow = 0f;
-    float currentTimeAbove = 0f;
+    float currentTimeCanWin = 0f;
+    float currentTimeMakeTransparent = 0f;
+    float currentTimeSpawnGacha = 0f;
     float timeToMove = 2f;
     Vector3 startPos;
     Vector3 endPos = new Vector3(-8, 2, 0);
@@ -18,14 +19,19 @@ public class GachaBall : MonoBehaviour
     Vector3 endRotation;
     List<Material> gachaMats = new List<Material>();
     bool shouldMakeTransparent = false;
+    bool shouldSpawnGacha = false;
+    bool growGacha = false;
     List<Color> startColor = new List<Color>();
     GachaID newGachaID;
+   
+
+    public ParticleSystem sparkles;
     // Use this for initialization
     void Start()
     {
         capsule = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-
+       
 
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
@@ -38,14 +44,13 @@ public class GachaBall : MonoBehaviour
                 startColor.Add(mat.color);
             }
         }
-        //startColor = renderers;
     }
 
     // Update is called once per frame
     void Update()
     {
         WinGacha();
-        MakeTransparent();
+        MakeGachaOpenAnimationTransparent();
     }
 
     void OnCollisionStay(Collision collision)
@@ -69,24 +74,24 @@ public class GachaBall : MonoBehaviour
         {
 
 
-            if (currentTimeBelow <= timeToMove)
+            if (currentTimeCanWin <= timeToMove)
             {
-                currentTimeBelow += Time.deltaTime;
-                capsule.transform.position = Vector3.Lerp(startPos, endPos, currentTimeBelow / timeToMove);
+                currentTimeCanWin += Time.deltaTime;
+                capsule.transform.position = Vector3.Lerp(startPos, endPos, currentTimeCanWin / timeToMove);
                 //capsule.transform.Rotate(capsule.transform.rotation.eulerAngles - Vector3.Lerp(startRotation, endRotation, currentTime / timeToMove)  );
                 capsule.transform.eulerAngles = new Vector3
-                   (Mathf.Lerp(startRotation.x, endRotation.x, currentTimeBelow / timeToMove),
-                    Mathf.Lerp(startRotation.y, endRotation.y, currentTimeBelow / timeToMove),
-                    Mathf.Lerp(startRotation.z, endRotation.z, currentTimeBelow / timeToMove));
-                
+                   (Mathf.Lerp(startRotation.x, endRotation.x, currentTimeCanWin / timeToMove),
+                    Mathf.Lerp(startRotation.y, endRotation.y, currentTimeCanWin / timeToMove),
+                    Mathf.Lerp(startRotation.z, endRotation.z, currentTimeCanWin / timeToMove));
+
             }
 
-            if (currentTimeBelow > timeToMove)
+            if (currentTimeCanWin > timeToMove)
             {
                 canWin = false;
                 animator.SetTrigger("OpenGacha");
                 shouldMakeTransparent = true;
-                currentTimeBelow = 0;
+                currentTimeCanWin = 0;
                 // GameObject newGacha = GameManager.Instance.GetGachaPrefab(gacha.gachaCollection[gacha.gachaCollection.Count - 1]);
                 //newGacha.transform.position = endPos;
 
@@ -103,44 +108,38 @@ public class GachaBall : MonoBehaviour
         }
 
     }
-    public void MakeTransparent()
+    public void MakeGachaOpenAnimationTransparent()
     {
-        
+
         if (shouldMakeTransparent)
         {
-            currentTimeAbove += Time.deltaTime;
+            currentTimeMakeTransparent += Time.deltaTime;
             foreach (var mat in gachaMats)
             {
                 float timeframe = .917f;
                 Color newColor;
-                
+
                 newColor = mat.color;
-                newColor.a = Mathf.Lerp(1, 0, currentTimeAbove / timeframe); // this is not good, but .917f is the amount of time that the animation takes to complete so it is a magic number
+                newColor.a = Mathf.Lerp(1, 0, currentTimeMakeTransparent / timeframe); // this is not good, but .917f is the amount of time that the animation takes to complete so it is a magic number
                 mat.color = newColor;
-                if (currentTimeAbove > 1)
+                if (currentTimeMakeTransparent > 1)
                 {
-                    SpawnGacha();
                     shouldMakeTransparent = false;
-                    currentTimeAbove = 0;
+                    currentTimeMakeTransparent = 0;
                     mat.color = startColor[0];
                     mat.color = startColor[1];
-                   
+                    GameObject newGacha = SpawnGacha();
+                    Destroy(newGacha, 5);
+                    sparkles.Play();
+
                 }
-               
             }
-
         }
-
-
-
     }
-    public void SpawnGacha()
+    public GameObject SpawnGacha()
     {
-        Debug.Log("shoudl spawn something");
-        newGachaID = Player.Instance.gachaCollection.Last();//[Player.Instance.gachaCollection.Count];
-        Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left,Vector3.up));
-        GameManager.Instance.GetGachaPrefab(newGachaID).transform.localScale = new Vector3(.5f,.5f,.5f);
-
+        newGachaID = Player.Instance.gachaCollection.Last();
+        return Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
 
     }
 }

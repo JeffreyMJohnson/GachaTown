@@ -120,12 +120,9 @@ public class BuyGacha : MonoBehaviour
                     Destroy(seperator);
                     seperator = null;
                     controller.SetTrigger("RotateDial");
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
-
-                  
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);                  
                         Buy();
-                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
-                        
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);                        
                         coin.isInSlot = false;
                     capsule.isKinematic = !capsule.isKinematic;
 
