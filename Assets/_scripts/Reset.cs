@@ -32,6 +32,6 @@ public class Reset : StateMachineBehaviour {
     void OnStateEnter()
     {
         capsule = GameObject.Find("gachacapsule_animation");
-        capsule.transform.position = new Vector3(-3.6f, 0.53f, 1.5013f);
+        capsule.transform.position = new Vector3(-1.5f, 0.53f, 1.5f);
     }
 }
