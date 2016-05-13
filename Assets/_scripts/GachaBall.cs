@@ -21,6 +21,7 @@ public class GachaBall : MonoBehaviour
     bool shouldMakeTransparent = false;
     bool shouldSpawnGacha = false;
     bool growGacha = false;
+    float timeLimitPerCapsule = 3f;
     List<Color> startColor = new List<Color>();
     GachaID newGachaID;
    
@@ -129,9 +130,10 @@ public class GachaBall : MonoBehaviour
                     mat.color = startColor[0];
                     mat.color = startColor[1];
                     GameObject newGacha = SpawnGacha();
-                    Destroy(newGacha, 5);
+                    Destroy(newGacha, timeLimitPerCapsule);
                     sparkles.Play();
-
+                    StartCoroutine(GachaLifetime(timeLimitPerCapsule));
+                    
                 }
             }
         }
@@ -142,4 +144,10 @@ public class GachaBall : MonoBehaviour
         return Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
 
     }
+    IEnumerator GachaLifetime(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        gachaMachine.isGachaThere = false;
+    }
+    
 }

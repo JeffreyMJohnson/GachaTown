@@ -10,6 +10,7 @@ public class BuyGacha : MonoBehaviour
     public int GachaSet = 0;
     public Rigidbody capsule;
     public GameObject seperator;
+    public bool isGachaThere = false;
     GameObject instanceSep = null;
     #endregion
 
@@ -108,7 +109,7 @@ public class BuyGacha : MonoBehaviour
 
     public void RotateDial()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&!isGachaThere)
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -125,7 +126,7 @@ public class BuyGacha : MonoBehaviour
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);                        
                         coin.isInSlot = false;
                     capsule.isKinematic = !capsule.isKinematic;
-
+                    isGachaThere = true;
                 }
             }
         }
