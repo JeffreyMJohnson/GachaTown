@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  gachaUI: {fileID: 0}
+  gachaUI: {fileID: 21300000, guid: 6b8ab6d4f76a9044a84c55f81d0565a5, type: 3}
   ID:
     _setIndex: 0
     _gachaIndex: 0
@@ -283,6 +283,11 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 1a7bf6cc2097bb9418a117e9ba442a2e, type: 2}
+    - target: {fileID: 0}
+      propertyPath: gachaUI
+      value: 
+      objectReference: {fileID: 21300000, guid: 6b8ab6d4f76a9044a84c55f81d0565a5,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 119186}
