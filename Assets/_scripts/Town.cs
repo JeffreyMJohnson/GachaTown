@@ -28,8 +28,6 @@ public class Town : MonoBehaviour
     private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
     private bool _isPlaceable = false;
-    private Material _redMaterial;
-    private Material _greenMaterial;
 
 
     #endregion
@@ -48,6 +46,7 @@ public class Town : MonoBehaviour
         Debug.Assert(_canvas != null, "_canvas not found.");
 
         Button backButton = null;
+        Button purgeButton = null;
 
         foreach (RectTransform child in _canvas.GetComponentsInChildren<RectTransform>())
         {
@@ -62,12 +61,16 @@ public class Town : MonoBehaviour
                 case "Back":
                     backButton = child.GetComponent<Button>();
                     break;
+                case "Purge":
+                    purgeButton = child.GetComponent<Button>();
+                    break;
             }
 
         }
         Debug.Assert(_scrollViewContent != null, "scroll view content not found.");
         Debug.Assert(_scrollView != null, "scroll view not found.");
         Debug.Assert(backButton != null, "back button not found.");
+        Debug.Assert(purgeButton != null, "purge button not found.");
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
 
@@ -82,10 +85,7 @@ public class Town : MonoBehaviour
         //set handler for back button
         backButton.onClick.AddListener(HandleBackButtonClickEvent);
 
-        _redMaterial = Resources.Load<Material>("materials/red");
-        _greenMaterial = Resources.Load<Material>("materials/green");
-        Debug.Assert(_redMaterial != null, "could not find red material in resources.");
-        Debug.Assert(_greenMaterial != null, "could not find green material in resources.");
+        purgeButton.onClick.AddListener(HandlePurgeButtonClickEvent);
     }
 
     private float _townDistance;
@@ -295,6 +295,17 @@ public class Town : MonoBehaviour
     {
         Player.Instance.SaveTownData(_placedGachas.ToArray());
         GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    private void HandlePurgeButtonClickEvent()
+    {
+        foreach (GameObject gacha in _placedGachas)
+        {
+            Destroy(gacha);
+        }
+        _placedGachas.Clear();
+        InitMenu();
+
     }
 
     #endregion
