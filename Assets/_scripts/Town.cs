@@ -38,7 +38,13 @@ public class Town : MonoBehaviour
 
     void Awake()
     {
-        _canvas = FindObjectOfType<Canvas>();
+        foreach (Canvas canvas in FindObjectsOfType<Canvas>())
+        {
+            if (canvas.name == "Canvas")
+            {
+                _canvas = canvas;
+            }
+        }
         Debug.Assert(_canvas != null, "_canvas not found.");
 
         Button backButton = null;
