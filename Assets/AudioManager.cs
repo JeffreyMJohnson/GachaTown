@@ -14,7 +14,8 @@ public class AudioManager : MonoBehaviour
         MECHANICAL_CLICK,
         MONEY_CLINK,
         MONEY_CHACHING,
-
+        CAPSULE_OPEN_POP,
+        CAPSULE_GACHA_PRESENT
     }
 
     #region public properties

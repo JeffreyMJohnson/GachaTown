@@ -517,6 +517,7 @@ MonoBehaviour:
   GachaSet: 0
   capsule: {fileID: 0}
   seperator: {fileID: 0}
+  isGachaThere: 0
 --- !u!95 &818217488
 Animator:
   serializedVersion: 3
@@ -1268,6 +1269,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5354e22b9c34f844c8eb92aceb5c74fe, type: 3}
   - {fileID: 8300000, guid: 81efce4b41b0d4e4aad104670ea84d84, type: 3}
   - {fileID: 8300000, guid: 904a5b59d9795aa47b5142f88d9cb892, type: 3}
+  - {fileID: 8300000, guid: 42cae3c2f621fd942b3fad56755ddc8a, type: 3}
+  - {fileID: 8300000, guid: 989c7cdb4a50a7d429231561d4b7e146, type: 3}
   BackgroundAudio:
   - {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}
   - {fileID: 8300000, guid: edfaee8943cf13e44a46dea81c6484a6, type: 3}
