@@ -29,9 +29,8 @@ public class Town : MonoBehaviour
     private float _maxScrollViewWidth = 0;
     private bool _isPlaceable = false;
 
-
     #endregion
-
+    
     #region unity lifecycle methods
 
     void Awake()
@@ -124,6 +123,10 @@ public class Town : MonoBehaviour
     /// </summary>
     private void UpdateEscapeKey()
     {
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            return;
+        }
         if (Input.GetKey(KeyCode.Escape))
         {
             HandleBackButtonClickEvent();
@@ -189,6 +192,10 @@ public class Town : MonoBehaviour
 
     void HandleGachaUIDragEvent(GameObject draggedObject)
     {
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            return;
+        }
         GachaUI gachaUIScript = draggedObject.GetComponent<GachaUI>();
         _gachaToPlace = GameObject.Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(gachaUIScript.ID));
         Gacha gachaScript = _gachaToPlace.GetComponent<Gacha>();
@@ -211,6 +218,99 @@ public class Town : MonoBehaviour
         _gachaToPlace = null;
 
     }
+
+   
+
+    private void HandleGachaOnClickEvent(Gacha clickedObject)
+    {
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            return;
+        }
+        if (_gachaToPlace == null)
+        {
+            _player.AddCoins(CoinsPerTap);
+            if (clickedObject.IsAnimated)
+            {
+                GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
+            }
+        }
+
+    }
+
+    private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)
+    {
+        clickedGacha.PlayAnimation(Gacha.Animation.Special);
+    }
+
+    private void HandleExpandButtonClickEvent()
+    {
+        StartCoroutine(expandScrollView());
+    }
+
+    private void HandleShrinkButtonClickEvent()
+    {
+        StartCoroutine(ShrinkScrollView());
+    }
+
+    private void HandleBackButtonClickEvent()
+    {
+        if(GameManager.Instance.IsCameraZooming)
+        { 
+            return;
+        }
+        Player.Instance.SaveTownData(_placedGachas.ToArray());
+        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
+    }
+
+    private void HandlePurgeButtonClickEvent()
+    {
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            return;
+        }
+        foreach (GameObject gacha in _placedGachas)
+        {
+            Destroy(gacha);
+        }
+        _placedGachas.Clear();
+        InitMenu();
+
+    }
+
+    #endregion
+    #region coroutines
+    private IEnumerator ShrinkScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(_maxScrollViewWidth, 0, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+        //edge case for float math equality check.
+        _scrollView.sizeDelta = new Vector2(
+               0,
+               _scrollView.sizeDelta.y);
+    }
+
+    private IEnumerator expandScrollView()
+    {
+        float t = 0;
+        while (t <= 1)
+        {
+            _scrollView.sizeDelta = new Vector2(
+                Mathf.Lerp(0, _maxScrollViewWidth, t),
+                _scrollView.sizeDelta.y);
+            t += ScrollviewShrinkStep;
+            yield return null;
+        }
+
+    }
+    #endregion
 
     /// <summary>
     /// moves gacha gameobject with the mouse position until the left mouse button is clicked
@@ -262,86 +362,6 @@ public class Town : MonoBehaviour
             }
         }
     }
-
-    private void HandleGachaOnClickEvent(Gacha clickedObject)
-    {
-        if (_gachaToPlace == null)
-        {
-            _player.AddCoins(CoinsPerTap);
-            if (clickedObject.IsAnimated)
-            {
-                GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
-            }
-        }
-
-    }
-
-    private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)
-    {
-        clickedGacha.PlayAnimation(Gacha.Animation.Special);
-    }
-
-    private void HandleExpandButtonClickEvent()
-    {
-        StartCoroutine(expandScrollView());
-    }
-
-    private void HandleShrinkButtonClickEvent()
-    {
-        StartCoroutine(ShrinkScrollView());
-    }
-
-    private void HandleBackButtonClickEvent()
-    {
-        Player.Instance.SaveTownData(_placedGachas.ToArray());
-        GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
-    }
-
-    private void HandlePurgeButtonClickEvent()
-    {
-        foreach (GameObject gacha in _placedGachas)
-        {
-            Destroy(gacha);
-        }
-        _placedGachas.Clear();
-        InitMenu();
-
-    }
-
-    #endregion
-    #region coroutines
-    private IEnumerator ShrinkScrollView()
-    {
-        float t = 0;
-        while (t <= 1)
-        {
-            _scrollView.sizeDelta = new Vector2(
-                Mathf.Lerp(_maxScrollViewWidth, 0, t),
-                _scrollView.sizeDelta.y);
-            t += ScrollviewShrinkStep;
-            yield return null;
-        }
-        //edge case for float math equality check.
-        _scrollView.sizeDelta = new Vector2(
-               0,
-               _scrollView.sizeDelta.y);
-    }
-
-    private IEnumerator expandScrollView()
-    {
-        float t = 0;
-        while (t <= 1)
-        {
-            _scrollView.sizeDelta = new Vector2(
-                Mathf.Lerp(0, _maxScrollViewWidth, t),
-                _scrollView.sizeDelta.y);
-            t += ScrollviewShrinkStep;
-            yield return null;
-        }
-
-    }
-    #endregion
-
     private bool IsPlaced(GachaID id)
     {
         return _placedGachas.Any(gacha => gacha.GetComponent<Gacha>().ID == id);

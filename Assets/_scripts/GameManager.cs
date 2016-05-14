@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
     public enum Scene { SPLASH, MAIN, GACHA, TOWN, COLLECTION, SETTING, GACHACHOOSE, HOW_TO_PLAY }
 
     #region public properties
+
+    public bool IsCameraZooming
+    {
+        get { return _cameraController.IsZooming; }
+    }
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
     public GameObject gachaUIPrefab;
     /// <summary>
@@ -26,6 +31,7 @@ public class GameManager : MonoBehaviour
     public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
 
     public CameraContoller.CameraZoomCompleteEvent OnZoomComplete;
+    public UnityEvent OnZoomReturn;
     #endregion
 
     #region private fields
@@ -51,6 +57,7 @@ public class GameManager : MonoBehaviour
 
         _cameraController = GetComponent<CameraContoller>();
         OnZoomComplete = _cameraController.OnZoomComplete;
+        OnZoomReturn = _cameraController.OnZoomReturn;
     }
     #endregion
 

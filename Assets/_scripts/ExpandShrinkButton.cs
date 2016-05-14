@@ -31,6 +31,10 @@ public class ExpandShrinkButton : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            return;
+        }
         FlipButtonState();
     }
 

@@ -7,7 +7,7 @@ public class CameraContoller : MonoBehaviour
     #region public fields
     [Tooltip("Position of camera when fully zoomed in relation to zoomed subject.")]
     public Vector3 parentOffset = Vector3.zero;
-
+    public bool IsZooming { get; private set; }
     public class CameraZoomCompleteEvent : UnityEvent<Gacha> { }
     public CameraZoomCompleteEvent OnZoomComplete = new CameraZoomCompleteEvent();
     public UnityEvent OnZoomReturn = new UnityEvent();
@@ -45,6 +45,7 @@ public class CameraContoller : MonoBehaviour
     /// <returns></returns>
     private IEnumerator ZoomToSubject(GameObject subject, Vector3 offset, float step = .01f)
     {
+        IsZooming = true;
         if (_camera == null)
         {
             _camera = Camera.main.transform;
@@ -83,6 +84,7 @@ public class CameraContoller : MonoBehaviour
             t += step;
             yield return null;
         }
+        IsZooming = false;
         OnZoomReturn.Invoke();
     }
     #endregion
