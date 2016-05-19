@@ -263,7 +263,7 @@ public class CollectionSort : MonoBehaviour
         if (!gachaInCollection)
         {
             //just changing the color with the api
-            gacha.ChangeColor(Color.grey);
+            gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
 
             return gachaInCollection;
         }
