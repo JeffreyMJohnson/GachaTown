@@ -8,7 +8,6 @@ public class CollectionSort : MonoBehaviour
     public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
     public Vector2 displaySize;// = new Vector2(2, 3);
-    public Material hiddenMaterial;
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
 
     #endregion
@@ -121,6 +120,7 @@ public class CollectionSort : MonoBehaviour
             if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
             {
                 //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
+                //also sometimes it just gives a null error
                 if (player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID))
                 {
                     if (!isZoomed)//zoom in
@@ -216,7 +216,6 @@ public class CollectionSort : MonoBehaviour
     }
     #endregion
 
-
     void InitCollectionPages()
     {
         for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
@@ -246,12 +245,9 @@ public class CollectionSort : MonoBehaviour
                 //instantiate the text objects here
                 //fill the text objects with description text, changes if we own it or not
                 //disable the description text
+                
 
-                SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
-                gachaSphereCollider.center = new Vector3(0, 2, 0);
-                gachaSphereCollider.radius = 2.5f;
-
-                SetGachaMaterial(gachaObject, gachaID);
+                SetGachaMaterial(gachaObject.GetComponent<Gacha>(), gachaID);
             }
         }
     }
@@ -261,25 +257,14 @@ public class CollectionSort : MonoBehaviour
     /// </summary>
     /// <param name="gachaObject"></param>
     /// <param name="gachaID"></param>
-    public bool SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
+    public bool SetGachaMaterial(Gacha gacha, GachaID gachaID)
     {
         bool gachaInCollection = player.InCollection(gachaID);
         if (!gachaInCollection)
         {
-            //if the model has animations implemented the mesh componenets change so here is some checking to get through this
-            //when all implemented will need a cleaner way I imagine
-            if (GameManager.Instance.IsGachaAnimated(gachaObject))
-            {
-                SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
-                mesh.material = hiddenMaterial;
-            }
-            else
-            {
-                MeshRenderer mesh = gachaObject.GetComponentInChildren<MeshRenderer>();
-                Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
-                mesh.material = hiddenMaterial;
-            }
+            //just changing the color with the api
+            gacha.ChangeColor(Color.grey);
+
             return gachaInCollection;
         }
         return gachaInCollection;
@@ -301,6 +286,5 @@ public class CollectionSort : MonoBehaviour
         newGacha.GetComponent<Gacha>().ID = gachaID;
         return newGacha;
     }
-
 
 }

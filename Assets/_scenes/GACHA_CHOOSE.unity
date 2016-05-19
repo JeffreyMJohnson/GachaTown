@@ -793,7 +793,7 @@ Transform:
   - {fileID: 1516627079}
   - {fileID: 289312829}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!1 &245298024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,7 +2036,7 @@ Transform:
   - {fileID: 795514435}
   - {fileID: 1795436128}
   m_Father: {fileID: 2113473926}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &861518334
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,7 +2643,7 @@ Transform:
   - {fileID: 836237446}
   - {fileID: 2064906804}
   m_Father: {fileID: 2113473926}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &1386269627
 GameObject:
   m_ObjectHideFlags: 0
@@ -2763,7 +2763,7 @@ Transform:
   - {fileID: 558280975}
   - {fileID: 1526870675}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1001 &1417162076
 Prefab:
   m_ObjectHideFlags: 0
@@ -3267,7 +3267,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 38293515}
-  - {fileID: 2115183519}
   - {fileID: 232730258}
   - {fileID: 1409490276}
   m_Father: {fileID: 0}
@@ -3838,7 +3837,7 @@ Transform:
   - {fileID: 641080341}
   - {fileID: 795740928}
   m_Father: {fileID: 2113473926}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &1941866603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3867,7 +3866,7 @@ Transform:
   - {fileID: 1110990772}
   - {fileID: 712962189}
   m_Father: {fileID: 2113473926}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!1 &1964519118
 GameObject:
   m_ObjectHideFlags: 0
@@ -4045,6 +4044,7 @@ Transform:
   m_LocalPosition: {x: -1.9679451, y: -0.8122997, z: -13.371849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2115183519}
   - {fileID: 1941866604}
   - {fileID: 840920908}
   - {fileID: 1357610043}
@@ -4073,10 +4073,10 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2115183518}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.9679451, y: 0.8122997, z: 13.371849}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1417162077}
   - {fileID: 1964519119}
-  m_Father: {fileID: 1615481060}
-  m_RootOrder: 1
+  m_Father: {fileID: 2113473926}
+  m_RootOrder: 0
