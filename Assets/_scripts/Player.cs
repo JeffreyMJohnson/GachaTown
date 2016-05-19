@@ -46,6 +46,7 @@ public class Player : MonoBehaviour
     private int _totalCoins;
     [SerializeField]
     private List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
+    //todo THIS MUST BE FALSE FOR RELEASE!!
     private bool _allGachasMode = true;
     #endregion
 

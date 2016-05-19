@@ -236,6 +236,8 @@ public class Town : MonoBehaviour
             }
         }
 
+        Debug.Log("size: " + clickedObject.Size);
+
     }
 
     private void HandleCameraZoomCompleteEvent(Gacha clickedGacha)

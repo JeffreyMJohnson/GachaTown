@@ -14,6 +14,34 @@ public class Gacha : MonoBehaviour
     public bool IsAnimated = false;
     public Sprite gachaUI = null;
     public GachaID ID;
+
+    public Vector3 Size
+    {
+        get
+        {
+            float width = 0;
+            float height = 0;
+            float depth = 0;
+            foreach (Renderer renderer in _renderers)
+            {
+                Vector3 size = renderer.bounds.size;
+                if (size.x > width)
+                {
+                    width = size.x;
+                }
+                if (size.y > height)
+                {
+                    height = size.y;
+                }
+                if (size.z > depth)
+                {
+                    depth = size.z;
+                }
+            }
+
+            return new Vector3(width, height, depth);
+        }
+    }
     #endregion
 
     #region events
@@ -31,8 +59,11 @@ public class Gacha : MonoBehaviour
     private Camera _mainCamera;
     private Collider _collider;
     private Animator _animator;
+    [Obsolete]
     private MeshRenderer _meshRenderer;
+    [Obsolete]
     private SkinnedMeshRenderer _skinnedMeshRenderer;
+    private Renderer[] _renderers;
     #endregion
 
     #region public API
@@ -76,20 +107,19 @@ public class Gacha : MonoBehaviour
         }
     }
 
-   
+
     /// <summary>
     /// Change the color of this gacha to the given color if disable is false, else ignores color and set to default texture.
     /// </summary>
     /// <param name="color"></param>
     public void ChangeColor(Color color)
     {
-        if (_meshRenderer != null)
+        foreach (Renderer renderer in _renderers)
         {
-            _meshRenderer.material.color = color;
-        }
-        else
-        {
-            _skinnedMeshRenderer.material.color = color;
+            foreach (Material material in renderer.materials)
+            {
+                material.color = color;
+            }
         }
 
     }
@@ -111,12 +141,10 @@ public class Gacha : MonoBehaviour
 
         _mainCamera = Camera.main;
 
-        _meshRenderer = GetComponentInChildren<MeshRenderer>();
-        if (_meshRenderer == null)
-        {
-            _skinnedMeshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        }
-        Debug.Assert(_meshRenderer != null || _skinnedMeshRenderer != null, "Could not find mesh renderer or skinned mesh renderer on this object.");
+       
+
+        _renderers = GetComponentsInChildren<Renderer>();
+       Debug.Assert(_renderers != null, "could not find a renderer."); 
 
     }
 
