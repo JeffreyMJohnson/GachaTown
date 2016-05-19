@@ -265,17 +265,17 @@ public class Town : MonoBehaviour
 
     private void HandlePurgeButtonClickEvent()
     {
-        if (GameManager.Instance.IsCameraZooming)
-        {
-            return;
-        }
+        
         foreach (GameObject gacha in _placedGachas)
         {
             Destroy(gacha);
         }
         _placedGachas.Clear();
         InitMenu();
-
+        if (GameManager.Instance.IsCameraZooming)
+        {
+            GameManager.Instance.CameraReturnToOriginal();
+        }
     }
 
     #endregion
