@@ -24,15 +24,17 @@ public class GachaBall : MonoBehaviour
     float timeLimitPerCapsule = 3f;
     List<Color> startColor = new List<Color>();
     GachaID newGachaID;
-   
+    bool isWaiting = false;
+
 
     public ParticleSystem sparkles;
     // Use this for initialization
     void Start()
     {
+
         capsule = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-       
+
 
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
 
@@ -51,7 +53,7 @@ public class GachaBall : MonoBehaviour
     void Update()
     {
         WinGacha();
-        MakeGachaOpenAnimationTransparent();
+        //MakeGachaOpenAnimationTransparent();
     }
 
     void OnCollisionStay(Collision collision)
@@ -61,13 +63,25 @@ public class GachaBall : MonoBehaviour
             if (capsule.velocity.x < .1 && capsule.velocity.x > -.1 && !canWin)
             {
                 canWin = true;
+                // TODO: Start your coroutine here!
                 startPos = capsule.transform.position;
                 startRotation = capsule.transform.rotation.eulerAngles;
                 endRotation.Set(0, -90, 0);
             }
         }
+       
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.gameObject.name == "TriggerShake")
+        {
+            animator.SetTrigger("WaitToOpen");
+        }
+    }
+
+    // TODO:    Turn this into a coroutine. Not the best solution, but it's the quickest way to remedy this.
+    //          Could probably advise better in a code review.
     public void WinGacha()
     {
 
@@ -75,7 +89,14 @@ public class GachaBall : MonoBehaviour
         {
 
 
-            if (currentTimeCanWin <= timeToMove)
+
+            //doing raycast here to find drop point. the coinslot collider doesn't belong to this object so the OnMouseUp function wont work here
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit[] hits = Physics.RaycastAll(ray);
+
+
+
+            if (currentTimeCanWin < timeToMove)
             {
                 currentTimeCanWin += Time.deltaTime;
                 capsule.transform.position = Vector3.Lerp(startPos, endPos, currentTimeCanWin / timeToMove);
@@ -86,71 +107,91 @@ public class GachaBall : MonoBehaviour
                     Mathf.Lerp(startRotation.z, endRotation.z, currentTimeCanWin / timeToMove));
 
             }
+            
+
 
             if (currentTimeCanWin > timeToMove)
             {
-                canWin = false;
-                animator.SetTrigger("OpenGacha");
-                AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_OPEN_POP);
-                shouldMakeTransparent = true;
-                currentTimeCanWin = 0;
-                // GameObject newGacha = GameManager.Instance.GetGachaPrefab(gacha.gachaCollection[gacha.gachaCollection.Count - 1]);
-                //newGacha.transform.position = endPos;
+                capsule.isKinematic = true;
 
 
-            }
-
-
-            //capsule.transform.rotation = Quaternion.Euler(Vector3.forward);    
-
-            capsule.isKinematic = true;
-
-            //instantiate a gacha prefab to show what you got
-            //Debug.Log(currentTimeAbove);
-        }
-
-    }
-    public void MakeGachaOpenAnimationTransparent()
-    {
-
-        if (shouldMakeTransparent)
-        {
-            currentTimeMakeTransparent += Time.deltaTime;
-            foreach (var mat in gachaMats)
-            {
-                float timeframe = .917f;
-                Color newColor;
-
-                newColor = mat.color;
-                newColor.a = Mathf.Lerp(1, 0, currentTimeMakeTransparent / timeframe); // this is not good, but .917f is the amount of time that the animation takes to complete so it is a magic number
-                mat.color = newColor;
-                if (currentTimeMakeTransparent > 1)
+                foreach (RaycastHit hit in hits)
                 {
-                    shouldMakeTransparent = false;
-                    currentTimeMakeTransparent = 0;
-                    mat.color = startColor[0];
-                    mat.color = startColor[1];
-                    GameObject newGacha = SpawnGacha();
-                    Destroy(newGacha, timeLimitPerCapsule);
-                    sparkles.Play();
-                    StartCoroutine(GachaLifetime(timeLimitPerCapsule));
                     
+
+
+                    //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
+                    if (hit.collider.gameObject.name == "gachacapsule_animation" && Input.GetMouseButtonUp(0))
+                    {
+                        
+
+                        canWin = false;
+                        animator.SetTrigger("OpenGacha");
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_OPEN_POP);
+                        //shouldMakeTransparent = true;
+                        StartCoroutine(MakeTransparent(.917f));
+                        currentTimeCanWin = 0;
+                        capsule.isKinematic = true;
+                        
+
+                    }
+
                 }
             }
         }
     }
+
+    IEnumerator MakeTransparent(float duration)
+    {
+        float timeElapsed = 0.0f;
+        while (timeElapsed < duration)
+        {
+            timeElapsed += Time.deltaTime;
+
+            foreach (var mat in gachaMats)
+            {
+                Color newColor;
+                newColor = mat.color;
+                newColor.a = Mathf.Lerp(1, 0, timeElapsed / duration); // this is not good, but .917f is the amount of time that the animation takes to complete so it is a magic number
+                mat.color = newColor;
+
+                if (timeElapsed > 1)
+                {
+                    shouldMakeTransparent = false;
+                    
+                    mat.color = startColor[0];
+                    mat.color = startColor[1];
+                }
+            }
+            yield return null;
+        }
+
+        //HACK: gotta set all the mats' alphas to 1 again since we're done and we're gonna hide the ball again
+        foreach (var mat in gachaMats)
+        {
+            Color newColor;
+            newColor = mat.color;
+            newColor.a = 1;
+            mat.color = newColor;
+        }
+
+        GameObject newGacha = SpawnGacha();
+        Destroy(newGacha, timeLimitPerCapsule);
+        sparkles.Play();
+        StartCoroutine(GachaLifetime(timeLimitPerCapsule));
+    }
+
     public GameObject SpawnGacha()
     {
         newGachaID = Player.Instance.gachaCollection.Last();
         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_GACHA_PRESENT);
         return Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
-        
-
     }
+
     IEnumerator GachaLifetime(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         gachaMachine.isGachaThere = false;
     }
-    
+
 }
