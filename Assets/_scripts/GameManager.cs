@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour
         {
             newGachaUI.GetComponentInChildren<Image>().sprite = gacha.gachaUI;
         }
-        newGachaUI.GetComponentInChildren<Text>().text = gacha.gameObject.name;
         newGachaUI.name = gacha.name;
         return newGachaUI;
     }

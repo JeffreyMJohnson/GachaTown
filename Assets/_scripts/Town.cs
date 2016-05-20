@@ -12,7 +12,6 @@ public class Town : MonoBehaviour
 {
     #region public properties
     public int CoinsPerTap = 5;
-    public GameObject GachaUIPrefab;
 
     public float ScrollviewShrinkStep = .01f;
     //todo make sure this is set to false for release. only effects editor but no need to run
