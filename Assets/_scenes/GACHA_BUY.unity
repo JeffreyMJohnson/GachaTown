@@ -1146,31 +1146,31 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 662877693}
   m_Mesh: {fileID: 0}
---- !u!1 &1222226858
+--- !u!1 &1317832423
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 1222226862}
-  - 33: {fileID: 1222226861}
-  - 65: {fileID: 1222226860}
-  - 23: {fileID: 1222226859}
+  - 4: {fileID: 1317832427}
+  - 33: {fileID: 1317832426}
+  - 65: {fileID: 1317832425}
+  - 23: {fileID: 1317832424}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TriggerShake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!23 &1222226859
+  m_IsActive: 1
+--- !u!23 &1317832424
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1222226858}
-  m_Enabled: 1
+  m_GameObject: {fileID: 1317832423}
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
@@ -1190,37 +1190,37 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &1222226860
+--- !u!65 &1317832425
 BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1222226858}
+  m_GameObject: {fileID: 1317832423}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.01, y: 0.01, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!33 &1222226861
+--- !u!33 &1317832426
 MeshFilter:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1222226858}
+  m_GameObject: {fileID: 1317832423}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1222226862
+--- !u!4 &1317832427
 Transform:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1222226858}
+  m_GameObject: {fileID: 1317832423}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8, y: 0, z: 0}
+  m_LocalPosition: {x: -8, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
 --- !u!1001 &1421141546
 Prefab:
   m_ObjectHideFlags: 0
@@ -1326,7 +1326,7 @@ Prefab:
     - target: {fileID: 9500000, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ea50a88a32866884092ccbe2cc352b34, type: 2}
+      objectReference: {fileID: 9100000, guid: 5e7d085a177183544a9cdb59f511677b, type: 2}
     - target: {fileID: 9500000, guid: ef400a20a212ec849a4d259d1e5e4814, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
