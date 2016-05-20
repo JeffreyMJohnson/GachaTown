@@ -15,11 +15,13 @@ public class ShowCollection : MonoBehaviour
     #endregion
 
     #region private fields
-    int currentPageNumber;
+
+    private int currentPageNumber;
     #endregion
 
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
         player = Player.Instance;
         currentPageNumber = 0;
@@ -27,7 +29,7 @@ public class ShowCollection : MonoBehaviour
         SetCollection(currentPageNumber);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -35,7 +37,7 @@ public class ShowCollection : MonoBehaviour
         }
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         //fix this shit
         //if (ShowGizmos)
@@ -116,7 +118,7 @@ public class ShowCollection : MonoBehaviour
     }
 
 
-    void SetGachasPosition(int page)
+    private void SetGachasPosition(int page)
     {
         for (int i = 0; i < currentPage.Length; i++)
         {

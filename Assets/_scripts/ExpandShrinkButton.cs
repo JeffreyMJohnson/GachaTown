@@ -19,7 +19,7 @@ public class ExpandShrinkButton : MonoBehaviour,
 
     private Button_State _currentButtonState = Button_State.SHRINK;
 
-    void Start()
+    private void Start()
     {
         Debug.Assert(ExpandSprite != null, "Expand sprite not set in editor.");
         Debug.Assert(ShrinkSprite != null, "Shrink sprite not set in editor.");

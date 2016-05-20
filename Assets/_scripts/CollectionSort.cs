@@ -13,32 +13,34 @@ public class CollectionSort : MonoBehaviour
     #endregion
 
     #region private fields
-    List<List<GameObject>> collectionPages = new List<List<GameObject>>();
-    Vector3 cameraDestination;
-    Vector3 cameraOrigin;
-    Vector3 pageDestination;
-    Vector3 pageOrigin;
-    Text title;
-    List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
-    Ray ray;
-    RaycastHit hit;
-    float zoomLevelOrigin;
-    float zoomLevelDestination;
-    bool isZoomed = false;
-    float scrollStart;// = 0;
-    float scrollTime;// = 20;
-    int currentPage;// = 0;
-    float zoomStart;// = 0;
-    float zoomTime;// = 20;
-    const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
-    AudioSource buttonPress;
 
-    Camera collectionCamera;
+    private List<List<GameObject>> collectionPages = new List<List<GameObject>>();
+    private Vector3 cameraDestination;
+    private Vector3 cameraOrigin;
+    private Vector3 pageDestination;
+    private Vector3 pageOrigin;
+    private Text title;
+    private List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
+    private Ray ray;
+    private RaycastHit hit;
+    private float zoomLevelOrigin;
+    private float zoomLevelDestination;
+    private bool isZoomed = false;
+    private float scrollStart;// = 0;
+    private float scrollTime;// = 20;
+    private int currentPage;// = 0;
+    private float zoomStart;// = 0;
+    private float zoomTime;// = 20;
+    private const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
+    private AudioSource buttonPress;
+
+    private Camera collectionCamera;
     private Player player;
     #endregion
 
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
 
         currentPage = 0;
@@ -103,7 +105,7 @@ public class CollectionSort : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKeyUp(KeyCode.Escape))
         {
@@ -161,7 +163,8 @@ public class CollectionSort : MonoBehaviour
     #endregion
 
     #region GUI
-    void SetTitle()
+
+    private void SetTitle()
     {
         for (int i = 0; i < titleCards.Count; i++)
         {
@@ -216,7 +219,7 @@ public class CollectionSort : MonoBehaviour
     }
     #endregion
 
-    void InitCollectionPages()
+    private void InitCollectionPages()
     {
         for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
         {
@@ -275,7 +278,7 @@ public class CollectionSort : MonoBehaviour
     /// </summary>
     /// <param name="gachaID"></param>
     /// <returns></returns>
-    GameObject GetGachaGameObject(GachaID gachaID)
+    private GameObject GetGachaGameObject(GachaID gachaID)
     {
         Debug.Assert(gachaID.SetIndex < GameManager.Instance.masterGachaSetList.Count);
         Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);

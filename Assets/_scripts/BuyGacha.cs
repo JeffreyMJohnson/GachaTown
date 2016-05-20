@@ -11,18 +11,20 @@ public class BuyGacha : MonoBehaviour
     public Rigidbody capsule;
     public GameObject seperator;
     public bool isGachaThere = false;
-    GameObject instanceSep = null;
+    private GameObject instanceSep = null;
     #endregion
 
     #region private fields
-    Player player;
-    Animator controller;
-    CoinDrag coin;
+
+    private Player player;
+    private Animator controller;
+    private CoinDrag coin;
     
     #endregion
 
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
@@ -65,7 +67,7 @@ public class BuyGacha : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {

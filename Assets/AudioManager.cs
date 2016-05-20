@@ -140,7 +140,7 @@ public class AudioManager : MonoBehaviour
 
     #region unity life cycle methods
 
-    void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {

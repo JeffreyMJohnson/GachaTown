@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
     #endregion
 
     #region unity lifecycle methods
-    void Awake()
+
+    private void Awake()
     {
         if (Instance == null)
         {
@@ -66,7 +67,7 @@ public class Player : MonoBehaviour
        
     }
 
-    void Start()
+    private void Start()
     {
         if (_allGachasMode)
         {
@@ -75,7 +76,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         SaveState();
     }

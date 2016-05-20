@@ -15,7 +15,8 @@ public class Town : MonoBehaviour
     public GameObject GachaUIPrefab;
 
     public float ScrollviewShrinkStep = .01f;
-
+    //todo make sure this is set to false for release. only effects editor but no need to run
+    public bool drawGizmos = true;
     #endregion
 
     #region private fields
@@ -28,12 +29,13 @@ public class Town : MonoBehaviour
     private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
     private bool _isPlaceable = false;
+    
 
     #endregion
     
     #region unity lifecycle methods
 
-    void Awake()
+    private void Awake()
     {
         foreach (Canvas canvas in FindObjectsOfType<Canvas>())
         {
@@ -88,7 +90,8 @@ public class Town : MonoBehaviour
     }
 
     private float _townDistance;
-    void Start()
+
+    private void Start()
     {
         _player = Player.Instance;
         InitMenu();
@@ -97,11 +100,11 @@ public class Town : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Camera.main.pixelWidth * .5f, Camera.main.pixelHeight * .25f, 0)), out hit))
         {
-            _townDistance = hit.distance;
+            _townDistance = hit.distance * .5f;
         }
     }
 
-    void Update()
+    private void Update()
     {
         UpdateEscapeKey();
 
@@ -109,14 +112,34 @@ public class Town : MonoBehaviour
 
     }
 
-    void OnDestroy()
+    private void OnDestroy()
     {
         Screen.orientation = ScreenOrientation.Landscape;
         GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
 
     }
 
+    private float _gizmoRadius = 0;
+    private Vector3 _gizmoPosition = Vector3.zero;
+    private void OnDrawGizmos()
+    {
+        if (drawGizmos)
+        {
+            Gizmos.color = Color.green;
+            foreach (GameObject gacha in _placedGachas)
+            {
+                Gacha script = gacha.GetComponent<Gacha>();
+                Gizmos.DrawWireCube(gacha.transform.position + (Vector3.up * (script.Size.y / 2)), script.Size);
+            }
 
+            Gizmos.color = Color.blue;
+            if (_gizmoRadius > 0)
+            {
+                Gizmos.DrawWireSphere(_gizmoPosition, _gizmoRadius);
+            }
+            
+        }
+    }
     #endregion
     /// <summary>
     /// Change to Menu scene when excape key is pressed.
@@ -161,7 +184,8 @@ public class Town : MonoBehaviour
         }
     }
     #region GUI
-    void InitMenu()
+
+    private void InitMenu()
     {
         //this linq query returns only unique entries from player collection
         var query =
@@ -190,7 +214,7 @@ public class Town : MonoBehaviour
 
     #region UI Handlers
 
-    void HandleGachaUIDragEvent(GameObject draggedObject)
+    private void HandleGachaUIDragEvent(GameObject draggedObject)
     {
         if (GameManager.Instance.IsCameraZooming)
         {
@@ -203,7 +227,7 @@ public class Town : MonoBehaviour
         gachaScript.OnClick.AddListener(HandleGachaOnClickEvent);
     }
 
-    void HandleGachaUIDropEvent(PointerEventData eventData)
+    private void HandleGachaUIDropEvent(PointerEventData eventData)
     {
         if (_isPlaceable)
         {
@@ -325,10 +349,12 @@ public class Town : MonoBehaviour
 
             Vector3 colliderSize = _gachaToPlace.GetComponent<Collider>().bounds.size;
             float radius = Mathf.Max(colliderSize.x, colliderSize.z);
+            _gizmoRadius = radius;
             RaycastHit[] hits = Physics.SphereCastAll(Camera.main.ScreenPointToRay(Input.mousePosition), radius, 1000, LayerMask.GetMask("Ground", "Gacha"));
 
             _isPlaceable = false;
-            Vector3 groundHitPoint = Vector3.zero;
+            Vector3 groundHitPoint =
+                Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _townDistance));
             foreach (RaycastHit sphereHit in hits)
             {
                 //ignore self
@@ -339,6 +365,7 @@ public class Town : MonoBehaviour
                 if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Gacha"))
                 {
                     _isPlaceable = false;
+                    groundHitPoint = sphereHit.point;
                     break;
                 }
                 if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -348,20 +375,9 @@ public class Town : MonoBehaviour
                 }
 
             }
-
-
-
-            if (_isPlaceable)
-            {
-                _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.green);
-                _gachaToPlace.transform.position = groundHitPoint;
-            }
-            else
-            {
-                _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.red);
-                _gachaToPlace.transform.position = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,
-                    _townDistance));
-            }
+            Color gachaColor = _isPlaceable ? Color.green : Color.red;
+            _gachaToPlace.GetComponent<Gacha>().ChangeColor(gachaColor);
+            _gachaToPlace.transform.position = groundHitPoint;
         }
     }
     private bool IsPlaced(GachaID id)
