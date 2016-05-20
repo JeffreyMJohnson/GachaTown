@@ -281,10 +281,32 @@ public class CollectionSort : MonoBehaviour
         Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
 
         GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
-        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
-        newGacha.transform.parent = transform;
-        newGacha.GetComponent<Gacha>().ID = gachaID;
-        return newGacha;
+        GameObject newGachaObject = Instantiate<GameObject>(gachaPrefab);
+        newGachaObject.transform.parent = transform;
+        Gacha newGacha = newGachaObject.GetComponent<Gacha>();//.ID = gachaID;
+        newGacha.ID = gachaID;
+
+        //CHECK HEIGHT/WIDTH HERE AND SCALE UP TRANSFORM
+        Vector3 nSize = newGacha.Size;
+        List<float> scale = new List<float>();
+
+        scale.Add(5 / nSize.x);
+        scale.Add(5 / nSize.y);
+        //scale.Add(5 / nSize.z);
+
+        float toScale = Mathf.Min(scale[0], scale[1]);
+
+        Vector3 gachaScale = newGachaObject.transform.localScale;
+        gachaScale.x *= toScale;
+        gachaScale.y *= toScale;
+        gachaScale.z *= toScale;
+
+        newGachaObject.transform.localScale = gachaScale;
+
+        //newGachaObject.transform.localScale = transform.localScale * Mathf.Min(scale[0], scale[1], scale[2]);
+
+
+        return newGachaObject;
     }
 
 }
