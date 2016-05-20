@@ -35,7 +35,7 @@ public class CoinDrag : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonUp(0)&&!isInSlot)
+        if (Input.GetMouseButtonUp(0) && !isInSlot)
         {
             
 
