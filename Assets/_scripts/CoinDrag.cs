@@ -4,20 +4,20 @@ using System.Collections;
 
 public class CoinDrag : MonoBehaviour
 {
-    GameObject draggedCoin = null;
+    private GameObject draggedCoin = null;
     //cached reference to child prefab for instantiating when dragged
-    GameObject coinPrefab;
-    BuyGacha machine;
+    private GameObject coinPrefab;
+    private BuyGacha machine;
     public bool isInSlot = false;
-    
-    void Start()
+
+    private void Start()
     {
         coinPrefab = transform.FindChild("Coin_1").gameObject;
         machine = FindObjectOfType<BuyGacha>();
         
     }
 
-    void OnMouseDrag()
+    private void OnMouseDrag()
     {
         isInSlot = false;
         if (draggedCoin == null)
@@ -33,7 +33,7 @@ public class CoinDrag : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonUp(0) && !isInSlot)
         {

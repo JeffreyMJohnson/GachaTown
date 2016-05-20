@@ -13,7 +13,7 @@ public class Settings : MonoBehaviour
     public Toggle muteSoundEffects;
 
 
-    void Start()
+    private void Start()
     {
         backgroundMusic.value = AudioManager.Instance.BackgroundAudioVolume;
         backgroundMusic.onValueChanged.AddListener(HandleBackgroundVolumeOnValueChangeEvent);
@@ -32,7 +32,7 @@ public class Settings : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -40,22 +40,22 @@ public class Settings : MonoBehaviour
         }
     }
 
-    void HandleBackgroundVolumeOnValueChangeEvent(float value)
+    private void HandleBackgroundVolumeOnValueChangeEvent(float value)
     {
         AudioManager.Instance.BackgroundAudioVolume = value;
     }
 
-    void HandleSoundEffectsVolumeOnValueChangedEvent(float value)
+    private void HandleSoundEffectsVolumeOnValueChangedEvent(float value)
     {
         AudioManager.Instance.SoundEffectsVolume = value;
     }
 
-    void HandleBackgroundMuteOnValueChangeEvent(bool value)
+    private void HandleBackgroundMuteOnValueChangeEvent(bool value)
     {
         AudioManager.Instance.BackgroundAudioMuted = value;
     }
 
-    void HandleSoundEffectsMuteOnValueChangeEvent(bool value)
+    private void HandleSoundEffectsMuteOnValueChangeEvent(bool value)
     {
         AudioManager.Instance.SoundEffectsMuted = value;
     }

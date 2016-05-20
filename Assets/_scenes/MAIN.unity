@@ -1292,7 +1292,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
   - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
   - {fileID: 11400000, guid: dac711c34e268094d8b15a8f4ec405c1, type: 2}
-  gachaUIPrefab: {fileID: 153162, guid: 63d5144661fb0c94ea38f93e9e60c03f, type: 2}
+  gachaUIPrefab: {fileID: 194216, guid: 63d5144661fb0c94ea38f93e9e60c03f, type: 2}
   OnZoomReturn:
     m_PersistentCalls:
       m_Calls: []

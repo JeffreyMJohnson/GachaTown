@@ -3,26 +3,29 @@ using System.Collections;
 
 public class GachaToyAI : MonoBehaviour
 {
-    Transform self;
+    private Transform self;
     public Transform target;
     public bool isSeeking;
     public bool isWandering;
-    float speed = .02f;
+    private float speed = .02f;
 
-    Vector3 wanderDir;
-    void Start()
+    private Vector3 wanderDir;
+
+    private void Start()
     {
         self = GetComponent<Transform>();
       
 
     }
-    void Update()
+
+    private void Update()
     {
         
         
         
     }
-    void FixedUpdate()
+
+    private void FixedUpdate()
     {
         if (Input.GetKeyDown("space"))
         {
@@ -46,7 +49,8 @@ public class GachaToyAI : MonoBehaviour
         }
 
     }
-    void TrueWander()
+
+    private void TrueWander()
     {
        wanderDir = transform.rotation.eulerAngles;
         wanderDir.x = 0;
@@ -56,7 +60,8 @@ public class GachaToyAI : MonoBehaviour
         self.transform.rotation = Quaternion.Euler(wanderDir);
        
     }
-    void Seek()
+
+    private void Seek()
     {
 
          self.LookAt(target, self.up);
@@ -66,7 +71,7 @@ public class GachaToyAI : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision myTarget)
+    private void OnCollisionEnter(Collision myTarget)
     {
         if (myTarget.gameObject.tag == "Target")
         {
@@ -74,7 +79,8 @@ public class GachaToyAI : MonoBehaviour
         }
 
     }
-    void OnCollisionExit(Collision myTarget)
+
+    private void OnCollisionExit(Collision myTarget)
     {
         if (myTarget.gameObject.tag == "Target")
         {
