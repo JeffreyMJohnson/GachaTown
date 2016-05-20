@@ -311,7 +311,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 106790300}
   - 33: {fileID: 106790303}
-  - 65: {fileID: 106790302}
   - 23: {fileID: 106790301}
   m_Layer: 0
   m_Name: left wall
@@ -358,18 +357,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &106790302
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 106790299}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &106790303
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -410,7 +397,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 150, y: 23.4}
-  m_SizeDelta: {x: 90, y: 60}
+  m_SizeDelta: {x: 90, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &234781152
 MonoBehaviour:
@@ -530,7 +517,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -150, y: 23.4}
-  m_SizeDelta: {x: 90, y: 60}
+  m_SizeDelta: {x: 90, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &299963453
 MonoBehaviour:
@@ -767,7 +754,6 @@ MonoBehaviour:
   gachaOffset: {x: 1, y: -2.85, z: 0}
   pageOffset: {x: 50, y: 0, z: 0}
   displaySize: {x: 6, y: 9}
-  hiddenMaterial: {fileID: 2100000, guid: 99288760df6286d43bf5a8d4b08cd007, type: 2}
   cameraStartPosition: {x: 6, y: 8.5, z: -10}
 --- !u!4 &667765333
 Transform:
@@ -864,7 +850,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 814226301}
   - 33: {fileID: 814226304}
-  - 65: {fileID: 814226303}
   - 23: {fileID: 814226302}
   m_Layer: 0
   m_Name: shelf 1
@@ -911,18 +896,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &814226303
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 814226300}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &814226304
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -939,7 +912,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 824435506}
   - 33: {fileID: 824435509}
-  - 65: {fileID: 824435508}
   - 23: {fileID: 824435507}
   m_Layer: 0
   m_Name: bottom
@@ -986,18 +958,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &824435508
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 824435505}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &824435509
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1192,7 +1152,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1187414155}
   - 33: {fileID: 1187414158}
-  - 65: {fileID: 1187414157}
   - 23: {fileID: 1187414156}
   m_Layer: 0
   m_Name: shelf 0
@@ -1239,18 +1198,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &1187414157
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1187414154}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1187414158
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1399,8 +1346,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1372445659}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -349}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -24.71}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 1550141674}
   m_Father: {fileID: 0}
@@ -1498,7 +1445,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1491767701}
   - 33: {fileID: 1491767704}
-  - 65: {fileID: 1491767703}
   - 23: {fileID: 1491767702}
   m_Layer: 0
   m_Name: top
@@ -1545,18 +1491,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &1491767703
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1491767700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1491767704
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1673,7 +1607,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1988021204}
   - 33: {fileID: 1988021207}
-  - 65: {fileID: 1988021206}
   - 23: {fileID: 1988021205}
   m_Layer: 0
   m_Name: right wall
@@ -1720,18 +1653,6 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!65 &1988021206
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1988021203}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &1988021207
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -8,7 +8,6 @@ public class CollectionSort : MonoBehaviour
     public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
     public Vector2 displaySize;// = new Vector2(2, 3);
-    public Material hiddenMaterial;
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
 
     #endregion
@@ -121,6 +120,7 @@ public class CollectionSort : MonoBehaviour
             if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
             {
                 //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
+                //also sometimes it just gives a null error
                 if (player.InCollection(hit.transform.gameObject.GetComponent<Gacha>().ID))
                 {
                     if (!isZoomed)//zoom in
@@ -216,7 +216,6 @@ public class CollectionSort : MonoBehaviour
     }
     #endregion
 
-
     void InitCollectionPages()
     {
         for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
@@ -246,12 +245,9 @@ public class CollectionSort : MonoBehaviour
                 //instantiate the text objects here
                 //fill the text objects with description text, changes if we own it or not
                 //disable the description text
+                
 
-                SphereCollider gachaSphereCollider = gachaObject.AddComponent<SphereCollider>(); ;
-                gachaSphereCollider.center = new Vector3(0, 2, 0);
-                gachaSphereCollider.radius = 2.5f;
-
-                SetGachaMaterial(gachaObject, gachaID);
+                SetGachaMaterial(gachaObject.GetComponent<Gacha>(), gachaID);
             }
         }
     }
@@ -261,25 +257,14 @@ public class CollectionSort : MonoBehaviour
     /// </summary>
     /// <param name="gachaObject"></param>
     /// <param name="gachaID"></param>
-    public bool SetGachaMaterial(GameObject gachaObject, GachaID gachaID)
+    public bool SetGachaMaterial(Gacha gacha, GachaID gachaID)
     {
         bool gachaInCollection = player.InCollection(gachaID);
         if (!gachaInCollection)
         {
-            //if the model has animations implemented the mesh componenets change so here is some checking to get through this
-            //when all implemented will need a cleaner way I imagine
-            if (GameManager.Instance.IsGachaAnimated(gachaObject))
-            {
-                SkinnedMeshRenderer mesh = gachaObject.GetComponentInChildren<SkinnedMeshRenderer>();
-                Debug.Assert(mesh != null, "Skinned mesh renderer not found in model: " + gachaObject.name);
-                mesh.material = hiddenMaterial;
-            }
-            else
-            {
-                MeshRenderer mesh = gachaObject.GetComponentInChildren<MeshRenderer>();
-                Debug.Assert(mesh != null, "Mesh component not found in model: " + gachaObject.name);
-                mesh.material = hiddenMaterial;
-            }
+            //just changing the color with the api
+            gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
+
             return gachaInCollection;
         }
         return gachaInCollection;
@@ -296,11 +281,32 @@ public class CollectionSort : MonoBehaviour
         Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
 
         GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
-        GameObject newGacha = Instantiate<GameObject>(gachaPrefab);
-        newGacha.transform.parent = transform;
-        newGacha.GetComponent<Gacha>().ID = gachaID;
-        return newGacha;
-    }
+        GameObject newGachaObject = Instantiate<GameObject>(gachaPrefab);
+        newGachaObject.transform.parent = transform;
+        Gacha newGacha = newGachaObject.GetComponent<Gacha>();//.ID = gachaID;
+        newGacha.ID = gachaID;
 
+        //CHECK HEIGHT/WIDTH HERE AND SCALE UP TRANSFORM
+        Vector3 nSize = newGacha.Size;
+        List<float> scale = new List<float>();
+
+        scale.Add(5 / nSize.x);
+        scale.Add(5 / nSize.y);
+        //scale.Add(5 / nSize.z);
+
+        float toScale = Mathf.Min(scale[0], scale[1]);
+
+        Vector3 gachaScale = newGachaObject.transform.localScale;
+        gachaScale.x *= toScale;
+        gachaScale.y *= toScale;
+        gachaScale.z *= toScale;
+
+        newGachaObject.transform.localScale = gachaScale;
+
+        //newGachaObject.transform.localScale = transform.localScale * Mathf.Min(scale[0], scale[1], scale[2]);
+
+
+        return newGachaObject;
+    }
 
 }

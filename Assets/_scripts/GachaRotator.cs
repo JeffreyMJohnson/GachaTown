@@ -30,7 +30,7 @@ public class GachaRotator : MonoBehaviour
         //GameObject playerObject = Player.Instance.gameObject;
 
         playerScript = Player.Instance;
-        
+
 
 
         selectedGacha = playerScript.Selected;
@@ -75,6 +75,22 @@ public class GachaRotator : MonoBehaviour
         maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
 
         Screen.orientation = ScreenOrientation.Portrait;
+
+        //This looks dumb (and it is) but it works for now
+        //the machine that is initially displayed is not correct and I do not want to mess with the start logic
+        RotateRight();
+        while (rotateStart < rotateTime)
+        {
+            rotateStart++;
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+        }
+        RotateLeft();
+        while (rotateStart < rotateTime)
+        {
+            rotateStart++;
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+        }
+
     }
 
     void Update()
@@ -86,12 +102,18 @@ public class GachaRotator : MonoBehaviour
         if (rotateStart < rotateTime)
         {
             //bug add deltaTime for timing not frame count.  if you want frame count use an int
-            rotateStart++;
+            RotateHolder();
 
-            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
     }
     #endregion
+
+    void RotateHolder()
+    {
+        rotateStart++;
+
+        transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+    }
 
     void TextUpdate()
     {
