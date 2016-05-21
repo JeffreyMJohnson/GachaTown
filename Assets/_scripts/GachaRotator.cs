@@ -90,6 +90,7 @@ public class GachaRotator : MonoBehaviour
 
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
+
     }
     #endregion
 
@@ -179,4 +180,6 @@ public class GachaRotator : MonoBehaviour
             toReturn = 360;
         return toReturn;
     }
+
+    
 }

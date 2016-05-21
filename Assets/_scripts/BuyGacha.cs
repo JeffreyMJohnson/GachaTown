@@ -11,6 +11,7 @@ public class BuyGacha : MonoBehaviour
     public Rigidbody capsule;
     public GameObject seperator;
     public bool isGachaThere = false;
+    public GameObject spinner;
     GameObject instanceSep = null;
     #endregion
 
@@ -18,7 +19,7 @@ public class BuyGacha : MonoBehaviour
     Player player;
     Animator controller;
     CoinDrag coin;
-    
+
     #endregion
 
     #region unity lifecycle methods
@@ -30,7 +31,7 @@ public class BuyGacha : MonoBehaviour
         player = Player.Instance;
 
         controller = GetComponent<Animator>();
-        
+
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
@@ -72,7 +73,7 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
-        
+
     }
     #endregion
 
@@ -109,22 +110,51 @@ public class BuyGacha : MonoBehaviour
 
     public void RotateDial()
     {
-        if (Input.GetMouseButtonDown(0)&&!isGachaThere)
+        if (Input.GetMouseButton(0) && !isGachaThere)
         {
             RaycastHit hit;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.gameObject.name == "gachamachine_dial"&& coin.isInSlot)
+
+
+                //four quadrants to make spinner rotate nicely on click
+                if (hit.collider.name == "LeftUpper")
+                {
+                    spinner.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                }
+                if (hit.collider.name == "RightUpper")
+                {
+                    spinner.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                }
+                if (hit.collider.name == "LeftLower")
+                {
+                    spinner.transform.Rotate(new Vector3(0,0, (-Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                }
+                if (hit.collider.name == "RightLower")
+                {
+                    spinner.transform.Rotate(new Vector3(0,0, (-Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                }
+
+
+                
+                
+            }
+
+            if (coin.isInSlot /*&& spinner.transform.rotation.z > 30*/)
+            {
+                if (hit.collider.gameObject.name == "LeftUpper" || hit.collider.gameObject.name == "RightUpper" || hit.collider.gameObject.name == "LeftLower" || hit.collider.gameObject.name == "RightUpper")
                 {
                     Destroy(seperator);
                     seperator = null;
+
+                    Debug.Log("asdf");
                     controller.SetTrigger("RotateDial");
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);                  
-                        Buy();
-                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);                        
-                        coin.isInSlot = false;
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
+                    Buy();
+                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
+                    coin.isInSlot = false;
                     capsule.isKinematic = !capsule.isKinematic;
                     isGachaThere = true;
                 }
@@ -133,6 +163,6 @@ public class BuyGacha : MonoBehaviour
     }
     
 
-    
+
 
 }

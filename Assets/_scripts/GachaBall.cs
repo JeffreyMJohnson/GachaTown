@@ -68,8 +68,7 @@ public class GachaBall : MonoBehaviour
                 startRotation = capsule.transform.rotation.eulerAngles;
                 endRotation.Set(0, -90, 0);
             }
-        }
-       
+        }       
     }
 
     void OnCollisionEnter(Collision collision)
