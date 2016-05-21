@@ -176,19 +176,6 @@ public class CollectionSort : MonoBehaviour
     #endregion
 
     #region UI handlers
-    public void Previous()
-    {
-        if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage--;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            pageDestination = transform.position + pageOffset;
-        }
-    }
-
     public void Home()
     {
         if (isZoomed)
@@ -204,6 +191,29 @@ public class CollectionSort : MonoBehaviour
         else
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
+
+    public void Previous()
+    {
+        if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
+        {
+            buttonPress.Play();
+            currentPage--;
+            SetTitle();
+            scrollStart = 0;
+            pageOrigin = transform.position;
+            pageDestination = transform.position + pageOffset;
+        }
+        else if (currentPage == 0 && scrollStart == scrollTime && !isZoomed)
+        {
+            buttonPress.Play();
+            currentPage = GameManager.Instance.masterGachaSetList.Count - 1;
+            SetTitle();
+            scrollStart = 0;
+            pageOrigin = transform.position;
+            float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+            pageDestination = transform.position - new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
+        }
+    }
     
     public void Next()
     {
@@ -215,6 +225,16 @@ public class CollectionSort : MonoBehaviour
             scrollStart = 0;
             pageOrigin = transform.position;
             pageDestination = transform.position - pageOffset;
+        }
+        else if (currentPage == GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+        {
+            buttonPress.Play();
+            currentPage = 0;
+            SetTitle();
+            scrollStart = 0;
+            pageOrigin = transform.position;
+            float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+            pageDestination = transform.position + new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
         }
     }
     #endregion
