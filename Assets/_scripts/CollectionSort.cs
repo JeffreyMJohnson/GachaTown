@@ -112,6 +112,7 @@ public class CollectionSort : MonoBehaviour
             Home();
         }
 
+        
 
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
@@ -140,7 +141,11 @@ public class CollectionSort : MonoBehaviour
                         hit.transform.gameObject.GetComponent<Gacha>().PlayAnimation(Gacha.Animation.Special);
                     }
                 }
-            }
+            }//ELSE if mouse button up and raycast fails
+                //save current mousex position and flip a bool
+            //add ondrag
+                //check if difference between saved mousex and current mousex is larger than 'value'
+                    //if yes then call previous/next depending on positive/negative and save current mousex
             
         }
 
