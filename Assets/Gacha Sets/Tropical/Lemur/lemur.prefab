@@ -1045,6 +1045,7 @@ MonoBehaviour:
   ID:
     _setIndex: 0
     _gachaIndex: 0
+  isWalkable: 1
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -1149,6 +1150,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c3b5e265ab23da345868ed835aac44cf, type: 2}
+    - target: {fileID: 0}
+      propertyPath: isWalkable
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 115560}

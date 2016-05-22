@@ -42,6 +42,8 @@ public class Gacha : MonoBehaviour
             return new Vector3(width, height, depth);
         }
     }
+
+    public bool isWalkable = false;
     #endregion
 
     #region events
@@ -118,6 +120,15 @@ public class Gacha : MonoBehaviour
             }
         }
 
+    }
+public delegate void WalkCompleteCallback();
+    public void Walk(Transform target, WalkCompleteCallback callback)
+    {
+        if (isWalkable)
+        {
+            Debug.Log(this.transform.name +  ": I'm walking to " + target.name);
+            callback();
+        }
     }
     #endregion
 

@@ -175,9 +175,4 @@ public class GameManager : MonoBehaviour
         return (anim == null) || (anim.enabled);
         //animator needs to be enabled/disabled manually in the prefab
     }
-
-    public void ClearTown()
-    {
-        
-    }
 }
