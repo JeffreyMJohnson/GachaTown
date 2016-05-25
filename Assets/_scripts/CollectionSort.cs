@@ -32,6 +32,7 @@ public class CollectionSort : MonoBehaviour
     private float zoomStart;// = 0;
     private float zoomTime;// = 20;
     private const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
+    private int pageQueue;
     private AudioSource buttonPress;
 
     private Camera collectionCamera;
@@ -42,14 +43,15 @@ public class CollectionSort : MonoBehaviour
 
     private void Start()
     {
+        pageQueue = 0;
 
         currentPage = 0;
 
         scrollStart = 0;
-        scrollTime = 20;    //How many frames the lerp will last
+        scrollTime = 20;    //How many frames this lerp will last
 
         zoomStart = 0;
-        zoomTime = 20;      //How many frames the lerp will last
+        zoomTime = 20;      //How many frames this lerp will last
 
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
@@ -117,7 +119,7 @@ public class CollectionSort : MonoBehaviour
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
         //eventually enable rotate of the gacha
-        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
+        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) //change this to when the mouse releases, edge case for dragging on to it after swiping
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
@@ -142,11 +144,14 @@ public class CollectionSort : MonoBehaviour
                     }
                 }
             }//ELSE if mouse button up and raycast fails
-                //save current mousex position and flip a bool
-            //add ondrag
-                //check if difference between saved mousex and current mousex is larger than 'value'
-                    //if yes then call previous/next depending on positive/negative and save current mousex
-            
+             //save current mousex position and flip a bool
+             //add ondrag
+             //check if difference between saved mousex and current mousex is larger than 'value'
+             //if yes then call previous/next depending on positive/negative and save current mousex
+
+            //Increase/decrease a counter each time next/previous is meant to be called, make then return bool, call handler 
+            //function every frame, handler function determines what to next/previous and decrease/increase if true.
+
         }
 
         if (scrollStart < scrollTime)
@@ -163,6 +168,8 @@ public class CollectionSort : MonoBehaviour
                                                               collectionCamera.transform.position.z);
             collectionCamera.orthographicSize = Mathf.Lerp(zoomLevelOrigin, zoomLevelDestination, zoomStart / zoomTime);
         }
+
+        handleQueue();
     }
 
     #endregion
@@ -197,50 +204,69 @@ public class CollectionSort : MonoBehaviour
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
+    public void handleQueue()
+    {
+        //PREVIOUS
+        if (pageQueue > 0)
+        {
+            if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue--;
+                currentPage--;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                pageDestination = transform.position + pageOffset;
+            }
+            else if (currentPage == 0 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue--;
+                currentPage = GameManager.Instance.masterGachaSetList.Count - 1;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                pageDestination = transform.position - new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
+            }
+        }
+
+        //NEXT
+        if (pageQueue < 0)
+        {
+            if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue++;
+                currentPage++;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                pageDestination = transform.position - pageOffset;
+            }
+            else if (currentPage == GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue++;
+                currentPage = 0;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                pageDestination = transform.position + new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
+            }
+        }
+    }
+
     public void Previous()
     {
-        if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage--;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            pageDestination = transform.position + pageOffset;
-        }
-        else if (currentPage == 0 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage = GameManager.Instance.masterGachaSetList.Count - 1;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
-            pageDestination = transform.position - new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
-        }
+        pageQueue++;
     }
     
     public void Next()
     {
-        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage++;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            pageDestination = transform.position - pageOffset;
-        }
-        else if (currentPage == GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage = 0;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
-            pageDestination = transform.position + new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
-        }
+        pageQueue--;
     }
     #endregion
 
