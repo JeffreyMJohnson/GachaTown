@@ -7,12 +7,16 @@ public class BuyGacha : MonoBehaviour
     #region public properties
     public Text moneyTextField;
     public Text displayTextField;
-    public int GachaSet = 0;
+    public int gachaSet = 0;
     public Rigidbody capsule;
-    public GameObject seperator;
     public bool isGachaThere = false;
-    public GameObject spinner;
-    GameObject instanceSep = null;
+    public GameObject dialHolder;
+
+    public Material pink;
+    public Material red;
+    public Material green;
+    public Material blue;
+    public Material yellow;
     #endregion
 
     #region private fields
@@ -21,7 +25,7 @@ public class BuyGacha : MonoBehaviour
     CoinDrag coin;
 
     #endregion
-
+    
     #region unity lifecycle methods
     void Start()
     {
@@ -35,16 +39,44 @@ public class BuyGacha : MonoBehaviour
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
-        //audioSource = GetComponent<AudioSource>();
-        //Debug.Assert(audioSource != null, "audio source component was not found.");
-
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
         Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
 
         moneyTextField.text = player.TotalCoins.ToString();
 
-        GachaSet = player.Selected;
-        displayTextField.text = GameManager.Instance.GetGachaSet(GachaSet).name;
+        gachaSet = player.Selected;
+        displayTextField.text = GameManager.Instance.GetGachaSet(gachaSet).name;
+
+
+        GameObject frame = GameObject.FindGameObjectWithTag("Frame");
+    
+
+        switch (gachaSet)
+        {
+            case 0:
+                frame.GetComponent<Renderer>().material = blue;
+                break;
+            case 1:
+                frame.GetComponent<Renderer>().material = green;
+                break;
+            case 2:
+                frame.GetComponent<Renderer>().material = pink;
+                break;
+            case 3:
+                frame.GetComponent<Renderer>().material = red;
+                break;
+            case 4:
+                frame.GetComponent<Renderer>().material = yellow;
+                break;
+        }
+
+
+
+
+
+
+        
+        
 
         //add onclick event for menu button
         Button[] buttons = FindObjectsOfType<Button>();
@@ -73,8 +105,9 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
-
+        Debug.Log(dialHolder.transform.rotation.z);
     }
+    
     #endregion
 
     #region UI Handlers
@@ -102,7 +135,7 @@ public class BuyGacha : MonoBehaviour
         {
             player.DeductCoins(5);
             moneyTextField.text = player.TotalCoins.ToString();
-            player.AddGachaToList(GameManager.Instance.GetRandomGacha(GachaSet));
+            player.AddGachaToList(GameManager.Instance.GetRandomGacha(gachaSet));
         }
 
     }
@@ -112,52 +145,58 @@ public class BuyGacha : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !isGachaThere)
         {
-            RaycastHit hit;
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+           
 
-            if (Physics.Raycast(ray, out hit))
+            if (coin.isInSlot)
             {
 
 
-                //four quadrants to make spinner rotate nicely on click
-                if (hit.collider.name == "LeftUpper")
+                RaycastHit hit;
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    spinner.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
-                }
-                if (hit.collider.name == "RightUpper")
-                {
-                    spinner.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
-                }
-                if (hit.collider.name == "LeftLower")
-                {
-                    spinner.transform.Rotate(new Vector3(0,0, (-Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
-                }
-                if (hit.collider.name == "RightLower")
-                {
-                    spinner.transform.Rotate(new Vector3(0,0, (-Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+
+                    // :(
+                    //four quadrants to make spinner rotate nicely on click
+                    if (hit.collider.name == "LeftUpper")
+                    {
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                    }
+                    if (hit.collider.name == "RightUpper")
+                    {
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                    }
+                    if (hit.collider.name == "LeftLower")
+                    {
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                    }
+                    if (hit.collider.name == "RightLower")
+                    {
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                    }
+
+
+
+
                 }
 
 
-                
-                
-            }
-
-            if (coin.isInSlot /*&& spinner.transform.rotation.z > 30*/)
-            {
-                if (hit.collider.gameObject.name == "LeftUpper" || hit.collider.gameObject.name == "RightUpper" || hit.collider.gameObject.name == "LeftLower" || hit.collider.gameObject.name == "RightUpper")
+                if (dialHolder.transform.rotation.z > .15f&& dialHolder.transform.rotation.z < .4f|| dialHolder.transform.rotation.z < -.15f&& dialHolder.transform.rotation.z > -.4f)
                 {
-                    Destroy(seperator);
-                    seperator = null;
-
-                    Debug.Log("asdf");
-                    controller.SetTrigger("RotateDial");
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
-                    Buy();
-                    AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
-                    coin.isInSlot = false;
-                    capsule.isKinematic = !capsule.isKinematic;
-                    isGachaThere = true;
-                }
+                    if (hit.collider.gameObject.name == "LeftUpper" || hit.collider.gameObject.name == "RightUpper" || hit.collider.gameObject.name == "LeftLower" || hit.collider.gameObject.name == "RightUpper")
+                    {
+                        //this is really dumb but due to constraints there will be two dials, one that will be able to rotate by the player, one that rotates after being instantiated inf ront of that one
+                        controller.SetTrigger("RotateDial");
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_KACHUNK);
+                        Buy();
+                        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
+                        coin.isInSlot = false;
+                        capsule.isKinematic = !capsule.isKinematic;
+                        isGachaThere = true;
+                        dialHolder.transform.rotation = Quaternion.Euler(0, -90, 0);
+                    }
+                }              
             }
         }
     }

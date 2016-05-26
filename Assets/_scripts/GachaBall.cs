@@ -28,6 +28,7 @@ public class GachaBall : MonoBehaviour
 
 
     public ParticleSystem sparkles;
+    public ParticleSystem glow;
     // Use this for initialization
     void Start()
     {
@@ -111,8 +112,12 @@ public class GachaBall : MonoBehaviour
 
             if (currentTimeCanWin > timeToMove)
             {
+                if (!glow.isPlaying)
+                {
+                    glow.Play();
+                }
                 capsule.isKinematic = true;
-
+                
 
                 foreach (RaycastHit hit in hits)
                 {
@@ -122,8 +127,8 @@ public class GachaBall : MonoBehaviour
                     //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
                     if (hit.collider.gameObject.name == "gachacapsule_animation" && Input.GetMouseButtonUp(0))
                     {
-                        
 
+                        glow.Stop();
                         canWin = false;
                         animator.SetTrigger("OpenGacha");
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_OPEN_POP);
