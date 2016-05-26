@@ -14,7 +14,7 @@ public class Gacha : MonoBehaviour
     public bool IsAnimated = false;
     public Sprite gachaUI = null;
     public GachaID ID;
-
+    [SerializeField]
     public Vector3 Size
     {
         get
@@ -59,10 +59,6 @@ public class Gacha : MonoBehaviour
     private Camera _mainCamera;
     private Collider _collider;
     private Animator _animator;
-    [Obsolete]
-    private MeshRenderer _meshRenderer;
-    [Obsolete]
-    private SkinnedMeshRenderer _skinnedMeshRenderer;
     private Renderer[] _renderers;
     #endregion
 
@@ -127,7 +123,7 @@ public class Gacha : MonoBehaviour
 
     #region unity lifecycle methods
 
-    void Awake()
+    private void Awake()
     {
         OnClick = new OnClickEvent();
 
@@ -148,7 +144,7 @@ public class Gacha : MonoBehaviour
 
     }
 
-    void Update()
+    private void Update()
     {
 
         UpdateClickEvent();
@@ -160,7 +156,7 @@ public class Gacha : MonoBehaviour
     /// Idle animation timer alarm event handler
     /// (fired from _idleAnimationTimer)
     /// </summary>
-    void HandleIdleAnimationAlarmEvent()
+    private void HandleIdleAnimationAlarmEvent()
     {
         PlayAnimation(Animation.Idle);
     }
@@ -170,7 +166,7 @@ public class Gacha : MonoBehaviour
     /// fires OnClickEvent if this gacha is clicked.
     /// note the Gacha prefab needs layer to be 'Gacha'and a 3d collider for this to work
     /// </summary>
-    void UpdateClickEvent()
+    private void UpdateClickEvent()
     {
         bool playingSpecialAnimation = IsAnimated && _animator.GetCurrentAnimatorStateInfo(0).IsName("special");
         if (!playingSpecialAnimation && Input.GetMouseButtonDown(0))
@@ -186,7 +182,7 @@ public class Gacha : MonoBehaviour
     }
 
 
-    IEnumerator WalkForward()
+    private IEnumerator WalkForward()
     {
         for (Timer timer = new Timer(1, true); timer.AlarmRaised == false; timer.Update(Time.deltaTime))
         {

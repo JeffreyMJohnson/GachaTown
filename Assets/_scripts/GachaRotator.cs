@@ -25,12 +25,13 @@ public class GachaRotator : MonoBehaviour
     #endregion
 
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
         //GameObject playerObject = Player.Instance.gameObject;
 
         playerScript = Player.Instance;
-        
+
 
 
         selectedGacha = playerScript.Selected;
@@ -75,9 +76,25 @@ public class GachaRotator : MonoBehaviour
         maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
 
         Screen.orientation = ScreenOrientation.Portrait;
+
+        //This looks dumb (and it is) but it works for now
+        //the machine that is initially displayed is not correct and I do not want to mess with the start logic
+        RotateRight();
+        while (rotateStart < rotateTime)
+        {
+            rotateStart++;
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+        }
+        RotateLeft();
+        while (rotateStart < rotateTime)
+        {
+            rotateStart++;
+            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+        }
+
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -86,15 +103,21 @@ public class GachaRotator : MonoBehaviour
         if (rotateStart < rotateTime)
         {
             //bug add deltaTime for timing not frame count.  if you want frame count use an int
-            rotateStart++;
+            RotateHolder();
 
-            transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
 
     }
     #endregion
 
-    void TextUpdate()
+    private void RotateHolder()
+    {
+        rotateStart++;
+
+        transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
+    }
+
+    private void TextUpdate()
     {
         gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5\n" + GameManager.Instance.masterGachaSetList[selectedGacha].name;
     }
@@ -171,7 +194,8 @@ public class GachaRotator : MonoBehaviour
         playerScript.Selected = selectedGacha;
         GameManager.Instance.ChangeScene(GameManager.Scene.GACHA);
     }
-    float GetDestinationRotation()
+
+    private float GetDestinationRotation()
     {
         float toReturn = selectedGacha * rotationInterval;
         if (toReturn == 360 - rotationInterval && transform.eulerAngles.y <= rotationInterval)

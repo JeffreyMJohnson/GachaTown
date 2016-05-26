@@ -6,31 +6,31 @@ using System.Linq;
 public class GachaBall : MonoBehaviour
 {
     public BuyGacha gachaMachine;
-    Rigidbody capsule;
-    Animator animator;
-    bool canWin = false;
-    float currentTimeCanWin = 0f;
-    float currentTimeMakeTransparent = 0f;
-    float currentTimeSpawnGacha = 0f;
-    float timeToMove = 2f;
-    Vector3 startPos;
-    Vector3 endPos = new Vector3(-8, 2, 0);
-    Vector3 startRotation;
-    Vector3 endRotation;
-    List<Material> gachaMats = new List<Material>();
-    bool shouldMakeTransparent = false;
-    bool shouldSpawnGacha = false;
-    bool growGacha = false;
-    float timeLimitPerCapsule = 3f;
-    List<Color> startColor = new List<Color>();
-    GachaID newGachaID;
-    bool isWaiting = false;
+    private Rigidbody capsule;
+    private Animator animator;
+    private bool canWin = false;
+    private float currentTimeCanWin = 0f;
+    private float currentTimeMakeTransparent = 0f;
+    private float currentTimeSpawnGacha = 0f;
+    private float timeToMove = 2f;
+    private Vector3 startPos;
+    private Vector3 endPos = new Vector3(-8, 2, 0);
+    private Vector3 startRotation;
+    private Vector3 endRotation;
+    private List<Material> gachaMats = new List<Material>();
+    private bool shouldMakeTransparent = false;
+    private bool shouldSpawnGacha = false;
+    private bool growGacha = false;
+    private float timeLimitPerCapsule = 3f;
+    private List<Color> startColor = new List<Color>();
+    private GachaID newGachaID;
+    private bool isWaiting = false;
 
 
     public ParticleSystem sparkles;
     public ParticleSystem glow;
     // Use this for initialization
-    void Start()
+    private void Start()
     {
 
         capsule = GetComponent<Rigidbody>();
@@ -51,13 +51,13 @@ public class GachaBall : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         WinGacha();
         //MakeGachaOpenAnimationTransparent();
     }
 
-    void OnCollisionStay(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.transform.gameObject.name == "GachaWin")
         {
@@ -72,7 +72,7 @@ public class GachaBall : MonoBehaviour
         }       
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.gameObject.name == "TriggerShake")
         {
@@ -145,7 +145,7 @@ public class GachaBall : MonoBehaviour
         }
     }
 
-    IEnumerator MakeTransparent(float duration)
+    private IEnumerator MakeTransparent(float duration)
     {
         float timeElapsed = 0.0f;
         while (timeElapsed < duration)
@@ -192,7 +192,7 @@ public class GachaBall : MonoBehaviour
         return Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
     }
 
-    IEnumerator GachaLifetime(float waitTime)
+    private IEnumerator GachaLifetime(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
         gachaMachine.isGachaThere = false;

@@ -20,14 +20,13 @@ public class BuyGacha : MonoBehaviour
     #endregion
 
     #region private fields
-    Player player;
-    Animator controller;
-    CoinDrag coin;
-
-    #endregion
+    private Player player;
+    private Animator controller;
+    private CoinDrag coin;
     
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
@@ -98,7 +97,7 @@ public class BuyGacha : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {

@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class Reset : StateMachineBehaviour {
-
-    GameObject capsule;
+    private GameObject capsule;
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
     //
@@ -29,7 +28,7 @@ public class Reset : StateMachineBehaviour {
     //
     //}
 
-    void OnStateEnter()
+    private void OnStateEnter()
     {
         capsule = GameObject.Find("gachacapsule_animation");
         capsule.transform.position = new Vector3(-1.5f, 0.53f, 1.5f);

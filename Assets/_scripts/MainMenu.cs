@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     #region unity lifecycle methods
-    void Start()
+
+    private void Start()
     {
         InitButtonHandlers();
 
@@ -18,7 +19,7 @@ public class MainMenu : MonoBehaviour
         Screen.orientation = ScreenOrientation.Portrait;
     }
 
-    void Update()
+    private void Update()
     {        
         if (Input.GetKey(KeyCode.Escape))
         {
@@ -39,7 +40,7 @@ public class MainMenu : MonoBehaviour
 
     #endregion
 
-    void InitButtonHandlers()
+    private void InitButtonHandlers()
     {
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
