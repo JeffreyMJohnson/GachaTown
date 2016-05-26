@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class CollectionSort : MonoBehaviour
 {
     #region public properties
-    public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
+    public Vector3 gachaOffset;// = new Vector3(-1, -2.85, 0);
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
-    public Vector2 displaySize;// = new Vector2(2, 3);
+    public Vector2 displaySize;// = new Vector2(6, 9);
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
+    public int swipeLength;// = 200
 
     #endregion
 
@@ -33,6 +34,9 @@ public class CollectionSort : MonoBehaviour
     private float zoomTime;// = 20;
     private const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
     private int pageQueue;
+    private int dragStart;
+    private int dragCurrent;
+    private bool isSwipe;
     private AudioSource buttonPress;
 
     private Camera collectionCamera;
@@ -44,6 +48,10 @@ public class CollectionSort : MonoBehaviour
     private void Start()
     {
         pageQueue = 0;
+
+        dragStart = 0;
+        dragCurrent = 0;
+        isSwipe = false;
 
         currentPage = 0;
 
@@ -114,15 +122,25 @@ public class CollectionSort : MonoBehaviour
             Home();
         }
 
-        
-
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragStart = (int)Input.mousePosition.x;
+            dragCurrent = (int)Input.mousePosition.x;
+            isSwipe = true;
+        }
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
         //eventually enable rotate of the gacha
         if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) //change this to when the mouse releases, edge case for dragging on to it after swiping
         {
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
+            if (isSwipe)
+            {
+                isSwipe = false;
+                dragCurrent = 0;
+                dragStart = 0;
+            }
+            else if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
             {
                 //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
                 //also sometimes it just gives a null error
@@ -143,16 +161,32 @@ public class CollectionSort : MonoBehaviour
                         hit.transform.gameObject.GetComponent<Gacha>().PlayAnimation(Gacha.Animation.Special);
                     }
                 }
-            }//ELSE if mouse button up and raycast fails
-             //save current mousex position and flip a bool
-             //add ondrag
-             //check if difference between saved mousex and current mousex is larger than 'value'
-             //if yes then call previous/next depending on positive/negative and save current mousex
+            }
+             
 
-            //Increase/decrease a counter each time next/previous is meant to be called, make then return bool, call handler 
-            //function every frame, handler function determines what to next/previous and decrease/increase if true.
 
+            //ELSE if mouse button up and raycast fails
+            //save current mousex position and flip a bool
+            //add ondrag
+            //check if difference between saved mousex and current mousex is larger than 'value'
+            //if yes then call previous/next depending on positive/negative and save current mousex
         }
+
+        if (Input.GetMouseButton(0) && isSwipe)
+        {
+            dragCurrent = (int)Input.mousePosition.x;
+            if (dragCurrent - dragStart > 100)
+            {
+                dragStart += 100;
+                Next();
+            }
+            else if (dragCurrent - dragStart < -100)
+            {
+                dragStart -= 100;
+                Previous();
+            }
+        }
+
 
         if (scrollStart < scrollTime)
         {
@@ -204,6 +238,8 @@ public class CollectionSort : MonoBehaviour
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
 
+    //Increase/decrease a counter each time next/previous is meant to be called, make then return bool, call handler 
+    //function every frame, handler function determines what to next/previous and decrease/increase if true.
     public void handleQueue()
     {
         //PREVIOUS

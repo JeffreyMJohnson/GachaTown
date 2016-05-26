@@ -755,6 +755,7 @@ MonoBehaviour:
   pageOffset: {x: 50, y: 0, z: 0}
   displaySize: {x: 6, y: 9}
   cameraStartPosition: {x: 6, y: 8.5, z: -10}
+  swipeLength: 200
 --- !u!4 &667765333
 Transform:
   m_ObjectHideFlags: 0
