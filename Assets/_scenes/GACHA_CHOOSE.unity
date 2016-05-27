@@ -735,7 +735,7 @@ Transform:
   - {fileID: 1516627079}
   - {fileID: 289312829}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1 &245298024
 GameObject:
   m_ObjectHideFlags: 0
@@ -2763,7 +2763,7 @@ Transform:
   - {fileID: 558280975}
   - {fileID: 1526870675}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1001 &1417162076
 Prefab:
   m_ObjectHideFlags: 0
@@ -3089,7 +3089,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 33e8216b765fba44a8b695656aaf2eea, type: 2}
+  - {fileID: 2100000, guid: 0e56c0981e862d945bc902c25b2d19c4, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -3267,9 +3267,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 38293515}
+  - {fileID: 2115183519}
   - {fileID: 232730258}
   - {fileID: 1409490276}
-  - {fileID: 2115183519}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!114 &1615481061
@@ -3287,6 +3287,7 @@ MonoBehaviour:
   moneyDisplay: {fileID: 450672145}
   selectedGacha: 0
   rotateTime: 15
+  swipeLength: 200
 --- !u!1 &1713487849
 GameObject:
   m_ObjectHideFlags: 0
@@ -3910,7 +3911,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: bca1a56a27fe328428e019f7519c7b98, type: 2}
+  - {fileID: 2100000, guid: 12c329d3fb13adf4faaaadbe19b00e1c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -4079,4 +4080,4 @@ Transform:
   - {fileID: 1417162077}
   - {fileID: 1964519119}
   m_Father: {fileID: 1615481060}
-  m_RootOrder: 3
+  m_RootOrder: 1

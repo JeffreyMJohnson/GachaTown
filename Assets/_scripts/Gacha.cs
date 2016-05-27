@@ -22,22 +22,20 @@ public class Gacha : MonoBehaviour
             float width = 0;
             float height = 0;
             float depth = 0;
-            foreach (Renderer renderer in _renderers)
+            Vector3 size = _collider.bounds.size;
+            if (size.x > width)
             {
-                Vector3 size = renderer.bounds.size;
-                if (size.x > width)
-                {
-                    width = size.x;
-                }
-                if (size.y > height)
-                {
-                    height = size.y;
-                }
-                if (size.z > depth)
-                {
-                    depth = size.z;
-                }
+                width = size.x;
             }
+            if (size.y > height)
+            {
+                height = size.y;
+            }
+            if (size.z > depth)
+            {
+                depth = size.z;
+            }
+            
 
             return new Vector3(width, height, depth);
         }

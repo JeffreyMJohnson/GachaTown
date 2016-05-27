@@ -9,7 +9,7 @@ public class GachaRotator : MonoBehaviour
     #region public properties
     public Text gachaDisplay;
     public Text moneyDisplay;
-    public int selectedGacha = 0;
+    public int selectedGacha = 0; //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
     public int rotateTime = 15; //in frames
     public int swipeLength = 200;
     #endregion
@@ -86,14 +86,14 @@ public class GachaRotator : MonoBehaviour
 
         //This looks dumb (and it is) but it works for now
         //the machine that is initially displayed is not correct and I do not want to mess with the start logic
-        RotateRight();
+        RotateLeft();
         HandleQueue();
         while (rotateStart < rotateTime)
         {
             rotateStart++;
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
-        RotateLeft();
+        RotateRight();
         HandleQueue();
         while (rotateStart < rotateTime)
         {

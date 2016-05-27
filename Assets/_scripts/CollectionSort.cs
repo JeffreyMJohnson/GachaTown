@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public class CollectionSort : MonoBehaviour
 {
     #region public properties
-    public Vector3 gachaOffset;// = new Vector3(-1, -2.85, 0);
+    public Vector3 gachaOffset;// = new Vector3(-1, -0.5, 0); DEFAULTS
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
-    public Vector2 displaySize;// = new Vector2(6, 9);
+    public Vector2 displaySize;// = new Vector2(6.35, 6.86);
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
     public int swipeLength;// = 200
 
@@ -20,7 +20,7 @@ public class CollectionSort : MonoBehaviour
     private Vector3 cameraOrigin;
     private Vector3 pageDestination;
     private Vector3 pageOrigin;
-    private Text title;
+    //private Text title;
     private List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
     private Ray ray;
     private RaycastHit hit;
@@ -63,17 +63,18 @@ public class CollectionSort : MonoBehaviour
 
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
-        title = GameObject.Find("PageTitle").GetComponent<Text>();
+        //title = GameObject.Find("PageTitle").GetComponent<Text>();
 
-        SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
+        /*SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
         //getting all of the spriterenderers for the title images so we can switch between them
         foreach (SpriteRenderer spriterenderer in titleCardsToList)
         {
             spriterenderer.enabled = false;
             titleCards.Add(spriterenderer);
-        }
+        }*/
 
         collectionCamera = FindObjectOfType<Camera>();
+        
         zoomLevelOrigin = collectionCamera.orthographicSize;
         zoomLevelDestination = zoomLevelOrigin;
         pageOrigin = transform.position;
@@ -121,6 +122,9 @@ public class CollectionSort : MonoBehaviour
         {
             Home();
         }
+
+        //DEBUG ONLY, IF YOU CALL THIS IN THE UPDATE THEN UNCOMMENT THE DELETE WITHIN GetGachaGameObject
+        //InitCollectionPages();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -216,12 +220,12 @@ public class CollectionSort : MonoBehaviour
 
     private void SetTitle()
     {
-        for (int i = 0; i < titleCards.Count; i++)
+        /*for (int i = 0; i < titleCards.Count; i++)
         {
             titleCards[i].enabled = false;
         }
         titleCards[currentPage].enabled = true;
-        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;
+        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;*/
     }
     #endregion
 
@@ -378,6 +382,10 @@ public class CollectionSort : MonoBehaviour
 
         GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGachaObject = Instantiate<GameObject>(gachaPrefab);
+
+        //TESTING ONLY
+        //Destroy(newGachaObject,0.1f);
+
         newGachaObject.transform.parent = transform;
         Gacha newGacha = newGachaObject.GetComponent<Gacha>();//.ID = gachaID;
         newGacha.ID = gachaID;
@@ -393,11 +401,11 @@ public class CollectionSort : MonoBehaviour
         float toScale = Mathf.Min(scale[0], scale[1]);
 
         Vector3 gachaScale = newGachaObject.transform.localScale;
-        gachaScale.x *= toScale;
-        gachaScale.y *= toScale;
-        gachaScale.z *= toScale;
+        gachaScale.x = toScale;
+        gachaScale.y = toScale;
+        gachaScale.z = toScale;
 
-        newGachaObject.transform.localScale = gachaScale;
+        //newGachaObject.transform.localScale = gachaScale;
 
         //newGachaObject.transform.localScale = transform.localScale * Mathf.Min(scale[0], scale[1], scale[2]);
 

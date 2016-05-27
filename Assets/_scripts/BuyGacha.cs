@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using System.Collections.Generic;
 
 public class BuyGacha : MonoBehaviour
 {
@@ -18,7 +18,7 @@ public class BuyGacha : MonoBehaviour
     public Material blue;
     public Material yellow;
     #endregion
-
+    
     #region private fields
     private Player player;
     private Animator controller;
@@ -49,23 +49,48 @@ public class BuyGacha : MonoBehaviour
 
 
         GameObject frame = GameObject.FindGameObjectWithTag("Frame");
-    
 
-        switch (gachaSet)
+        MeshRenderer[] gachaTitles = GameObject.Find("GachaTitle").GetComponentsInChildren<MeshRenderer>(true);
+        
+        switch (gachaSet) //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
         {
             case 0:
                 frame.GetComponent<Renderer>().material = blue;
+                gachaTitles[0].enabled = true;
+                SpriteRenderer[] spookySprites = gachaTitles[0].GetComponentsInChildren<SpriteRenderer>(true);
+                foreach(SpriteRenderer spriterenderer in spookySprites)
+                {
+                    spriterenderer.enabled = true;
+                }
                 break;
             case 1:
-                frame.GetComponent<Renderer>().material = red;
+                frame.GetComponent<Renderer>().material = green;
+                gachaTitles[1].enabled = true;
+                SpriteRenderer[] sweetsSprites = gachaTitles[1].GetComponentsInChildren<SpriteRenderer>(true);
+                foreach (SpriteRenderer spriterenderer in sweetsSprites)
+                {
+                    spriterenderer.enabled = true;
+                }
                 break;
             case 2:
-                frame.GetComponent<Renderer>().material = green;
+                frame.GetComponent<Renderer>().material = pink;
+                gachaTitles[2].enabled = true;
+                SpriteRenderer[] tropicalSprites = gachaTitles[2].GetComponentsInChildren<SpriteRenderer>(true);
+                foreach (SpriteRenderer spriterenderer in tropicalSprites)
+                {
+                    spriterenderer.enabled = true;
+                }
                 break;
             case 3:
-                frame.GetComponent<Renderer>().material = pink;
+                frame.GetComponent<Renderer>().material = red;
+                gachaTitles[3].enabled = true;
+                SpriteRenderer[] citySprites = gachaTitles[3].GetComponentsInChildren<SpriteRenderer>(true);
+                foreach (SpriteRenderer spriterenderer in citySprites)
+                {
+                    spriterenderer.enabled = true;
+                }
                 break;
-            case 4:
+            default:
                 frame.GetComponent<Renderer>().material = yellow;
                 break;
         }

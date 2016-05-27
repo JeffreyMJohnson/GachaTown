@@ -37,8 +37,9 @@ public class Player : MonoBehaviour
     public static Player Instance;
 
     public List<GachaID> gachaCollection;
-    
-    public int Selected = 0;
+
+    //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
+    public int Selected = 0;    
     #endregion
 
     #region private fields
