@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Reset : StateMachineBehaviour {
     private GameObject capsule;
+    private Renderer[] rend;
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
     //
@@ -32,5 +33,11 @@ public class Reset : StateMachineBehaviour {
     {
         capsule = GameObject.Find("gachacapsule_animation");
         capsule.transform.position = new Vector3(-1.5f, 0.53f, 1.5f);
+        rend =  capsule.GetComponentsInChildren<Renderer>();
+        for (int i = 0; i < rend.Length; i++)
+        {
+            rend[i].material.color = new Color(Random.Range(0, 100) * .01f, Random.Range(0, 100) * .01f, Random.Range(0, 100) * .01f);
+        }
     }
+   
 }

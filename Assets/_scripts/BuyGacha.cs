@@ -4,14 +4,14 @@ using System.Collections;
 
 public class BuyGacha : MonoBehaviour
 {
-    #region public properties
+    #region public properties   
+    public int gachaSet = 0;
+    public float rotationSpeed = 10;
+    public bool isGachaThere = false;    
     public Text moneyTextField;
     public Text displayTextField;
-    public int gachaSet = 0;
-    public Rigidbody capsule;
-    public bool isGachaThere = false;
     public GameObject dialHolder;
-
+    public Rigidbody capsule;
     public Material pink;
     public Material red;
     public Material green;
@@ -57,13 +57,13 @@ public class BuyGacha : MonoBehaviour
                 frame.GetComponent<Renderer>().material = blue;
                 break;
             case 1:
-                frame.GetComponent<Renderer>().material = green;
+                frame.GetComponent<Renderer>().material = red;
                 break;
             case 2:
-                frame.GetComponent<Renderer>().material = pink;
+                frame.GetComponent<Renderer>().material = green;
                 break;
             case 3:
-                frame.GetComponent<Renderer>().material = red;
+                frame.GetComponent<Renderer>().material = pink;
                 break;
             case 4:
                 frame.GetComponent<Renderer>().material = yellow;
@@ -78,7 +78,6 @@ public class BuyGacha : MonoBehaviour
         
         
 
-        //add onclick event for menu button
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
         {
@@ -117,7 +116,6 @@ public class BuyGacha : MonoBehaviour
 
     public void BuyLazy()
     {
-        //GameManager.Instance.PlaySoundEffect(GameManager.Instance.fxBuyTwenty);
         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CHACHING);
         for (int i = 0; i < 20; i++)
         {
@@ -156,23 +154,23 @@ public class BuyGacha : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
 
-                    // :(
+                    // :( // I am so sorry for this
                     //four quadrants to make spinner rotate nicely on click
                     if (hit.collider.name == "LeftUpper")
                     {
-                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * rotationSpeed) + (Input.GetAxis("Mouse Y") * 5)));
                     }
                     if (hit.collider.name == "RightUpper")
                     {
-                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (Input.GetAxis("Mouse X") * rotationSpeed) + (-Input.GetAxis("Mouse Y") * 5)));
                     }
                     if (hit.collider.name == "LeftLower")
                     {
-                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * 5) + (Input.GetAxis("Mouse Y") * 5)));
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * rotationSpeed) + (Input.GetAxis("Mouse Y") * 5)));
                     }
                     if (hit.collider.name == "RightLower")
                     {
-                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * 5) + (-Input.GetAxis("Mouse Y") * 5)));
+                        dialHolder.transform.Rotate(new Vector3(0, 0, (-Input.GetAxis("Mouse X") * rotationSpeed) + (-Input.GetAxis("Mouse Y") * 5)));
                     }
 
 

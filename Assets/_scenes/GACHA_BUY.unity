@@ -199,8 +199,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 81585436}
   m_LocalRotation: {x: 0.000000011175871, y: 0.99789304, z: -0.064880654, w: -0.00000017896487}
-  m_LocalPosition: {x: -0.006422216, y: 0.021356983, z: 0.026939115}
-  m_LocalScale: {x: 0.014444444, y: 0.014444444, z: 0.014444444}
+  m_LocalPosition: {x: -0.006422216, y: 0.022, z: 0.026939115}
+  m_LocalScale: {x: 0.016, y: 0.016, z: 0.014444444}
   m_Children: []
   m_Father: {fileID: 1520405024}
   m_RootOrder: 3
@@ -796,8 +796,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 264407845}
   m_LocalRotation: {x: 0.000000011175871, y: 0.99789304, z: -0.064880654, w: -0.00000017896487}
-  m_LocalPosition: {x: -0.006422216, y: 0.021356983, z: 0.026939115}
-  m_LocalScale: {x: 0.014444444, y: 0.014444444, z: 0.014444444}
+  m_LocalPosition: {x: -0.006422216, y: 0.022, z: 0.026939115}
+  m_LocalScale: {x: 0.016, y: 0.016, z: 0.014444444}
   m_Children: []
   m_Father: {fileID: 1520405024}
   m_RootOrder: 5
@@ -1287,8 +1287,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 508435662}
   m_LocalRotation: {x: 0.000000011175871, y: 0.99789304, z: -0.064880654, w: -0.00000017896487}
-  m_LocalPosition: {x: -0.006422216, y: 0.021356983, z: 0.026939115}
-  m_LocalScale: {x: 0.014444444, y: 0.014444444, z: 0.014444444}
+  m_LocalPosition: {x: -0.006422216, y: 0.022, z: 0.026939115}
+  m_LocalScale: {x: 0.016, y: 0.016, z: 0.014444444}
   m_Children: []
   m_Father: {fileID: 1520405024}
   m_RootOrder: 4
@@ -1518,8 +1518,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1239334818}
   m_LocalRotation: {x: 0.000000011175871, y: 0.99789304, z: -0.064880654, w: -0.00000017896487}
-  m_LocalPosition: {x: -0.006422216, y: 0.021356983, z: 0.026939115}
-  m_LocalScale: {x: 0.014444444, y: 0.014444444, z: 0.014444444}
+  m_LocalPosition: {x: -0.006422216, y: 0.022, z: 0.026939115}
+  m_LocalScale: {x: 0.016, y: 0.016, z: 0.014444444}
   m_Children: []
   m_Father: {fileID: 1520405024}
   m_RootOrder: 6
@@ -1875,7 +1875,7 @@ GameObject:
   - 4: {fileID: 1520405026}
   - 33: {fileID: 1520405028}
   - 23: {fileID: 1520405027}
-  - 64: {fileID: 1520405022}
+  - 65: {fileID: 1520405022}
   m_Layer: 0
   m_Name: gachamachine_coinslot
   m_TagString: Untagged
@@ -1905,8 +1905,8 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 0d04930840e839640bb027740f8ce180, type: 2}
   blue: {fileID: 2100000, guid: 7dd66e6b1fdca0149af4b84dd6988e11, type: 2}
   yellow: {fileID: 2100000, guid: 5825976ad7f77ef48b0972f8c1f3e4ca, type: 2}
---- !u!64 &1520405022
-MeshCollider:
+--- !u!65 &1520405022
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -1915,8 +1915,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 0
-  m_Mesh: {fileID: 4300002, guid: d3f74c3c22175074fbf4251fb8deb6ef, type: 3}
+  m_Size: {x: 0.01, y: 0.015, z: 0.0027888445}
+  m_Center: {x: -0.0000000018632935, y: 0.0000000037204766, z: 0.0003230473}
 --- !u!95 &1520405023
 Animator:
   serializedVersion: 3
@@ -2207,7 +2207,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5825976ad7f77ef48b0972f8c1f3e4ca, type: 2}
+  - {fileID: 2100000, guid: 65e28a48a79ef7041a36850d73a010ab, type: 2}
   - {fileID: 2100000, guid: 65e28a48a79ef7041a36850d73a010ab, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
