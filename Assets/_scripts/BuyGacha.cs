@@ -23,7 +23,8 @@ public class BuyGacha : MonoBehaviour
     private Player player;
     private Animator controller;
     private CoinDrag coin;
-    
+    #endregion
+
     #region unity lifecycle methods
 
     private void Start()
@@ -104,7 +105,6 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
-        Debug.Log(dialHolder.transform.rotation.z);
     }
     
     #endregion
