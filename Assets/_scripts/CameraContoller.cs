@@ -32,7 +32,8 @@ public class CameraContoller : MonoBehaviour
     /// </summary>
     public void PullBackToOriginal()
     {
-        StartCoroutine(ReturnFromZoom());
+        if (GameManager.Instance.CurrentScene == GameManager.Scene.TOWN)
+            StartCoroutine(ReturnFromZoom());
     }
     #endregion
     #region private methods

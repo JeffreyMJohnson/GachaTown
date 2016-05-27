@@ -131,16 +131,17 @@ public class CollectionSort : MonoBehaviour
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
         //eventually enable rotate of the gacha
-        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) //change this to when the mouse releases, edge case for dragging on to it after swiping
+        if (Input.GetMouseButtonUp(0) ) //change this to when the mouse releases, edge case for dragging on to it after swiping
         {
-            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (isSwipe)
             {
                 isSwipe = false;
                 dragCurrent = 0;
                 dragStart = 0;
             }
-            else if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
+
+            ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit) && !isSwipe && zoomStart == zoomTime) //the gacha was hit and we have the gacha
             {
                 //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
                 //also sometimes it just gives a null error
@@ -162,8 +163,8 @@ public class CollectionSort : MonoBehaviour
                     }
                 }
             }
-             
 
+            
 
             //ELSE if mouse button up and raycast fails
             //save current mousex position and flip a bool
@@ -175,18 +176,22 @@ public class CollectionSort : MonoBehaviour
         if (Input.GetMouseButton(0) && isSwipe)
         {
             dragCurrent = (int)Input.mousePosition.x;
-            if (dragCurrent - dragStart > 100)
+            if (dragCurrent - dragStart > swipeLength)
             {
-                dragStart += 100;
+                dragStart += swipeLength;
                 Next();
+                isSwipe = !isSwipe;
             }
-            else if (dragCurrent - dragStart < -100)
+            else if (dragCurrent - dragStart < -swipeLength)
             {
-                dragStart -= 100;
+                dragStart -= swipeLength;
                 Previous();
+                isSwipe = !isSwipe;
             }
         }
 
+
+        handleQueue();
 
         if (scrollStart < scrollTime)
         {
@@ -203,7 +208,6 @@ public class CollectionSort : MonoBehaviour
             collectionCamera.orthographicSize = Mathf.Lerp(zoomLevelOrigin, zoomLevelDestination, zoomStart / zoomTime);
         }
 
-        handleQueue();
     }
 
     #endregion
@@ -297,12 +301,14 @@ public class CollectionSort : MonoBehaviour
 
     public void Previous()
     {
-        pageQueue++;
+        if (!isZoomed)
+            pageQueue++;
     }
     
     public void Next()
     {
-        pageQueue--;
+        if (!isZoomed)
+            pageQueue--;
     }
     #endregion
 
