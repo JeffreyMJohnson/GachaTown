@@ -9,7 +9,6 @@ public class BuyGacha : MonoBehaviour
     public float rotationSpeed = 10;
     public bool isGachaThere = false;    
     public Text moneyTextField;
-    public Text displayTextField;
     public GameObject dialHolder;
     public Rigidbody capsule;
     public Material pink;
@@ -17,8 +16,14 @@ public class BuyGacha : MonoBehaviour
     public Material green;
     public Material blue;
     public Material yellow;
-    #endregion
+    public Image displayText;
     
+    public Sprite spooky;
+    public Sprite sweets;
+    public Sprite tropical;
+    public Sprite city;
+    #endregion
+
     #region private fields
     private Player player;
     private Animator controller;
@@ -35,17 +40,16 @@ public class BuyGacha : MonoBehaviour
         player = Player.Instance;
 
         controller = GetComponent<Animator>();
-
+        
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
 
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
-        Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
 
         moneyTextField.text = player.TotalCoins.ToString();
 
+
         gachaSet = player.Selected;
-        displayTextField.text = GameManager.Instance.GetGachaSet(gachaSet).name;
 
 
         GameObject frame = GameObject.FindGameObjectWithTag("Frame");
@@ -56,6 +60,7 @@ public class BuyGacha : MonoBehaviour
         {
             case 0:
                 frame.GetComponent<Renderer>().material = blue;
+                displayText.sprite = spooky;
                 gachaTitles[0].enabled = true;
                 SpriteRenderer[] spookySprites = gachaTitles[0].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach(SpriteRenderer spriterenderer in spookySprites)
@@ -65,7 +70,8 @@ public class BuyGacha : MonoBehaviour
                 break;
             case 1:
                 frame.GetComponent<Renderer>().material = green;
-                gachaTitles[1].enabled = true;
+                displayText.sprite = sweets;
+               gachaTitles[1].enabled = true;
                 SpriteRenderer[] sweetsSprites = gachaTitles[1].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in sweetsSprites)
                 {
@@ -74,7 +80,8 @@ public class BuyGacha : MonoBehaviour
                 break;
             case 2:
                 frame.GetComponent<Renderer>().material = pink;
-                gachaTitles[2].enabled = true;
+                displayText.sprite = tropical;
+               gachaTitles[2].enabled = true;
                 SpriteRenderer[] tropicalSprites = gachaTitles[2].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in tropicalSprites)
                 {
@@ -83,7 +90,8 @@ public class BuyGacha : MonoBehaviour
                 break;
             case 3:
                 frame.GetComponent<Renderer>().material = red;
-                gachaTitles[3].enabled = true;
+                displayText.sprite = city;
+               gachaTitles[3].enabled = true;
                 SpriteRenderer[] citySprites = gachaTitles[3].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in citySprites)
                 {
