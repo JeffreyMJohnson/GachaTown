@@ -117,6 +117,17 @@ public class Gacha : MonoBehaviour
         }
 
     }
+
+    public void ChangeTexture(Texture texture)
+    {
+        foreach (Renderer renderer in _renderers)
+        {
+            foreach (Material material in renderer.materials)
+            {
+                material.mainTexture = texture;
+            }
+        }
+    }
     #endregion
 
     #region unity lifecycle methods

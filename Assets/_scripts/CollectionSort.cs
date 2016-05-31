@@ -9,6 +9,7 @@ public class CollectionSort : MonoBehaviour
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
     public Vector2 displaySize;// = new Vector2(6.35, 6.86);
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
+    public Texture defaultTexture;
     public int swipeLength;// = 200
 
     #endregion
@@ -363,7 +364,10 @@ public class CollectionSort : MonoBehaviour
         if (!gachaInCollection)
         {
             //just changing the color with the api
-            gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
+            //gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
+
+            //changing texture with public api
+            gacha.ChangeTexture(defaultTexture);
 
             return gachaInCollection;
         }
