@@ -155,7 +155,6 @@ public class Town : MonoBehaviour
         }
     }
 
-
     private void LoadPlacedGachas()
     {
         foreach (Player.PlacedGachaData data in Player.Instance.GetTownData())

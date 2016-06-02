@@ -101,7 +101,6 @@ public class Gacha : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Change the color of this gacha to the given color if disable is false, else ignores color and set to default texture.
     /// </summary>

@@ -364,10 +364,10 @@ public class CollectionSort : MonoBehaviour
         if (!gachaInCollection)
         {
             //just changing the color with the api
-            //gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
+            gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
 
             //changing texture with public api
-            gacha.ChangeTexture(defaultTexture);
+            //gacha.ChangeTexture(defaultTexture);
 
             return gachaInCollection;
         }
@@ -409,9 +409,9 @@ public class CollectionSort : MonoBehaviour
         gachaScale.y = toScale;
         gachaScale.z = toScale;
 
-        //newGachaObject.transform.localScale = gachaScale;
+        newGachaObject.transform.localScale = gachaScale;
 
-        //newGachaObject.transform.localScale = transform.localScale * Mathf.Min(scale[0], scale[1], scale[2]);
+        //newGachaObject.transform.localScale = newGachaObject.transform.localScale * Mathf.Min(scale[0], scale[1]);
 
 
         return newGachaObject;
