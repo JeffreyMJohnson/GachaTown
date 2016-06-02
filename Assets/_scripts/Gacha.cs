@@ -194,6 +194,7 @@ public class Gacha : MonoBehaviour
     {
         for (Timer timer = new Timer(1, true); timer.AlarmRaised == false; timer.Update(Time.deltaTime))
         {
+            
             float speed = 5 * Time.deltaTime;
             transform.Translate(Vector3.forward * speed);
             _animator.SetFloat("velocity", speed);

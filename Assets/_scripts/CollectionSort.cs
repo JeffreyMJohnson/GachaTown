@@ -306,13 +306,13 @@ public class CollectionSort : MonoBehaviour
 
     public void Previous()
     {
-        if (!isZoomed)
+        if (!isZoomed && pageQueue < 3)
             pageQueue++;
     }
     
     public void Next()
     {
-        if (!isZoomed)
+        if (!isZoomed && pageQueue > -3)
             pageQueue--;
     }
     #endregion
