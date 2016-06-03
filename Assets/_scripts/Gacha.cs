@@ -22,28 +22,24 @@ public class Gacha : MonoBehaviour
             float width = 0;
             float height = 0;
             float depth = 0;
-            foreach (Renderer renderer in _renderers)
+            Vector3 size = _collider.bounds.size;
+            if (size.x > width)
             {
-                Vector3 size = renderer.bounds.size;
-                if (size.x > width)
-                {
-                    width = size.x;
-                }
-                if (size.y > height)
-                {
-                    height = size.y;
-                }
-                if (size.z > depth)
-                {
-                    depth = size.z;
-                }
+                width = size.x;
             }
+            if (size.y > height)
+            {
+                height = size.y;
+            }
+            if (size.z > depth)
+            {
+                depth = size.z;
+            }
+            
 
             return new Vector3(width, height, depth);
         }
     }
-
-    public bool isWalkable = false;
     #endregion
 
     #region events
@@ -105,7 +101,6 @@ public class Gacha : MonoBehaviour
         }
     }
 
-
     /// <summary>
     /// Change the color of this gacha to the given color if disable is false, else ignores color and set to default texture.
     /// </summary>
@@ -121,13 +116,15 @@ public class Gacha : MonoBehaviour
         }
 
     }
-public delegate void WalkCompleteCallback();
-    public void Walk(Transform target, WalkCompleteCallback callback)
+
+    public void ChangeTexture(Texture texture)
     {
-        if (isWalkable)
+        foreach (Renderer renderer in _renderers)
         {
-            Debug.Log(this.transform.name +  ": I'm walking to " + target.name);
-            callback();
+            foreach (Material material in renderer.materials)
+            {
+                material.mainTexture = texture;
+            }
         }
     }
     #endregion
@@ -197,6 +194,7 @@ public delegate void WalkCompleteCallback();
     {
         for (Timer timer = new Timer(1, true); timer.AlarmRaised == false; timer.Update(Time.deltaTime))
         {
+            
             float speed = 5 * Time.deltaTime;
             transform.Translate(Vector3.forward * speed);
             _animator.SetFloat("velocity", speed);

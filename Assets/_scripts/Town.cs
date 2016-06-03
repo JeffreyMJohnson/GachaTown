@@ -12,11 +12,8 @@ public class Town : MonoBehaviour
 {
     #region public properties
     public int CoinsPerTap = 5;
+
     public float ScrollviewShrinkStep = .01f;
-    [Tooltip("Minimum amount of seconds to calculate random walk cycle (inclusively).")]
-    public float minSecondsToWalk = 5;
-    [Tooltip("Maximum amount of seconds to calculate random walk cycle (inclusively).")]
-    public float maxSecondsToWalk = 10;
     //todo make sure this is set to false for release. only effects editor but no need to run
     public bool drawGizmos = true;
     #endregion
@@ -31,11 +28,10 @@ public class Town : MonoBehaviour
     private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
     private bool _isPlaceable = false;
-    private float _townDistance;
-    private Timer _walkTimer = null;
+    
 
     #endregion
-
+    
     #region unity lifecycle methods
 
     private void Awake()
@@ -90,12 +86,9 @@ public class Town : MonoBehaviour
         backButton.onClick.AddListener(HandleBackButtonClickEvent);
 
         purgeButton.onClick.AddListener(HandlePurgeButtonClickEvent);
-
-        _walkTimer = new Timer(UnityEngine.Random.Range(minSecondsToWalk, maxSecondsToWalk));
-        _walkTimer.onRaiseAlarmEvent += HandleWalkAnimationTimerAlarmEvent;
     }
 
-    
+    private float _townDistance;
 
     private void Start()
     {
@@ -108,11 +101,6 @@ public class Town : MonoBehaviour
         {
             _townDistance = hit.distance * .5f;
         }
-
-        if (_placedGachas.Count > 0)
-        {
-            _walkTimer.Start();
-        }
     }
 
     private void Update()
@@ -121,7 +109,6 @@ public class Town : MonoBehaviour
 
         UpdateGachaDrag();
 
-        _walkTimer.Update(Time.deltaTime);
     }
 
     private void OnDestroy()
@@ -131,6 +118,28 @@ public class Town : MonoBehaviour
 
     }
 
+    private float _gizmoRadius = 0;
+    private Vector3 _gizmoPosition = Vector3.zero;
+    private void OnDrawGizmos()
+    {
+        if (drawGizmos)
+        {
+            Gizmos.color = Color.green;
+            foreach (GameObject gacha in _placedGachas)
+            {
+                Gacha script = gacha.GetComponent<Gacha>();
+                Gizmos.DrawWireCube(gacha.transform.position + (Vector3.up * (script.Size.y / 2)), script.Size);
+            }
+
+            Gizmos.color = Color.blue;
+            if (_gizmoRadius > 0)
+            {
+                Gizmos.DrawWireSphere(_gizmoPosition, _gizmoRadius);
+            }
+            
+        }
+    }
+    #endregion
     /// <summary>
     /// Change to Menu scene when excape key is pressed.
     /// </summary>
@@ -146,52 +155,32 @@ public class Town : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// moves gacha gameobject with the mouse position until the left mouse button is clicked
-    /// </summary>
-    private void UpdateGachaDrag()
+    private void LoadPlacedGachas()
     {
-
-        if (_gachaToPlace != null)
+        foreach (Player.PlacedGachaData data in Player.Instance.GetTownData())
         {
-
-            Vector3 colliderSize = _gachaToPlace.GetComponent<Collider>().bounds.size;
-            float radius = _gachaToPlace.GetComponent<Gacha>().Size.x * .5f; //Mathf.Max(colliderSize.x, colliderSize.z);
-            Vector3 halfExtents = _gachaToPlace.GetComponent<Gacha>().Size * .5f;
-
-            RaycastHit[] hits = Physics.SphereCastAll(Camera.main.ScreenPointToRay(Input.mousePosition), radius, 1000, LayerMask.GetMask("Ground", "Gacha"));
-
-
-            _isPlaceable = false;
-            Vector3 groundHitPoint =
-                Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _townDistance));
-            foreach (RaycastHit sphereHit in hits)
-            {
-                //ignore self
-                if (sphereHit.collider.gameObject == _gachaToPlace)
-                {
-                    continue;
-                }
-                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Gacha"))
-                {
-                    _isPlaceable = false;
-                    groundHitPoint = sphereHit.point;
-                    break;
-                }
-                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
-                {
-                    _isPlaceable = true;
-                    groundHitPoint = sphereHit.point;
-                }
-
-            }
-            Color gachaColor = _isPlaceable ? Color.green : Color.red;
-            _gachaToPlace.GetComponent<Gacha>().ChangeColor(gachaColor);
-            _gachaToPlace.transform.position = groundHitPoint;
+            GameObject newGacha = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(data.id));
+            newGacha.transform.position = data.position;
+            newGacha.transform.rotation = data.rotation;
+            newGacha.transform.localScale = data.scale;
+            Gacha script = newGacha.GetComponent<Gacha>();
+            script.OnClick.AddListener(HandleGachaOnClickEvent);
+            script.ID = data.id;
+            _placedGachas.Add(newGacha);
         }
     }
-    #endregion
-    
+
+    private void ClearScrollViewContent()
+    {
+        foreach (Transform child in _scrollViewContent.GetComponentsInChildren<Transform>())
+        {
+            if (child != _scrollViewContent.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+        }
+    }
     #region GUI
 
     private void InitMenu()
@@ -219,17 +208,6 @@ public class Town : MonoBehaviour
 
     }
 
-    private void ClearScrollViewContent()
-    {
-        foreach (Transform child in _scrollViewContent.GetComponentsInChildren<Transform>())
-        {
-            if (child != _scrollViewContent.transform)
-            {
-                Destroy(child.gameObject);
-            }
-
-        }
-    }
     #endregion
 
     #region UI Handlers
@@ -254,7 +232,6 @@ public class Town : MonoBehaviour
             _placedGachas.Add(_gachaToPlace);
             _gachaToPlace.GetComponent<Gacha>().ChangeColor(Color.white);
             InitMenu();
-            _walkTimer.Start();
         }
         else
         {
@@ -264,7 +241,7 @@ public class Town : MonoBehaviour
 
     }
 
-
+   
 
     private void HandleGachaOnClickEvent(Gacha clickedObject)
     {
@@ -302,8 +279,8 @@ public class Town : MonoBehaviour
 
     private void HandleBackButtonClickEvent()
     {
-        if (GameManager.Instance.IsCameraZooming)
-        {
+        if(GameManager.Instance.IsCameraZooming)
+        { 
             return;
         }
         Player.Instance.SaveTownData(_placedGachas.ToArray());
@@ -312,7 +289,7 @@ public class Town : MonoBehaviour
 
     private void HandlePurgeButtonClickEvent()
     {
-
+        
         foreach (GameObject gacha in _placedGachas)
         {
             Destroy(gacha);
@@ -326,7 +303,6 @@ public class Town : MonoBehaviour
     }
 
     #endregion
-
     #region coroutines
     private IEnumerator ShrinkScrollView()
     {
@@ -360,92 +336,51 @@ public class Town : MonoBehaviour
     }
     #endregion
 
-    #region Walk Animation
-    
-
-    private void HandleWalkCompleteEvent()
+    /// <summary>
+    /// moves gacha gameobject with the mouse position until the left mouse button is clicked
+    /// </summary>
+    private void UpdateGachaDrag()
     {
-        Debug.Log("callback.");
-        _walkTimer.AlarmTime = UnityEngine.Random.Range(minSecondsToWalk, maxSecondsToWalk);
-        _walkTimer.Reset();
-        _walkTimer.Start();
-    }
 
-    private void HandleWalkAnimationTimerAlarmEvent()
-    {
-        
-        Transform seeker = GetRandomPlacedWalkableGacha();
-        Transform target = GetRandomPlacedGacha(seeker);
-        if (seeker == null || target == null)
+        if (_gachaToPlace != null)
         {
-            return;
+
+            Vector3 colliderSize = _gachaToPlace.GetComponent<Collider>().bounds.size;
+            float radius = Mathf.Max(colliderSize.x, colliderSize.z);
+            _gizmoRadius = radius;
+            RaycastHit[] hits = Physics.SphereCastAll(Camera.main.ScreenPointToRay(Input.mousePosition), radius, 1000, LayerMask.GetMask("Ground", "Gacha"));
+
+            _isPlaceable = false;
+            Vector3 groundHitPoint =
+                Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _townDistance));
+            foreach (RaycastHit sphereHit in hits)
+            {
+                //ignore self
+                if (sphereHit.collider.gameObject == _gachaToPlace)
+                {
+                    continue;
+                }
+                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Gacha"))
+                {
+                    _isPlaceable = false;
+                    groundHitPoint = sphereHit.point;
+                    break;
+                }
+                if (sphereHit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+                {
+                    _isPlaceable = true;
+                    groundHitPoint = sphereHit.point;
+                }
+
+            }
+            Color gachaColor = _isPlaceable ? Color.green : Color.red;
+            _gachaToPlace.GetComponent<Gacha>().ChangeColor(gachaColor);
+            _gachaToPlace.transform.position = groundHitPoint;
         }
-        seeker.GetComponent<Gacha>().Walk(target, HandleWalkCompleteEvent);
-
     }
-#endregion
-
-    private void LoadPlacedGachas()
-    {
-        foreach (Player.PlacedGachaData data in Player.Instance.GetTownData())
-        {
-            GameObject newGacha = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(data.id));
-            newGacha.transform.position = data.position;
-            newGacha.transform.rotation = data.rotation;
-            newGacha.transform.localScale = data.scale;
-            Gacha script = newGacha.GetComponent<Gacha>();
-            script.OnClick.AddListener(HandleGachaOnClickEvent);
-            script.ID = data.id;
-            _placedGachas.Add(newGacha);
-        }
-    }
-
     private bool IsPlaced(GachaID id)
     {
         return _placedGachas.Any(gacha => gacha.GetComponent<Gacha>().ID == id);
     }
 
-    /// <summary>
-    /// Returns Transform of random gacha placed in town that is walkable, else returns null.
-    /// </summary>
-    /// <returns></returns>
-    private Transform GetRandomPlacedWalkableGacha()
-    {
-        List<Gacha> walkables = _placedGachas.Select(gacha => gacha.GetComponent<Gacha>()).Where(script => script.isWalkable).ToList();
-        if (walkables.Count > 2)
-        {
-            return walkables[UnityEngine.Random.Range(0, walkables.Count - 1)].transform;
-        }
-        else if (walkables.Count == 1)
-        {
-            return walkables[0].transform;
-        }
-        return null;
-    }
-
-    /// <summary>
-    /// Returns Transform of a random placed gacha that is not the given the seeker gacha.
-    /// note if there are less than 2 gachas placed including the seeker, returns null.
-    /// </summary>
-    /// <param name="seeker"></param>
-    /// <returns></returns>
-    private Transform GetRandomPlacedGacha(Transform seeker)
-    {
-        if (seeker == null || _placedGachas.Count < 2)
-        {
-            return null;
-        }
-        int circuitBreaker = 100;
-        while (circuitBreaker-- > 0)
-        {
-            int index = UnityEngine.Random.Range(0, _placedGachas.Count);
-            Transform random = _placedGachas[index].transform;
-            if (random != seeker)
-            {
-                return _placedGachas[index].transform;
-            }
-        }
-        Debug.Assert(false, "loop circuit breaker broke, something is wrong.");
-        return null;
-    }
 }

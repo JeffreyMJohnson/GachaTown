@@ -8,6 +8,7 @@ TagManager:
   - GachaMachine
   - Coin
   - GachaWin
+  - Frame
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Gacha
   - Ground
   - GachaUI
-  - 
-  - 
+  - Spinner
+  - DialHolder
   - 
   - 
   - 

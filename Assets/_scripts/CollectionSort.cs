@@ -5,10 +5,12 @@ using System.Collections.Generic;
 public class CollectionSort : MonoBehaviour
 {
     #region public properties
-    public Vector3 gachaOffset;// = new Vector3(-2, -3, 0);
+    public Vector3 gachaOffset;// = new Vector3(-1, -0.5, 0); DEFAULTS
     public Vector3 pageOffset;// = new Vector3(50, 0, 0);
-    public Vector2 displaySize;// = new Vector2(2, 3);
+    public Vector2 displaySize;// = new Vector2(6.35, 6.86);
     public Vector3 cameraStartPosition;//= new Vector3(6, 8.5, -10) 
+    public Texture defaultTexture;
+    public int swipeLength;// = 200
 
     #endregion
 
@@ -19,7 +21,7 @@ public class CollectionSort : MonoBehaviour
     private Vector3 cameraOrigin;
     private Vector3 pageDestination;
     private Vector3 pageOrigin;
-    private Text title;
+    //private Text title;
     private List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
     private Ray ray;
     private RaycastHit hit;
@@ -32,6 +34,10 @@ public class CollectionSort : MonoBehaviour
     private float zoomStart;// = 0;
     private float zoomTime;// = 20;
     private const int MAX_GACHA_PER_PAGE = 9;   //DECIDED LIMIT FOR GACHA SETS, NO SET SHOULD HAVE MORE THAN 9
+    private int pageQueue;
+    private int dragStart;
+    private int dragCurrent;
+    private bool isSwipe;
     private AudioSource buttonPress;
 
     private Camera collectionCamera;
@@ -42,28 +48,34 @@ public class CollectionSort : MonoBehaviour
 
     private void Start()
     {
+        pageQueue = 0;
+
+        dragStart = 0;
+        dragCurrent = 0;
+        isSwipe = false;
 
         currentPage = 0;
 
         scrollStart = 0;
-        scrollTime = 20;    //How many frames the lerp will last
+        scrollTime = 20;    //How many frames this lerp will last
 
         zoomStart = 0;
-        zoomTime = 20;      //How many frames the lerp will last
+        zoomTime = 20;      //How many frames this lerp will last
 
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
-        title = GameObject.Find("PageTitle").GetComponent<Text>();
+        //title = GameObject.Find("PageTitle").GetComponent<Text>();
 
-        SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
+        /*SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
         //getting all of the spriterenderers for the title images so we can switch between them
         foreach (SpriteRenderer spriterenderer in titleCardsToList)
         {
             spriterenderer.enabled = false;
             titleCards.Add(spriterenderer);
-        }
+        }*/
 
         collectionCamera = FindObjectOfType<Camera>();
+        
         zoomLevelOrigin = collectionCamera.orthographicSize;
         zoomLevelDestination = zoomLevelOrigin;
         pageOrigin = transform.position;
@@ -112,14 +124,29 @@ public class CollectionSort : MonoBehaviour
             Home();
         }
 
+        //DEBUG ONLY, IF YOU CALL THIS IN THE UPDATE THEN UNCOMMENT THE DELETE WITHIN GetGachaGameObject
+        //InitCollectionPages();
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragStart = (int)Input.mousePosition.x;
+            dragCurrent = (int)Input.mousePosition.x;
+            isSwipe = true;
+        }
         //ray cast from screen position on left click release
         //if hits gacha, zoom in on it, load and enable description text
         //eventually enable rotate of the gacha
-        if (Input.GetMouseButtonUp(0) && zoomStart == zoomTime) 
+        if (Input.GetMouseButtonUp(0) ) //change this to when the mouse releases, edge case for dragging on to it after swiping
         {
+            if (isSwipe)
+            {
+                isSwipe = false;
+                dragCurrent = 0;
+                dragStart = 0;
+            }
+
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit)) //the gacha was hit and we have the gacha
+            if (Physics.Raycast(ray, out hit) && !isSwipe && zoomStart == zoomTime) //the gacha was hit and we have the gacha
             {
                 //this sometimes gives a null error when you attempt to click on creamy because it looks for a mesh in the immediate gameobject
                 //also sometimes it just gives a null error
@@ -141,8 +168,35 @@ public class CollectionSort : MonoBehaviour
                     }
                 }
             }
+
             
+
+            //ELSE if mouse button up and raycast fails
+            //save current mousex position and flip a bool
+            //add ondrag
+            //check if difference between saved mousex and current mousex is larger than 'value'
+            //if yes then call previous/next depending on positive/negative and save current mousex
         }
+
+        if (Input.GetMouseButton(0) && isSwipe)
+        {
+            dragCurrent = (int)Input.mousePosition.x;
+            if (dragCurrent - dragStart > swipeLength)
+            {
+                dragStart += swipeLength;
+                Next();
+                isSwipe = !isSwipe;
+            }
+            else if (dragCurrent - dragStart < -swipeLength)
+            {
+                dragStart -= swipeLength;
+                Previous();
+                isSwipe = !isSwipe;
+            }
+        }
+
+
+        handleQueue();
 
         if (scrollStart < scrollTime)
         {
@@ -158,6 +212,7 @@ public class CollectionSort : MonoBehaviour
                                                               collectionCamera.transform.position.z);
             collectionCamera.orthographicSize = Mathf.Lerp(zoomLevelOrigin, zoomLevelDestination, zoomStart / zoomTime);
         }
+
     }
 
     #endregion
@@ -166,29 +221,16 @@ public class CollectionSort : MonoBehaviour
 
     private void SetTitle()
     {
-        for (int i = 0; i < titleCards.Count; i++)
+        /*for (int i = 0; i < titleCards.Count; i++)
         {
             titleCards[i].enabled = false;
         }
         titleCards[currentPage].enabled = true;
-        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;
+        title.text = GameManager.Instance.masterGachaSetList[currentPage].name;*/
     }
     #endregion
 
     #region UI handlers
-    public void Previous()
-    {
-        if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage--;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            pageDestination = transform.position + pageOffset;
-        }
-    }
-
     public void Home()
     {
         if (isZoomed)
@@ -204,18 +246,74 @@ public class CollectionSort : MonoBehaviour
         else
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
     }
+
+    //Increase/decrease a counter each time next/previous is meant to be called, make then return bool, call handler 
+    //function every frame, handler function determines what to next/previous and decrease/increase if true.
+    public void handleQueue()
+    {
+        //PREVIOUS
+        if (pageQueue > 0)
+        {
+            if (currentPage != 0 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue--;
+                currentPage--;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                pageDestination = transform.position + pageOffset;
+            }
+            else if (currentPage == 0 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue--;
+                currentPage = GameManager.Instance.masterGachaSetList.Count - 1;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                pageDestination = transform.position - new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
+            }
+        }
+
+        //NEXT
+        if (pageQueue < 0)
+        {
+            if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue++;
+                currentPage++;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                pageDestination = transform.position - pageOffset;
+            }
+            else if (currentPage == GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            {
+                buttonPress.Play();
+                pageQueue++;
+                currentPage = 0;
+                SetTitle();
+                scrollStart = 0;
+                pageOrigin = transform.position;
+                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                pageDestination = transform.position + new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
+            }
+        }
+    }
+
+    public void Previous()
+    {
+        if (!isZoomed && pageQueue < 3)
+            pageQueue++;
+    }
     
     public void Next()
     {
-        if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
-        {
-            buttonPress.Play();
-            currentPage++;
-            SetTitle();
-            scrollStart = 0;
-            pageOrigin = transform.position;
-            pageDestination = transform.position - pageOffset;
-        }
+        if (!isZoomed && pageQueue > -3)
+            pageQueue--;
     }
     #endregion
 
@@ -268,6 +366,9 @@ public class CollectionSort : MonoBehaviour
             //just changing the color with the api
             gacha.ChangeColor(new Color(0.2f, 0.2f, 0.2f));
 
+            //changing texture with public api
+            //gacha.ChangeTexture(defaultTexture);
+
             return gachaInCollection;
         }
         return gachaInCollection;
@@ -285,6 +386,10 @@ public class CollectionSort : MonoBehaviour
 
         GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGachaObject = Instantiate<GameObject>(gachaPrefab);
+
+        //TESTING ONLY
+        //Destroy(newGachaObject,0.1f);
+
         newGachaObject.transform.parent = transform;
         Gacha newGacha = newGachaObject.GetComponent<Gacha>();//.ID = gachaID;
         newGacha.ID = gachaID;
@@ -300,13 +405,13 @@ public class CollectionSort : MonoBehaviour
         float toScale = Mathf.Min(scale[0], scale[1]);
 
         Vector3 gachaScale = newGachaObject.transform.localScale;
-        gachaScale.x *= toScale;
-        gachaScale.y *= toScale;
-        gachaScale.z *= toScale;
+        gachaScale.x = toScale;
+        gachaScale.y = toScale;
+        gachaScale.z = toScale;
 
         newGachaObject.transform.localScale = gachaScale;
 
-        //newGachaObject.transform.localScale = transform.localScale * Mathf.Min(scale[0], scale[1], scale[2]);
+        //newGachaObject.transform.localScale = newGachaObject.transform.localScale * Mathf.Min(scale[0], scale[1]);
 
 
         return newGachaObject;

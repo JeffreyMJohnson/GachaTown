@@ -9,8 +9,9 @@ public class GachaRotator : MonoBehaviour
     #region public properties
     public Text gachaDisplay;
     public Text moneyDisplay;
-    public int selectedGacha = 0;
+    public int selectedGacha = 0; //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
     public int rotateTime = 15; //in frames
+    public int swipeLength = 200;
     #endregion
 
     #region private fields
@@ -22,6 +23,10 @@ public class GachaRotator : MonoBehaviour
     private int rotateStart = 15;
     private Player playerScript;
     private int gachaCount = 0;
+    private int rotateQueue = 0;
+    private int dragStart;
+    private int dragCurrent;
+    private bool isSwipe;
     #endregion
 
     #region unity lifecycle methods
@@ -32,7 +37,9 @@ public class GachaRotator : MonoBehaviour
 
         playerScript = Player.Instance;
 
-
+        dragStart = 0;
+        dragCurrent = 0;
+        isSwipe = false;
 
         selectedGacha = playerScript.Selected;
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
@@ -79,13 +86,15 @@ public class GachaRotator : MonoBehaviour
 
         //This looks dumb (and it is) but it works for now
         //the machine that is initially displayed is not correct and I do not want to mess with the start logic
-        RotateRight();
+        RotateLeft();
+        HandleQueue();
         while (rotateStart < rotateTime)
         {
             rotateStart++;
             transform.Rotate(0, Mathf.Lerp(transform.eulerAngles.y, GetDestinationRotation(), (float)rotateStart / (float)rotateTime) - transform.eulerAngles.y, 0);
         }
-        RotateLeft();
+        RotateRight();
+        HandleQueue();
         while (rotateStart < rotateTime)
         {
             rotateStart++;
@@ -100,12 +109,49 @@ public class GachaRotator : MonoBehaviour
         {
             GameManager.Instance.ChangeScene(GameManager.Scene.MAIN);
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            dragStart = (int)Input.mousePosition.x;
+            dragCurrent = (int)Input.mousePosition.x;
+            isSwipe = true;
+        }
+        if (Input.GetMouseButtonUp(0)) //change this to when the mouse releases, edge case for dragging on to it after swiping
+        {
+            if (isSwipe)
+            {
+                isSwipe = false;
+                dragCurrent = 0;
+                dragStart = 0;
+            }
+        }
+
+        if (Input.GetMouseButton(0) && isSwipe)
+        {
+            dragCurrent = (int)Input.mousePosition.x;
+            if (dragCurrent - dragStart > swipeLength)
+            {
+                dragStart += swipeLength;
+                RotateLeft();
+                isSwipe = !isSwipe;
+            }
+            else if (dragCurrent - dragStart < -swipeLength)
+            {
+                dragStart -= swipeLength;
+                RotateRight();
+                isSwipe = !isSwipe;
+            }
+        }
+
+        HandleQueue();
+
         if (rotateStart < rotateTime)
         {
             //bug add deltaTime for timing not frame count.  if you want frame count use an int
             RotateHolder();
 
         }
+
     }
     #endregion
 
@@ -126,29 +172,7 @@ public class GachaRotator : MonoBehaviour
     /// </summary>
     public void RotateLeft()
     {
-        if (rotateStart == rotateTime)
-        {
-            rotateStart = 0;
-
-            selectedGacha++;
-
-            //if (selectedGacha == -1)
-            //    selectedGacha = gachaCount - 1;
-            //selectedGacha = selectedGacha % gachaCount;
-            if (selectedGacha == maxGachaSetCount)
-            {
-                selectedGacha = 0;
-            }
-
-            for (int i = 0; i < titleImages.Count; i++)
-            {
-                titleImages[i].enabled = false;
-            }
-            titleImages[selectedGacha].enabled = true;
-
-            TextUpdate();
-            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
-        }
+        rotateQueue--;
     }
 
     /// <summary>
@@ -156,29 +180,65 @@ public class GachaRotator : MonoBehaviour
     /// </summary>
     public void RotateRight()
     {
-        //bug this needs to be changed float equality is not done this way
-        if (rotateStart == rotateTime)
+        rotateQueue++;        
+    }
+
+    public void HandleQueue()
+    {
+        if (rotateQueue > 0)
         {
-            rotateStart = 0;
-
-            selectedGacha--;
-
-            //selectedGacha = selectedGacha % gachaCount;
-            if (selectedGacha < 0)
+            if (rotateStart == rotateTime)
             {
-                selectedGacha = maxGachaSetCount - 1;
-            }
+                rotateQueue--;
+                rotateStart = 0;
 
-            for (int i = 0; i < titleImages.Count; i++)
+                selectedGacha++;
+
+                //if (selectedGacha == -1)
+                //    selectedGacha = gachaCount - 1;
+                //selectedGacha = selectedGacha % gachaCount;
+                if (selectedGacha == maxGachaSetCount)
+                {
+                    selectedGacha = 0;
+                }
+
+                for (int i = 0; i < titleImages.Count; i++)
+                {
+                    titleImages[i].enabled = false;
+                }
+                titleImages[selectedGacha].enabled = true;
+
+                TextUpdate();
+                AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
+            }
+        }
+        if (rotateQueue < 0)
+        {
+            if (rotateStart == rotateTime)
             {
-                titleImages[i].enabled = false;
-            }
-            titleImages[selectedGacha].enabled = true;
+                rotateQueue++;
+                rotateStart = 0;
 
-            TextUpdate();
-            AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
+                selectedGacha--;
+
+                //selectedGacha = selectedGacha % gachaCount;
+                if (selectedGacha < 0)
+                {
+                    selectedGacha = maxGachaSetCount - 1;
+                }
+
+                for (int i = 0; i < titleImages.Count; i++)
+                {
+                    titleImages[i].enabled = false;
+                }
+                titleImages[selectedGacha].enabled = true;
+
+                TextUpdate();
+                AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
+            }
         }
     }
+
     public void LoadMainMenu()
     {
 
@@ -203,4 +263,6 @@ public class GachaRotator : MonoBehaviour
             toReturn = 360;
         return toReturn;
     }
+
+    
 }

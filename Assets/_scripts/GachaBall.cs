@@ -5,30 +5,33 @@ using System.Linq;
 
 public class GachaBall : MonoBehaviour
 {
+    #region public properties
     public BuyGacha gachaMachine;
+    public ParticleSystem sparkles;
+    public ParticleSystem glow;
+    #endregion
+
+    #region private properties
+    private GachaID newGachaID;
     private Rigidbody capsule;
     private Animator animator;
-    private bool canWin = false;
-    private float currentTimeCanWin = 0f;
-    private float currentTimeMakeTransparent = 0f;
-    private float currentTimeSpawnGacha = 0f;
-    private float timeToMove = 2f;
     private Vector3 startPos;
     private Vector3 endPos = new Vector3(-8, 2, 0);
     private Vector3 startRotation;
     private Vector3 endRotation;
     private List<Material> gachaMats = new List<Material>();
+    private List<Color> startColor = new List<Color>();
+    private float currentTimeCanWin = 0f;
+    private float currentTimeMakeTransparent = 0f;
+    private float currentTimeSpawnGacha = 0f;
+    private float timeToMove = 2f;
+    private float timeLimitPerCapsule = 3f;
     private bool shouldMakeTransparent = false;
     private bool shouldSpawnGacha = false;
     private bool growGacha = false;
-    private float timeLimitPerCapsule = 3f;
-    private List<Color> startColor = new List<Color>();
-    private GachaID newGachaID;
     private bool isWaiting = false;
-
-
-    public ParticleSystem sparkles;
-    // Use this for initialization
+    private bool canWin = false;
+    #endregion
     private void Start()
     {
 
@@ -37,7 +40,10 @@ public class GachaBall : MonoBehaviour
 
 
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
-
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i].material.color = new Color(Random.Range(0, 100) * .01f, Random.Range(0, 100) * .01f, Random.Range(0, 100) * .01f);
+        }
 
         foreach (var render in renderers)
         {
@@ -49,11 +55,9 @@ public class GachaBall : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     private void Update()
     {
         WinGacha();
-        //MakeGachaOpenAnimationTransparent();
     }
 
     private void OnCollisionStay(Collision collision)
@@ -63,13 +67,11 @@ public class GachaBall : MonoBehaviour
             if (capsule.velocity.x < .1 && capsule.velocity.x > -.1 && !canWin)
             {
                 canWin = true;
-                // TODO: Start your coroutine here!
                 startPos = capsule.transform.position;
                 startRotation = capsule.transform.rotation.eulerAngles;
                 endRotation.Set(0, -90, 0);
             }
-        }
-       
+        }       
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -100,7 +102,6 @@ public class GachaBall : MonoBehaviour
             {
                 currentTimeCanWin += Time.deltaTime;
                 capsule.transform.position = Vector3.Lerp(startPos, endPos, currentTimeCanWin / timeToMove);
-                //capsule.transform.Rotate(capsule.transform.rotation.eulerAngles - Vector3.Lerp(startRotation, endRotation, currentTime / timeToMove)  );
                 capsule.transform.eulerAngles = new Vector3
                    (Mathf.Lerp(startRotation.x, endRotation.x, currentTimeCanWin / timeToMove),
                     Mathf.Lerp(startRotation.y, endRotation.y, currentTimeCanWin / timeToMove),
@@ -112,8 +113,12 @@ public class GachaBall : MonoBehaviour
 
             if (currentTimeCanWin > timeToMove)
             {
+                if (!glow.isPlaying)
+                {
+                    glow.Play();
+                }
                 capsule.isKinematic = true;
-
+                
 
                 foreach (RaycastHit hit in hits)
                 {
@@ -123,12 +128,11 @@ public class GachaBall : MonoBehaviour
                     //if dragged coin is null then we're just clicking on the button without dragging, it hits this anyways because ondragrelease doesn't exist
                     if (hit.collider.gameObject.name == "gachacapsule_animation" && Input.GetMouseButtonUp(0))
                     {
-                        
 
+                        glow.Stop();
                         canWin = false;
                         animator.SetTrigger("OpenGacha");
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_OPEN_POP);
-                        //shouldMakeTransparent = true;
                         StartCoroutine(MakeTransparent(.917f));
                         currentTimeCanWin = 0;
                         capsule.isKinematic = true;
