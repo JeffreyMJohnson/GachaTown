@@ -9,7 +9,9 @@ public class CoinDrag : MonoBehaviour
     private GameObject coinPrefab;
     private BuyGacha machine;
     public bool isInSlot = false;
+    bool hasClicked = false;
 
+    public ParticleSystem coinPrompt;
     private void Start()
     {
         coinPrefab = transform.FindChild("Coin_1").gameObject;
@@ -19,7 +21,16 @@ public class CoinDrag : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (!hasClicked)
+        {
+            Debug.Log("asdfsdf");
+            hasClicked = true;
+            coinPrompt.Play();
+        }
+
         isInSlot = false;
+       
+        
         if (draggedCoin == null)
         {
             draggedCoin = Instantiate<GameObject>(coinPrefab);

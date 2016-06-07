@@ -17,11 +17,12 @@ public class BuyGacha : MonoBehaviour
     public Material blue;
     public Material yellow;
     public Image displayText;
-    
     public Sprite spooky;
     public Sprite sweets;
     public Sprite tropical;
     public Sprite city;
+    public ParticleSystem slotPrompt;
+    public ParticleSystem dialPrompt;
     #endregion
 
     #region private fields
@@ -55,7 +56,6 @@ public class BuyGacha : MonoBehaviour
         GameObject frame = GameObject.FindGameObjectWithTag("Frame");
 
         MeshRenderer[] gachaTitles = GameObject.Find("GachaTitle").GetComponentsInChildren<MeshRenderer>(true);
-        
         switch (gachaSet) //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
         {
             case 0:
@@ -137,6 +137,7 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
+        
     }
     
     #endregion
