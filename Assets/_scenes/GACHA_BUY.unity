@@ -323,7 +323,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isInSlot: 0
-  coinPrompt: {fileID: 138447017}
 --- !u!135 &100492361
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6029,8 +6028,10 @@ MonoBehaviour:
   sweets: {fileID: 21300000, guid: b11b3f656f4166a47aa96cc4cbe8821f, type: 3}
   tropical: {fileID: 21300000, guid: 9019329ac8758874f90fe39ac395669d, type: 3}
   city: {fileID: 21300000, guid: 19f23cf8e1c1196419f7103bf7636cc5, type: 3}
+  coinPrompt: {fileID: 138447017}
   slotPrompt: {fileID: 1558950039}
   dialPrompt: {fileID: 258868104}
+  ball: {fileID: 494712542}
 --- !u!65 &1520405022
 BoxCollider:
   m_ObjectHideFlags: 0
