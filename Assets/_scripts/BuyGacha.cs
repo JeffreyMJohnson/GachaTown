@@ -6,10 +6,10 @@ public class BuyGacha : MonoBehaviour
 {
     #region public properties   
     public int gachaSet = 0;
+    public int prompt = 0;
     public float rotationSpeed = 10;
-    public bool isGachaThere = false;    
+    public bool isGachaThere = false;
     public Text moneyTextField;
-    public Text displayTextField;
     public GameObject dialHolder;
     public Rigidbody capsule;
     public Material pink;
@@ -17,8 +17,17 @@ public class BuyGacha : MonoBehaviour
     public Material green;
     public Material blue;
     public Material yellow;
+    public Image displayText;
+    public Sprite spooky;
+    public Sprite sweets;
+    public Sprite tropical;
+    public Sprite city;
+    public ParticleSystem coinPrompt;
+    public ParticleSystem slotPrompt;
+    public ParticleSystem dialPrompt;
+    public GachaBall ball;
     #endregion
-    
+
     #region private fields
     private Player player;
     private Animator controller;
@@ -29,42 +38,38 @@ public class BuyGacha : MonoBehaviour
 
     private void Start()
     {
+        player = Player.Instance;
+        controller = GetComponent<Animator>();
+        gachaSet = player.Selected;
+
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
 
-        player = Player.Instance;
-
-        controller = GetComponent<Animator>();
 
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
-
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
-        Debug.Assert(displayTextField != null, "Display text field not found, was it set in editor?");
 
         moneyTextField.text = player.TotalCoins.ToString();
 
-        gachaSet = player.Selected;
-        displayTextField.text = GameManager.Instance.GetGachaSet(gachaSet).name;
-
-
         GameObject frame = GameObject.FindGameObjectWithTag("Frame");
-
         MeshRenderer[] gachaTitles = GameObject.Find("GachaTitle").GetComponentsInChildren<MeshRenderer>(true);
-        
+        prompt = 0;
         switch (gachaSet) //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
         {
             case 0:
                 frame.GetComponent<Renderer>().material = blue;
+                displayText.sprite = spooky;
                 gachaTitles[0].enabled = true;
                 SpriteRenderer[] spookySprites = gachaTitles[0].GetComponentsInChildren<SpriteRenderer>(true);
-                foreach(SpriteRenderer spriterenderer in spookySprites)
+                foreach (SpriteRenderer spriterenderer in spookySprites)
                 {
                     spriterenderer.enabled = true;
                 }
                 break;
             case 1:
                 frame.GetComponent<Renderer>().material = green;
+                displayText.sprite = sweets;
                 gachaTitles[1].enabled = true;
                 SpriteRenderer[] sweetsSprites = gachaTitles[1].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in sweetsSprites)
@@ -74,6 +79,7 @@ public class BuyGacha : MonoBehaviour
                 break;
             case 2:
                 frame.GetComponent<Renderer>().material = pink;
+                displayText.sprite = tropical;
                 gachaTitles[2].enabled = true;
                 SpriteRenderer[] tropicalSprites = gachaTitles[2].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in tropicalSprites)
@@ -83,6 +89,7 @@ public class BuyGacha : MonoBehaviour
                 break;
             case 3:
                 frame.GetComponent<Renderer>().material = red;
+                displayText.sprite = city;
                 gachaTitles[3].enabled = true;
                 SpriteRenderer[] citySprites = gachaTitles[3].GetComponentsInChildren<SpriteRenderer>(true);
                 foreach (SpriteRenderer spriterenderer in citySprites)
@@ -100,8 +107,8 @@ public class BuyGacha : MonoBehaviour
 
 
 
-        
-        
+
+
 
         Button[] buttons = FindObjectsOfType<Button>();
         foreach (Button button in buttons)
@@ -110,9 +117,6 @@ public class BuyGacha : MonoBehaviour
             {
                 case "Main Menu Button":
                     button.onClick.AddListener(delegate { HandleClick(GameManager.Scene.MAIN); });
-                    break;
-                case "Buy Twenty Button":
-                    button.onClick.AddListener(BuyLazy);
                     break;
                 default:
                     break;
@@ -129,8 +133,53 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
+        Debug.Log("coinprompt is " + coinPrompt.isPlaying);
+        Debug.Log("slotprompt is " + slotPrompt.isPlaying);
+        Debug.Log("dialprompt is " + dialPrompt.isPlaying);
+        Debug.Log(prompt);
+     
+
+        switch (prompt) //0 is when coin needs to be put into slot, 1 is when coin is picked up, 2 is when coin is put down and anside the slot 3 is when player is meant to be waiting to open the gacha ball
+        {
+            case 0:
+                if (!coinPrompt.isPlaying)
+                {
+                    coinPrompt.Play();
+                    slotPrompt.Stop();
+                    dialPrompt.Stop();
+                }
+                break;
+            case 1:
+                if (!slotPrompt.isPlaying)
+                {
+                    slotPrompt.Play();
+                    coinPrompt.Stop();
+                    dialPrompt.Stop();
+                }
+                break;
+            case 2:
+                if (!dialPrompt.isPlaying)
+                {
+                    dialPrompt.Play();
+                    coinPrompt.Stop();
+                    slotPrompt.Stop();
+                }
+                break;
+            case 3:
+                coinPrompt.Stop();
+                slotPrompt.Stop();
+                dialPrompt.Stop();
+                break;
+            default:
+                coinPrompt.Stop();
+                slotPrompt.Stop();
+                dialPrompt.Stop();
+                break;
+        }
+
+
     }
-    
+
     #endregion
 
     #region UI Handlers
@@ -139,14 +188,6 @@ public class BuyGacha : MonoBehaviour
         GameManager.Instance.ChangeScene(scene);
     }
 
-    public void BuyLazy()
-    {
-        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CHACHING);
-        for (int i = 0; i < 20; i++)
-        {
-            Buy();
-        }
-    }
     #endregion
 
     #region public API
@@ -165,12 +206,14 @@ public class BuyGacha : MonoBehaviour
 
     public void RotateDial()
     {
-        if (Input.GetMouseButton(0) && !isGachaThere)
+        if (coin.isInSlot)
         {
-           
 
-            if (coin.isInSlot)
+
+
+            if (Input.GetMouseButton(0) && !isGachaThere)
             {
+
 
 
                 RaycastHit hit;
@@ -204,7 +247,7 @@ public class BuyGacha : MonoBehaviour
                 }
 
 
-                if (dialHolder.transform.rotation.z > .15f&& dialHolder.transform.rotation.z < .4f|| dialHolder.transform.rotation.z < -.15f&& dialHolder.transform.rotation.z > -.4f)
+                if (dialHolder.transform.rotation.z > .15f && dialHolder.transform.rotation.z < .4f || dialHolder.transform.rotation.z < -.15f && dialHolder.transform.rotation.z > -.4f)
                 {
                     if (hit.collider.gameObject.name == "LeftUpper" || hit.collider.gameObject.name == "RightUpper" || hit.collider.gameObject.name == "LeftLower" || hit.collider.gameObject.name == "RightUpper")
                     {
@@ -214,16 +257,18 @@ public class BuyGacha : MonoBehaviour
                         Buy();
                         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CLINK);
                         coin.isInSlot = false;
-                        capsule.isKinematic = !capsule.isKinematic;
                         isGachaThere = true;
+                        capsule.isKinematic = !capsule.isKinematic;
                         dialHolder.transform.rotation = Quaternion.Euler(0, -90, 0);
+                        prompt = 3;
                     }
-                }              
+                }
             }
         }
     }
-    
-
-
-
 }
+
+
+
+
+
