@@ -136,7 +136,7 @@ public class GachaBall : MonoBehaviour
                         StartCoroutine(MakeTransparent(.917f));
                         currentTimeCanWin = 0;
                         capsule.isKinematic = true;
-                        
+                        gachaMachine.prompt = 0;
 
                     }
 

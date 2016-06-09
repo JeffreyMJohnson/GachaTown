@@ -45,7 +45,7 @@ public class BuyGacha : MonoBehaviour
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
 
-        
+
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
@@ -110,21 +110,18 @@ public class BuyGacha : MonoBehaviour
 
 
 
-        //Button[] buttons = FindObjectsOfType<Button>();
-        //foreach (Button button in buttons)
-        //{
-        //    switch (button.name)
-        //    {
-        //        case "Main Menu Button":
-        //            button.onClick.AddListener(delegate { HandleClick(GameManager.Scene.MAIN); });
-        //            break;
-        //        case "Buy Twenty Button":
-        //            button.onClick.AddListener(BuyLazy);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        Button[] buttons = FindObjectsOfType<Button>();
+        foreach (Button button in buttons)
+        {
+            switch (button.name)
+            {
+                case "Main Menu Button":
+                    button.onClick.AddListener(delegate { HandleClick(GameManager.Scene.MAIN); });
+                    break;
+                default:
+                    break;
+            }
+        }
 
         Screen.orientation = ScreenOrientation.Portrait;
     }
@@ -140,21 +137,9 @@ public class BuyGacha : MonoBehaviour
         Debug.Log("slotprompt is " + slotPrompt.isPlaying);
         Debug.Log("dialprompt is " + dialPrompt.isPlaying);
         Debug.Log(prompt);
-        //if (!coinPrompt.isPlaying&&!slotPrompt.isPlaying&&!dialPrompt.isPlaying)
-        //{
-        //    coinPrompt.Play();
-        //}
-        //if (!slotPrompt.isPlaying&& coinPrompt.isPlaying && !dialPrompt.isPlaying)
-        //{
-        //    slotPrompt.Play();
-        //}
-        //if (!coinPrompt.isPlaying && !slotPrompt.isPlaying&& !ball.glow.isPlaying)
-        //{
-        //    dialPrompt.Play();
-        //}
+     
 
-        //might be playing every update rather than once
-        switch (prompt) //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
+        switch (prompt) //0 is when coin needs to be put into slot, 1 is when coin is picked up, 2 is when coin is put down and anside the slot 3 is when player is meant to be waiting to open the gacha ball
         {
             case 0:
                 if (!coinPrompt.isPlaying)
@@ -179,12 +164,12 @@ public class BuyGacha : MonoBehaviour
                     coinPrompt.Stop();
                     slotPrompt.Stop();
                 }
-                break;     
-                case 4:
+                break;
+            case 3:
                 coinPrompt.Stop();
                 slotPrompt.Stop();
                 dialPrompt.Stop();
-                break;       
+                break;
             default:
                 coinPrompt.Stop();
                 slotPrompt.Stop();
@@ -203,14 +188,6 @@ public class BuyGacha : MonoBehaviour
         GameManager.Instance.ChangeScene(scene);
     }
 
-    public void BuyLazy()
-    {
-        AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MONEY_CHACHING);
-        for (int i = 0; i < 20; i++)
-        {
-            Buy();
-        }
-    }
     #endregion
 
     #region public API
@@ -232,7 +209,7 @@ public class BuyGacha : MonoBehaviour
         if (coin.isInSlot)
         {
 
-           
+
 
             if (Input.GetMouseButton(0) && !isGachaThere)
             {

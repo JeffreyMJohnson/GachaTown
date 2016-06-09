@@ -25,18 +25,21 @@ public class CoinDrag : MonoBehaviour
        
         isInSlot = false;
 
-
-        if (draggedCoin == null)
+        if (!machine.isGachaThere)
         {
-            draggedCoin = Instantiate<GameObject>(coinPrefab);
+            if (draggedCoin == null)
+            {
+                draggedCoin = Instantiate<GameObject>(coinPrefab);
+            }
+            //todo this will need to be changed to z axis when the model facing issue is corrected.
+            //this handles how coin is placed when clicked on
+            Vector3 coinPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector3.right * 3);
+            draggedCoin.transform.position = coinPosition;
+            draggedCoin.transform.localEulerAngles = new Vector3(90, 0, 90);
+
+            machine.prompt = 1;
         }
-        //todo this will need to be changed to z axis when the model facing issue is corrected.
-        //this handles how coin is placed when clicked on
-        Vector3 coinPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition) + (Vector3.right * 3);
-        draggedCoin.transform.position = coinPosition;
-        draggedCoin.transform.localEulerAngles = new Vector3(90, 0, 90);
-        //
-        machine.prompt = 1;
+        
 
 
 
@@ -72,7 +75,11 @@ public class CoinDrag : MonoBehaviour
 
             if (!isInSlot)
             {
-                machine.prompt = 0;
+                if (!machine.isGachaThere)
+                {
+                    machine.prompt = 0;
+                }
+               
                 Destroy(draggedCoin);
                 draggedCoin = null;
 
@@ -80,10 +87,10 @@ public class CoinDrag : MonoBehaviour
 
 
         }
+       
 
 
 
-
-    }
+        }
 
 }
