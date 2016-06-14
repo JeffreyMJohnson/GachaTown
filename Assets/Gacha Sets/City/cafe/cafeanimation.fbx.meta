@@ -1,0 +1,267 @@
+fileFormatVersion: 2
+guid: 3dc58f75a0118a442bd4f45b3b7106cc
+timeCreated: 1465496038
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: building
+    100002: //RootNode
+    100004: chair1
+    100006: chair2
+    100008: chair3
+    100010: chair4
+    100012: cookie1
+    100014: cookie2
+    100016: cup1
+    100018: cup2
+    100020: cup3
+    100022: cup4
+    100024: flowerpot1
+    100026: flowerpot3
+    100028: group1
+    100030: pCube2
+    100032: plate1
+    100034: plate2
+    100036: plate3
+    100038: plate4
+    100040: sugar1
+    100042: sugar2
+    100044: table1
+    100046: table2
+    400000: building
+    400002: //RootNode
+    400004: chair1
+    400006: chair2
+    400008: chair3
+    400010: chair4
+    400012: cookie1
+    400014: cookie2
+    400016: cup1
+    400018: cup2
+    400020: cup3
+    400022: cup4
+    400024: flowerpot1
+    400026: flowerpot3
+    400028: group1
+    400030: pCube2
+    400032: plate1
+    400034: plate2
+    400036: plate3
+    400038: plate4
+    400040: sugar1
+    400042: sugar2
+    400044: table1
+    400046: table2
+    2300000: building
+    2300002: chair1
+    2300004: chair2
+    2300006: chair3
+    2300008: chair4
+    2300010: cookie1
+    2300012: cookie2
+    2300014: cup1
+    2300016: cup2
+    2300018: cup3
+    2300020: cup4
+    2300022: flowerpot1
+    2300024: flowerpot3
+    2300026: plate1
+    2300028: plate2
+    2300030: plate3
+    2300032: plate4
+    2300034: sugar1
+    2300036: sugar2
+    2300038: table1
+    2300040: table2
+    3300000: building
+    3300002: chair1
+    3300004: chair2
+    3300006: chair3
+    3300008: chair4
+    3300010: cookie1
+    3300012: cookie2
+    3300014: cup1
+    3300016: cup2
+    3300018: cup3
+    3300020: cup4
+    3300022: flowerpot1
+    3300024: flowerpot3
+    3300026: plate1
+    3300028: plate2
+    3300030: plate3
+    3300032: plate4
+    3300034: sugar1
+    3300036: sugar2
+    3300038: table1
+    3300040: table2
+    4300000: flowerpot1
+    4300002: sugar2
+    4300004: sugar1
+    4300006: cup1
+    4300008: cup3
+    4300010: cup4
+    4300012: cup2
+    4300014: chair1
+    4300016: chair2
+    4300018: table1
+    4300020: table2
+    4300022: chair3
+    4300024: chair4
+    4300026: flowerpot3
+    4300028: building
+    4300030: plate1
+    4300032: cookie1
+    4300034: plate4
+    4300036: plate3
+    4300038: cookie2
+    4300040: plate2
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.987447
+        functionName: SpecialAnimationComplete
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: group1
+        weight: 1
+      - path: group1/chair1
+        weight: 1
+      - path: group1/chair2
+        weight: 1
+      - path: group1/chair3
+        weight: 1
+      - path: group1/chair4
+        weight: 1
+      - path: group1/cup1
+        weight: 1
+      - path: group1/cup2
+        weight: 1
+      - path: group1/cup3
+        weight: 1
+      - path: group1/cup4
+        weight: 1
+      - path: group1/flowerpot1
+        weight: 1
+      - path: group1/flowerpot3
+        weight: 1
+      - path: group1/sugar1
+        weight: 1
+      - path: group1/sugar2
+        weight: 1
+      - path: group1/table1
+        weight: 1
+      - path: group1/table2
+        weight: 1
+      - path: pCube2
+        weight: 1
+      - path: pCube2/building
+        weight: 1
+      - path: pCube2/cookie1
+        weight: 1
+      - path: pCube2/cookie2
+        weight: 1
+      - path: pCube2/plate1
+        weight: 1
+      - path: pCube2/plate2
+        weight: 1
+      - path: pCube2/plate3
+        weight: 1
+      - path: pCube2/plate4
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.8
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

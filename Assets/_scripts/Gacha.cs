@@ -12,8 +12,11 @@ public class Gacha : MonoBehaviour
     public enum Animation { Idle, Walk, Special }
     #region public properties
     public bool IsAnimated = false;
+    
     public Sprite gachaUI = null;
     public GachaID ID;
+    public bool HasSpecialAnimation = false;
+    public AnimationClip SpecialAnimation = null;
     [SerializeField]
     public Vector3 Size
     {
