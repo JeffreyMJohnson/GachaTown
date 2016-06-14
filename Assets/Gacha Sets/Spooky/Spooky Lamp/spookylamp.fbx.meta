@@ -1,26 +1,29 @@
 fileFormatVersion: 2
-guid: ad8a64bac30b5bb49860bd89d241a6eb
-timeCreated: 1459547154
+guid: a9244a4d2847c4c49b9a8594e9a45f1e
+timeCreated: 1465426518
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: pCylinder1
-    100004: pCylinder2
-    100006: spookylamp
-    100008: transform1
-    100010: transform2
-    400000: //RootNode
-    400002: pCylinder1
-    400004: pCylinder2
-    400006: spookylamp
-    400008: transform1
-    400010: transform2
-    2300000: spookylamp
-    3300000: spookylamp
+    100000: lamp_base
+    100002: lamp_bottom
+    100004: lamp_butt
+    100006: lamp_chest
+    100008: lamp_neck
+    100010: lamp_top
+    100012: spookylamp
+    100014: //RootNode
+    400000: lamp_base
+    400002: lamp_bottom
+    400004: lamp_butt
+    400006: lamp_chest
+    400008: lamp_neck
+    400010: lamp_top
+    400012: spookylamp
+    400014: //RootNode
     4300000: spookylamp
     9500000: //RootNode
+    13700000: spookylamp
   materials:
     importMaterials: 1
     materialName: 0

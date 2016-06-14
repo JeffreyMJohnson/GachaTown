@@ -1,7 +1,7 @@
 fileFormatVersion: 2
-guid: e70ebc3aa7064854ba4567ecaa3cc572
-timeCreated: 1465926339
-licenseType: Free
+guid: ef6f10c5a96d64845b8d6cf83b96e0a4
+timeCreated: 1465426572
+licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -19,7 +19,7 @@ ModelImporter:
     400008: lamp_neck
     400010: lamp_top
     400012: //RootNode
-    7400000: Take 001
+    7400000: special
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,7 +41,56 @@ ModelImporter:
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: special
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 58
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.98988414
+        functionName: SpecialAnimationComplete
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: lamp_bottom
+        weight: 1
+      - path: lamp_bottom/lamp_base
+        weight: 1
+      - path: lamp_bottom/lamp_base/lamp_butt
+        weight: 1
+      - path: lamp_bottom/lamp_base/lamp_butt/lamp_chest
+        weight: 1
+      - path: lamp_bottom/lamp_base/lamp_butt/lamp_chest/lamp_neck
+        weight: 1
+      - path: lamp_bottom/lamp_base/lamp_butt/lamp_chest/lamp_neck/lamp_top
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
