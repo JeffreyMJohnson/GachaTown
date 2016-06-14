@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 45faf735ddf3d6846bbeb3750fc74e19
-timeCreated: 1460064370
-licenseType: Pro
+timeCreated: 1464987123
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
@@ -79,7 +79,10 @@ ModelImporter:
     400068: tail_middle
     400070: toe_l
     400072: toe_r
+    2300000: //RootNode
+    3300000: //RootNode
     4300000: Parrot
+    4300002: parrot
     9500000: //RootNode
     13700000: Parrot 1
   materials:

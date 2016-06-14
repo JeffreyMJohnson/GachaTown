@@ -883,6 +883,8 @@ MonoBehaviour:
   ID:
     _setIndex: 0
     _gachaIndex: 0
+  HasSpecialAnimation: 1
+  SpecialAnimation: {fileID: 7400000, guid: 868b3cad26a50124c8caea119daae950, type: 3}
   OnClick:
     m_PersistentCalls:
       m_Calls: []

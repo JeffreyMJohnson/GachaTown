@@ -1,0 +1,11 @@
+some gacha walk
+some gacha have special animation
+
+animation tester
+select prefab
+	settings
+		walkable
+		special
+
+unity editor
+open Gacha Editor Window

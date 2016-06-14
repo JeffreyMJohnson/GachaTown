@@ -100,15 +100,7 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
-        functionName: PlaySpecialAnimationEffect
-        data: 
-        objectReferenceParameter: {fileID: 125948, guid: d820e281993a92f4fb12d5d6ad80403d,
-          type: 2}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.99841017
+      - time: 0.9915709
         functionName: SpecialAnimationComplete
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -170,7 +162,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 2
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

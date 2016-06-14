@@ -1,0 +1,503 @@
+fileFormatVersion: 2
+guid: 9c1f2ad53b7a0d44a99d5e84a0e534bc
+timeCreated: 1464987121
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: polySurface1
+    100002: polySurface1 1
+    100004: polySurface10
+    100006: polySurface11
+    100008: polySurface12
+    100010: polySurface13
+    100012: polySurface14
+    100014: polySurface15
+    100016: polySurface16
+    100018: polySurface17
+    100020: polySurface18
+    100022: polySurface19
+    100024: polySurface2
+    100026: polySurface20
+    100028: polySurface21
+    100030: polySurface22
+    100032: polySurface23
+    100034: polySurface24
+    100036: polySurface25
+    100038: polySurface26
+    100040: polySurface27
+    100042: polySurface28
+    100044: polySurface29
+    100046: polySurface3
+    100048: polySurface30
+    100050: polySurface31
+    100052: polySurface32
+    100054: polySurface33
+    100056: polySurface34
+    100058: polySurface35
+    100060: polySurface36
+    100062: polySurface37
+    100064: polySurface38
+    100066: polySurface39
+    100068: polySurface4
+    100070: polySurface40
+    100072: polySurface41
+    100074: polySurface42
+    100076: polySurface43
+    100078: polySurface44
+    100080: polySurface45
+    100082: polySurface46
+    100084: polySurface47
+    100086: polySurface5
+    100088: polySurface6
+    100090: polySurface7
+    100092: polySurface8
+    100094: polySurface9
+    100096: tea_set
+    100098: //RootNode
+    100100: transform1
+    100102: transform10
+    100104: transform11
+    100106: transform12
+    100108: transform13
+    100110: transform14
+    100112: transform15
+    100114: transform16
+    100116: transform17
+    100118: transform18
+    100120: transform19
+    100122: transform2
+    100124: transform20
+    100126: transform21
+    100128: transform22
+    100130: transform23
+    100132: transform24
+    100134: transform25
+    100136: transform26
+    100138: transform27
+    100140: transform28
+    100142: transform29
+    100144: transform3
+    100146: transform30
+    100148: transform31
+    100150: transform32
+    100152: transform33
+    100154: transform34
+    100156: transform35
+    100158: transform36
+    100160: transform37
+    100162: transform38
+    100164: transform39
+    100166: transform4
+    100168: transform40
+    100170: transform41
+    100172: transform42
+    100174: transform43
+    100176: transform44
+    100178: transform45
+    100180: transform46
+    100182: transform47
+    100184: transform48
+    100186: transform5
+    100188: transform6
+    100190: transform7
+    100192: transform8
+    100194: transform9
+    400000: polySurface1
+    400002: polySurface1 1
+    400004: polySurface10
+    400006: polySurface11
+    400008: polySurface12
+    400010: polySurface13
+    400012: polySurface14
+    400014: polySurface15
+    400016: polySurface16
+    400018: polySurface17
+    400020: polySurface18
+    400022: polySurface19
+    400024: polySurface2
+    400026: polySurface20
+    400028: polySurface21
+    400030: polySurface22
+    400032: polySurface23
+    400034: polySurface24
+    400036: polySurface25
+    400038: polySurface26
+    400040: polySurface27
+    400042: polySurface28
+    400044: polySurface29
+    400046: polySurface3
+    400048: polySurface30
+    400050: polySurface31
+    400052: polySurface32
+    400054: polySurface33
+    400056: polySurface34
+    400058: polySurface35
+    400060: polySurface36
+    400062: polySurface37
+    400064: polySurface38
+    400066: polySurface39
+    400068: polySurface4
+    400070: polySurface40
+    400072: polySurface41
+    400074: polySurface42
+    400076: polySurface43
+    400078: polySurface44
+    400080: polySurface45
+    400082: polySurface46
+    400084: polySurface47
+    400086: polySurface5
+    400088: polySurface6
+    400090: polySurface7
+    400092: polySurface8
+    400094: polySurface9
+    400096: tea_set
+    400098: //RootNode
+    400100: transform1
+    400102: transform10
+    400104: transform11
+    400106: transform12
+    400108: transform13
+    400110: transform14
+    400112: transform15
+    400114: transform16
+    400116: transform17
+    400118: transform18
+    400120: transform19
+    400122: transform2
+    400124: transform20
+    400126: transform21
+    400128: transform22
+    400130: transform23
+    400132: transform24
+    400134: transform25
+    400136: transform26
+    400138: transform27
+    400140: transform28
+    400142: transform29
+    400144: transform3
+    400146: transform30
+    400148: transform31
+    400150: transform32
+    400152: transform33
+    400154: transform34
+    400156: transform35
+    400158: transform36
+    400160: transform37
+    400162: transform38
+    400164: transform39
+    400166: transform4
+    400168: transform40
+    400170: transform41
+    400172: transform42
+    400174: transform43
+    400176: transform44
+    400178: transform45
+    400180: transform46
+    400182: transform47
+    400184: transform48
+    400186: transform5
+    400188: transform6
+    400190: transform7
+    400192: transform8
+    400194: transform9
+    2300000: polySurface1
+    3300000: polySurface1
+    4300000: polySurface1
+    7400000: Special
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Special
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.98522824
+        functionName: SpecialAnimationComplete
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface1
+        weight: 1
+      - path: tea_set
+        weight: 1
+      - path: tea_set/polySurface1 1
+        weight: 1
+      - path: tea_set/polySurface1 1/transform48
+        weight: 1
+      - path: tea_set/polySurface2
+        weight: 1
+      - path: tea_set/polySurface2/transform47
+        weight: 1
+      - path: tea_set/polySurface3
+        weight: 1
+      - path: tea_set/polySurface3/transform46
+        weight: 1
+      - path: tea_set/polySurface4
+        weight: 1
+      - path: tea_set/polySurface4/transform45
+        weight: 1
+      - path: tea_set/polySurface5
+        weight: 1
+      - path: tea_set/polySurface5/transform44
+        weight: 1
+      - path: tea_set/polySurface6
+        weight: 1
+      - path: tea_set/polySurface6/transform43
+        weight: 1
+      - path: tea_set/polySurface7
+        weight: 1
+      - path: tea_set/polySurface7/transform42
+        weight: 1
+      - path: tea_set/polySurface8
+        weight: 1
+      - path: tea_set/polySurface8/transform41
+        weight: 1
+      - path: tea_set/polySurface9
+        weight: 1
+      - path: tea_set/polySurface9/transform40
+        weight: 1
+      - path: tea_set/polySurface10
+        weight: 1
+      - path: tea_set/polySurface10/transform39
+        weight: 1
+      - path: tea_set/polySurface11
+        weight: 1
+      - path: tea_set/polySurface11/transform38
+        weight: 1
+      - path: tea_set/polySurface12
+        weight: 1
+      - path: tea_set/polySurface12/transform37
+        weight: 1
+      - path: tea_set/polySurface13
+        weight: 1
+      - path: tea_set/polySurface13/transform36
+        weight: 1
+      - path: tea_set/polySurface14
+        weight: 1
+      - path: tea_set/polySurface14/transform35
+        weight: 1
+      - path: tea_set/polySurface15
+        weight: 1
+      - path: tea_set/polySurface15/transform34
+        weight: 1
+      - path: tea_set/polySurface16
+        weight: 1
+      - path: tea_set/polySurface16/transform33
+        weight: 1
+      - path: tea_set/polySurface17
+        weight: 1
+      - path: tea_set/polySurface17/transform32
+        weight: 1
+      - path: tea_set/polySurface18
+        weight: 1
+      - path: tea_set/polySurface18/transform31
+        weight: 1
+      - path: tea_set/polySurface19
+        weight: 1
+      - path: tea_set/polySurface19/transform30
+        weight: 1
+      - path: tea_set/polySurface20
+        weight: 1
+      - path: tea_set/polySurface20/transform29
+        weight: 1
+      - path: tea_set/polySurface21
+        weight: 1
+      - path: tea_set/polySurface21/transform28
+        weight: 1
+      - path: tea_set/polySurface22
+        weight: 1
+      - path: tea_set/polySurface22/transform27
+        weight: 1
+      - path: tea_set/polySurface23
+        weight: 1
+      - path: tea_set/polySurface23/transform26
+        weight: 1
+      - path: tea_set/polySurface24
+        weight: 1
+      - path: tea_set/polySurface24/transform25
+        weight: 1
+      - path: tea_set/polySurface25
+        weight: 1
+      - path: tea_set/polySurface25/transform24
+        weight: 1
+      - path: tea_set/polySurface26
+        weight: 1
+      - path: tea_set/polySurface26/transform23
+        weight: 1
+      - path: tea_set/polySurface27
+        weight: 1
+      - path: tea_set/polySurface27/transform22
+        weight: 1
+      - path: tea_set/polySurface28
+        weight: 1
+      - path: tea_set/polySurface28/transform21
+        weight: 1
+      - path: tea_set/polySurface29
+        weight: 1
+      - path: tea_set/polySurface29/transform20
+        weight: 1
+      - path: tea_set/polySurface30
+        weight: 1
+      - path: tea_set/polySurface30/transform19
+        weight: 1
+      - path: tea_set/polySurface31
+        weight: 1
+      - path: tea_set/polySurface31/transform18
+        weight: 1
+      - path: tea_set/polySurface32
+        weight: 1
+      - path: tea_set/polySurface32/transform17
+        weight: 1
+      - path: tea_set/polySurface33
+        weight: 1
+      - path: tea_set/polySurface33/transform16
+        weight: 1
+      - path: tea_set/polySurface34
+        weight: 1
+      - path: tea_set/polySurface34/transform15
+        weight: 1
+      - path: tea_set/polySurface35
+        weight: 1
+      - path: tea_set/polySurface35/transform14
+        weight: 1
+      - path: tea_set/polySurface36
+        weight: 1
+      - path: tea_set/polySurface36/transform13
+        weight: 1
+      - path: tea_set/polySurface37
+        weight: 1
+      - path: tea_set/polySurface37/transform12
+        weight: 1
+      - path: tea_set/polySurface38
+        weight: 1
+      - path: tea_set/polySurface38/transform11
+        weight: 1
+      - path: tea_set/polySurface39
+        weight: 1
+      - path: tea_set/polySurface39/transform10
+        weight: 1
+      - path: tea_set/polySurface40
+        weight: 1
+      - path: tea_set/polySurface40/transform9
+        weight: 1
+      - path: tea_set/polySurface41
+        weight: 1
+      - path: tea_set/polySurface41/transform8
+        weight: 1
+      - path: tea_set/polySurface42
+        weight: 1
+      - path: tea_set/polySurface42/transform7
+        weight: 1
+      - path: tea_set/polySurface43
+        weight: 1
+      - path: tea_set/polySurface43/transform6
+        weight: 1
+      - path: tea_set/polySurface44
+        weight: 1
+      - path: tea_set/polySurface44/transform5
+        weight: 1
+      - path: tea_set/polySurface45
+        weight: 1
+      - path: tea_set/polySurface45/transform4
+        weight: 1
+      - path: tea_set/polySurface46
+        weight: 1
+      - path: tea_set/polySurface46/transform3
+        weight: 1
+      - path: tea_set/polySurface47
+        weight: 1
+      - path: tea_set/polySurface47/transform2
+        weight: 1
+      - path: tea_set/transform1
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

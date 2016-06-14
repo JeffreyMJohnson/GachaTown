@@ -466,12 +466,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 506d66d8dfc190a46af1dca809512df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gachaSet: 0
+  rotationSpeed: 10
+  isGachaThere: 0
   moneyTextField: {fileID: 0}
   displayTextField: {fileID: 0}
-  GachaSet: 0
+  dialHolder: {fileID: 0}
   capsule: {fileID: 0}
-  seperator: {fileID: 0}
-  isGachaThere: 0
+  pink: {fileID: 0}
+  red: {fileID: 0}
+  green: {fileID: 0}
+  blue: {fileID: 0}
+  yellow: {fileID: 0}
 --- !u!95 &818217488
 Animator:
   serializedVersion: 3

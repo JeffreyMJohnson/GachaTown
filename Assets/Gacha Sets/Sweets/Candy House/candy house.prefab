@@ -1,18 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &165128
+--- !u!1 &115808
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 404786}
-  - 33: {fileID: 3326660}
-  - 23: {fileID: 2398896}
-  - 95: {fileID: 9503974}
-  - 114: {fileID: 11483004}
-  - 65: {fileID: 6598930}
+  - 4: {fileID: 404030}
+  - 33: {fileID: 3320420}
+  - 23: {fileID: 2326578}
+  - 95: {fileID: 9593726}
+  - 65: {fileID: 6596296}
+  - 114: {fileID: 11487166}
   m_Layer: 8
   m_Name: candy house
   m_TagString: Untagged
@@ -20,24 +20,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &404786
+--- !u!4 &404030
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
+  m_GameObject: {fileID: 115808}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 164.79953, y: 164.79953, z: 164.79953}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2398896
+--- !u!23 &2326578
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
+  m_GameObject: {fileID: 115808}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,34 +58,34 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3326660
+--- !u!33 &3320420
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
-  m_Mesh: {fileID: 4300000, guid: 28e3dfeddb32eb746b1fd9fdd9464dbe, type: 3}
---- !u!65 &6598930
+  m_GameObject: {fileID: 115808}
+  m_Mesh: {fileID: 4300000, guid: e13e83f62e46e054fb5dbf7e72344692, type: 3}
+--- !u!65 &6596296
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
+  m_GameObject: {fileID: 115808}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.12, y: 3.83, z: 4.427626}
-  m_Center: {x: -0.014751911, y: 1.9, z: -0.08436251}
---- !u!95 &9503974
+  m_Size: {x: 0.028620638, y: 0.024344357, z: 0.026866738}
+  m_Center: {x: -0.00008951407, y: 0.0121721765, z: -0.0005119103}
+--- !u!95 &9593726
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
+  m_GameObject: {fileID: 115808}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 28e3dfeddb32eb746b1fd9fdd9464dbe, type: 3}
+  m_Avatar: {fileID: 9000000, guid: e13e83f62e46e054fb5dbf7e72344692, type: 3}
   m_Controller: {fileID: 9100000, guid: b42e7a0db27bc8e41aba2d1be14c8c11, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -94,19 +94,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11483004
+--- !u!114 &11487166
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 165128}
+  m_GameObject: {fileID: 115808}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25173b6c2b0b82f4cb69b726ab4a64fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  gachaUI: {fileID: 21300000, guid: 362869835be1d3844a31d85066e41181, type: 3}
+  gachaUI: {fileID: 0}
   ID:
     _setIndex: 0
     _gachaIndex: 0
@@ -123,39 +123,10 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: idleAnimationTime
-      value: 60
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b42e7a0db27bc8e41aba2d1be14c8c11, type: 2}
-    - target: {fileID: 0}
-      propertyPath: gachaUI
-      value: 
-      objectReference: {fileID: 21300000, guid: 362869835be1d3844a31d85066e41181,
-        type: 3}
-    - target: {fileID: 0}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 165128}
+  m_RootGameObject: {fileID: 115808}
   m_IsPrefabParent: 1

@@ -14,5 +14,7 @@ MonoBehaviour:
   collection:
   - {fileID: 115398, guid: 364ad3c87b6639441ae84a39ec54d529, type: 2}
   - {fileID: 119186, guid: 6d1f44db650a3164d9797a10d5ec8f52, type: 2}
+  - {fileID: 135740, guid: d6e71fee4cf49c54a899df269a56ee0d, type: 2}
+  - {fileID: 161774, guid: e527c816828cf0546baa8383a1eab8b8, type: 2}
   name: Spooky
   description: boo
