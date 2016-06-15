@@ -1,114 +1,75 @@
 fileFormatVersion: 2
-guid: a26d3baff3bf2764eb24b1e522d575cc
-timeCreated: 1465148090
-licenseType: Free
+guid: 9f7497fae5b161741b026c9296a559a4
+timeCreated: 1465513902
+licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: character
-    100002: //RootNode
-    100004: pCone1
-    100006: pCone2
-    100008: pCone3
-    100010: pCone4
-    100012: pCube1
-    100014: polySurface1
-    100016: polySurface10
-    100018: polySurface11
-    100020: polySurface12
-    100022: polySurface2
-    100024: polySurface2 1
-    100026: polySurface3
-    100028: polySurface4
-    100030: polySurface5
-    100032: polySurface6
-    100034: polySurface7
-    100036: polySurface8
-    100038: polySurface9
-    100040: polySurface9 1
-    100042: pSphere1
-    100044: pSphere2
-    100046: pSphere3
-    100048: pSphere4
-    100050: pSphere5
-    100052: transform1
-    100054: transform10
-    100056: transform11
-    100058: transform12
-    100060: transform13
-    100062: transform14
-    100064: transform15
-    100066: transform16
-    100068: transform17
-    100070: transform18
-    100072: transform19
-    100074: transform2
-    100076: transform20
-    100078: transform21
-    100080: transform22
-    100082: transform23
-    100084: transform24
-    100086: transform3
-    100088: transform4
-    100090: transform5
-    100092: transform6
-    100094: transform7
-    100096: transform8
-    100098: transform9
-    400000: character
-    400002: //RootNode
-    400004: pCone1
-    400006: pCone2
-    400008: pCone3
-    400010: pCone4
-    400012: pCube1
-    400014: polySurface1
-    400016: polySurface10
-    400018: polySurface11
-    400020: polySurface12
-    400022: polySurface2
-    400024: polySurface2 1
-    400026: polySurface3
-    400028: polySurface4
-    400030: polySurface5
-    400032: polySurface6
-    400034: polySurface7
-    400036: polySurface8
-    400038: polySurface9
-    400040: polySurface9 1
-    400042: pSphere1
-    400044: pSphere2
-    400046: pSphere3
-    400048: pSphere4
-    400050: pSphere5
-    400052: transform1
-    400054: transform10
-    400056: transform11
-    400058: transform12
-    400060: transform13
-    400062: transform14
-    400064: transform15
-    400066: transform16
-    400068: transform17
-    400070: transform18
-    400072: transform19
-    400074: transform2
-    400076: transform20
-    400078: transform21
-    400080: transform22
-    400082: transform23
-    400084: transform24
-    400086: transform3
-    400088: transform4
-    400090: transform5
-    400092: transform6
-    400094: transform7
-    400096: transform8
-    400098: transform9
-    2300000: polySurface12
-    3300000: polySurface12
-    4300000: polySurface12
+    100000: clavicle
+    100002: controls
+    100004: //RootNode
+    100006: elbow_l
+    100008: elbow_r
+    100010: feather
+    100012: foot_l
+    100014: foot_l 1
+    100016: foot_r
+    100018: foot_r 1
+    100020: hand_l
+    100022: hand_r
+    100024: head
+    100026: Hip
+    100028: leg_l
+    100030: leg_r
+    100032: neck
+    100034: polySurface2
+    100036: pSphere4
+    100038: shin_l
+    100040: shin_r
+    100042: shoulder_l
+    100044: shoulder_r
+    100046: spine_1
+    100048: spine_2
+    100050: tail_base
+    100052: tail_end
+    100054: tail_middle
+    100056: toe_l
+    100058: toe_r
+    400000: clavicle
+    400002: controls
+    400004: //RootNode
+    400006: elbow_l
+    400008: elbow_r
+    400010: feather
+    400012: foot_l
+    400014: foot_l 1
+    400016: foot_r
+    400018: foot_r 1
+    400020: hand_l
+    400022: hand_r
+    400024: head
+    400026: Hip
+    400028: leg_l
+    400030: leg_r
+    400032: neck
+    400034: polySurface2
+    400036: pSphere4
+    400038: shin_l
+    400040: shin_r
+    400042: shoulder_l
+    400044: shoulder_r
+    400046: spine_1
+    400048: spine_2
+    400050: tail_base
+    400052: tail_end
+    400054: tail_middle
+    400056: toe_l
+    400058: toe_r
+    4300000: polySurface2
+    4300002: pSphere4
     9500000: //RootNode
+    13700000: polySurface2
+    13700002: pSphere4
   materials:
     importMaterials: 1
     materialName: 0
@@ -133,7 +94,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 40
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

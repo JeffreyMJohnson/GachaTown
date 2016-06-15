@@ -1,18 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &115808
+--- !u!1 &187068
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 404030}
-  - 33: {fileID: 3320420}
-  - 23: {fileID: 2326578}
-  - 95: {fileID: 9593726}
-  - 65: {fileID: 6596296}
-  - 114: {fileID: 11487166}
+  - 4: {fileID: 452636}
+  - 33: {fileID: 3386688}
+  - 23: {fileID: 2325298}
+  - 95: {fileID: 9571616}
+  - 65: {fileID: 6572780}
+  - 114: {fileID: 11401914}
   m_Layer: 8
   m_Name: candy house
   m_TagString: Untagged
@@ -20,24 +20,24 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &404030
+--- !u!4 &452636
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 164.79953, y: 164.79953, z: 164.79953}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!23 &2326578
+--- !u!23 &2325298
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -58,32 +58,32 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!33 &3320420
+--- !u!33 &3386688
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_Mesh: {fileID: 4300000, guid: e13e83f62e46e054fb5dbf7e72344692, type: 3}
---- !u!65 &6596296
+--- !u!65 &6572780
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.028620638, y: 0.024344357, z: 0.026866738}
+  m_Size: {x: 0.01, y: 0.02, z: 0.02}
   m_Center: {x: -0.00008951407, y: 0.0121721765, z: -0.0005119103}
---- !u!95 &9593726
+--- !u!95 &9571616
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e13e83f62e46e054fb5dbf7e72344692, type: 3}
   m_Controller: {fileID: 9100000, guid: b42e7a0db27bc8e41aba2d1be14c8c11, type: 2}
@@ -94,22 +94,24 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &11487166
+--- !u!114 &11401914
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 115808}
+  m_GameObject: {fileID: 187068}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25173b6c2b0b82f4cb69b726ab4a64fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsAnimated: 0
-  gachaUI: {fileID: 0}
+  gachaUI: {fileID: 21300000, guid: 362869835be1d3844a31d85066e41181, type: 3}
   ID:
     _setIndex: 0
     _gachaIndex: 0
+  HasSpecialAnimation: 0
+  SpecialAnimation: {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -123,10 +125,14 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
-      propertyPath: m_Layer
-      value: 8
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 115808}
+  m_RootGameObject: {fileID: 187068}
   m_IsPrefabParent: 1
