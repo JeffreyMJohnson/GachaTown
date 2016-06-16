@@ -14,7 +14,7 @@ GameObject:
   - 65: {fileID: 6555028}
   - 114: {fileID: 11452084}
   m_Layer: 8
-  m_Name: Skyscraper
+  m_Name: skyscraper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
