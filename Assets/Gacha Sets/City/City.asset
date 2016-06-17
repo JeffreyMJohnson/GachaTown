@@ -17,8 +17,6 @@ MonoBehaviour:
   - {fileID: 161710, guid: e251f846a5536c042b230ae67aad015a, type: 2}
   - {fileID: 199720, guid: d4a10f74a9a18a44eaac38a496294d1b, type: 2}
   - {fileID: 170978, guid: af7c2cee576b62f47a7aedc5d0be5b0d, type: 2}
-  - {fileID: 149318, guid: cbd4a6773b2a7e94083723adb7d0c03e, type: 2}
   - {fileID: 129284, guid: 53e90ec4ce8b7c04f89c229e1f65d7ee, type: 2}
-  - {fileID: 159418, guid: 0a8e2df53d506f74b8878f97d528be3c, type: 2}
   name: City
   description: Welcome to Gotham

@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Name: Tropical
   m_EditorClassIdentifier: 
   collection:
-  - {fileID: 147088, guid: a3c27ec1cd1cef541af9d1f5c49109b1, type: 2}
-  - {fileID: 135998, guid: 996bd68cf6f2372479fa9141cfcc6090, type: 2}
-  - {fileID: 105328, guid: da12a3bbd90c3c949b94ec94055a6775, type: 2}
+  - {fileID: 118272, guid: f25214a1ed17d2b49ad92e01df6ba94f, type: 2}
+  - {fileID: 199282, guid: 7d2992c46b3d4e04aade6d6a02f48a2e, type: 2}
+  - {fileID: 178772, guid: b06b4e2429e18664fa04ef0df5d676b3, type: 2}
   - {fileID: 171084, guid: be35d7911d6402140a7234ca8a98cd3d, type: 2}
   - {fileID: 152368, guid: c582b92459fbfc245b8a6caa69a83bcb, type: 2}
-  - {fileID: 118272, guid: f25214a1ed17d2b49ad92e01df6ba94f, type: 2}
-  - {fileID: 178772, guid: b06b4e2429e18664fa04ef0df5d676b3, type: 2}
-  - {fileID: 199282, guid: 7d2992c46b3d4e04aade6d6a02f48a2e, type: 2}
   name: Tropical
   description: Toes in the sand

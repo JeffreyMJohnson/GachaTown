@@ -14,7 +14,7 @@ GameObject:
   - 65: {fileID: 6595568}
   - 114: {fileID: 11401090}
   m_Layer: 8
-  m_Name: beach hut
+  m_Name: Beach Hut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
