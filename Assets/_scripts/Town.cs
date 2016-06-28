@@ -23,7 +23,6 @@ public class Town : MonoBehaviour
     private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
-    private GameObject _gachaUIToDrop = null;
     private Player _player = null;
     private List<GameObject> _placedGachas = new List<GameObject>();
     private float _maxScrollViewWidth = 0;
@@ -108,7 +107,6 @@ public class Town : MonoBehaviour
         UpdateEscapeKey();
 
         UpdateGachaDrag();
-
     }
 
     private void OnDestroy()
@@ -159,7 +157,7 @@ public class Town : MonoBehaviour
     {
         foreach (Player.PlacedGachaData data in Player.Instance.GetTownData())
         {
-            GameObject newGacha = Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(data.id));
+            GameObject newGacha = Instantiate<GameObject>(GachaManager.Instance.GetGachaPrefab(data.id));
             newGacha.transform.position = data.position;
             newGacha.transform.rotation = data.rotation;
             newGacha.transform.localScale = data.scale;
@@ -196,7 +194,7 @@ public class Town : MonoBehaviour
         {
             if (!IsPlaced(gachaId))
             {
-                GameObject gachaUIInstance = GameManager.Instance.GetGachaUI(gachaId);
+                GameObject gachaUIInstance = GachaManager.Instance.GetGachaUI(gachaId);
                 gachaUIInstance.transform.SetParent(_scrollViewContent);
                 GachaUI gachaUI = gachaUIInstance.GetComponent<GachaUI>();
                 gachaUI.onGachaDrag.AddListener(HandleGachaUIDragEvent);
@@ -219,7 +217,7 @@ public class Town : MonoBehaviour
             return;
         }
         GachaUI gachaUIScript = draggedObject.GetComponent<GachaUI>();
-        _gachaToPlace = GameObject.Instantiate<GameObject>(GameManager.Instance.GetGachaPrefab(gachaUIScript.ID));
+        _gachaToPlace = GameObject.Instantiate<GameObject>(GachaManager.Instance.GetGachaPrefab(gachaUIScript.ID));
         Gacha gachaScript = _gachaToPlace.GetComponent<Gacha>();
         gachaScript.ID = gachaUIScript.ID;
         gachaScript.OnClick.AddListener(HandleGachaOnClickEvent);

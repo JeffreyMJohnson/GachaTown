@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         if (_allGachasMode)
         {
             gachaCollection.Clear();
-            gachaCollection = GameManager.Instance.GetAllGachaIds();
+            gachaCollection = GachaManager.Instance.GetAllGachaIds();
         }
     }
 

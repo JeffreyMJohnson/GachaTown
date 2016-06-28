@@ -9,7 +9,7 @@ public class CoinDrag : MonoBehaviour
     private GameObject coinPrefab;
     private BuyGacha machine;
     public bool isInSlot = false;
-    bool hasClicked = false;
+    
 
 
     private void Start()

@@ -17,7 +17,7 @@ public class GachaTestWindow : EditorWindow
     [MenuItem("Window/Gacha Tester")]
     public static void ShowWindow()
     {
-        EditorWindow window = EditorWindow.GetWindow<GachaTestWindow>();
+        EditorWindow.GetWindow<GachaTestWindow>();
     }
 
     void OnGUI()

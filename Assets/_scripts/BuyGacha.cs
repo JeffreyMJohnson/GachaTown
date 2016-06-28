@@ -198,7 +198,9 @@ public class BuyGacha : MonoBehaviour
         {
             player.DeductCoins(5);
             moneyTextField.text = player.TotalCoins.ToString();
-            player.AddGachaToList(GameManager.Instance.GetRandomGacha(gachaSet));
+            //todo remove this
+            //player.AddGachaToList(GameManager.Instance.GetRandomGacha(gachaSet));
+            player.AddGachaToList(GachaManager.Instance.GetRandomGacha(gachaSet));
         }
 
     }

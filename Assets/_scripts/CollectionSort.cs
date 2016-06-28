@@ -22,7 +22,7 @@ public class CollectionSort : MonoBehaviour
     private Vector3 pageDestination;
     private Vector3 pageOrigin;
     //private Text title;
-    private List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
+    //private List<SpriteRenderer> titleCards = new List<SpriteRenderer>();
     private Ray ray;
     private RaycastHit hit;
     private float zoomLevelOrigin;
@@ -84,7 +84,7 @@ public class CollectionSort : MonoBehaviour
         cameraDestination = cameraOrigin;
 
         //todo use accessor for this collection
-        if (GameManager.Instance.masterGachaSetList.Count == 0)
+        if (GachaManager.Instance.SetCount == 0)
         {
             Debug.Log("setlist is empty");
         }
@@ -268,11 +268,11 @@ public class CollectionSort : MonoBehaviour
             {
                 buttonPress.Play();
                 pageQueue--;
-                currentPage = GameManager.Instance.masterGachaSetList.Count - 1;
+                currentPage = GachaManager.Instance.SetCount - 1;
                 SetTitle();
                 scrollStart = 0;
                 pageOrigin = transform.position;
-                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                float tCount = GachaManager.Instance.SetCount - 1;
                 pageDestination = transform.position - new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
             }
         }
@@ -280,7 +280,7 @@ public class CollectionSort : MonoBehaviour
         //NEXT
         if (pageQueue < 0)
         {
-            if (currentPage < GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            if (currentPage < GachaManager.Instance.SetCount - 1 && scrollStart == scrollTime && !isZoomed)
             {
                 buttonPress.Play();
                 pageQueue++;
@@ -290,7 +290,7 @@ public class CollectionSort : MonoBehaviour
                 pageOrigin = transform.position;
                 pageDestination = transform.position - pageOffset;
             }
-            else if (currentPage == GameManager.Instance.masterGachaSetList.Count - 1 && scrollStart == scrollTime && !isZoomed)
+            else if (currentPage == GachaManager.Instance.SetCount - 1 && scrollStart == scrollTime && !isZoomed)
             {
                 buttonPress.Play();
                 pageQueue++;
@@ -298,7 +298,7 @@ public class CollectionSort : MonoBehaviour
                 SetTitle();
                 scrollStart = 0;
                 pageOrigin = transform.position;
-                float tCount = GameManager.Instance.masterGachaSetList.Count - 1;
+                float tCount = GachaManager.Instance.SetCount - 1;
                 pageDestination = transform.position + new Vector3(pageOffset.x * tCount, pageOffset.y * tCount, pageOffset.z * tCount);
             }
         }
@@ -319,11 +319,11 @@ public class CollectionSort : MonoBehaviour
 
     private void InitCollectionPages()
     {
-        for (int i = 0; i < GameManager.Instance.masterGachaSetList.Count; i++)
+        for (int i = 0; i < GachaManager.Instance.SetCount; i++)
         {
             collectionPages.Add(new List<GameObject>());
 
-            GachaSet set = GameManager.Instance.masterGachaSetList[i];
+            GachaSet set = GachaManager.Instance.GetGachaSet(i);
             //case for when set contains less than Max count variable
             int currentPageCount = 0;
             if (MAX_GACHA_PER_PAGE > set.collection.Count)
@@ -381,10 +381,10 @@ public class CollectionSort : MonoBehaviour
     /// <returns></returns>
     private GameObject GetGachaGameObject(GachaID gachaID)
     {
-        Debug.Assert(gachaID.SetIndex < GameManager.Instance.masterGachaSetList.Count);
-        Debug.Assert(gachaID.GachaIndex < GameManager.Instance.masterGachaSetList[gachaID.SetIndex].collection.Count);
+        Debug.Assert(gachaID.SetIndex < GachaManager.Instance.SetCount);
+        Debug.Assert(gachaID.GachaIndex < GachaManager.Instance.GetGachaSet(gachaID.SetIndex).collection.Count);
 
-        GameObject gachaPrefab = GameManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
+        GameObject gachaPrefab = GachaManager.Instance.GetGachaPrefab(new GachaID(gachaID.SetIndex, gachaID.GachaIndex));
         GameObject newGachaObject = Instantiate<GameObject>(gachaPrefab);
 
         //TESTING ONLY

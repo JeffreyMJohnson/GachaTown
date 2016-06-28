@@ -1162,7 +1162,7 @@ NoParseForYou:
 
 #region GRAPHICS
 
-	GameObject go;
+	//GameObject go;
 
 	private void DrawGridOrthographic(Camera cam)
 	{

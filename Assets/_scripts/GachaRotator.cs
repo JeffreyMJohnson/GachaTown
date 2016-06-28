@@ -80,7 +80,7 @@ public class GachaRotator : MonoBehaviour
         }
         TextUpdate();
 
-        maxGachaSetCount = GameManager.Instance.masterGachaSetList.Count;
+        maxGachaSetCount = GachaManager.Instance.SetCount;
 
         Screen.orientation = ScreenOrientation.Portrait;
 
@@ -164,7 +164,7 @@ public class GachaRotator : MonoBehaviour
 
     private void TextUpdate()
     {
-        gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5\n" + GameManager.Instance.masterGachaSetList[selectedGacha].name;
+        gachaDisplay.text = "MACHINE NO. " + (selectedGacha + 1) + "\nCOST 5\n" + GachaManager.Instance.GetGachaSet(selectedGacha).name;
     }
 
     /// <summary>

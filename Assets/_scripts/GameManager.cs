@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// singleton class that is available from every scene (once instantiated in Main Menu scene). 
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
     {
         get { return _cameraController.IsZooming; }
     }
+    [Obsolete]
     public List<GachaSet> masterGachaSetList = new List<GachaSet>();
     public GameObject gachaUIPrefab;
     /// <summary>
@@ -62,78 +65,6 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Gacha collection access
-    /// <summary>
-    /// Returns GachaSet object of given index from the MasterGachaCollection
-    /// </summary>
-    /// <param name="setIndex"></param>
-    /// <returns></returns>
-    public GachaSet GetGachaSet(int setIndex)
-    {
-        return masterGachaSetList[setIndex];
-    }
-
-    /// <summary>
-    /// Returns a GachaID struct that points to the prefab of a random Gacha from the given set index.
-    /// NOTE:Use unity's Instantiate<GameObject>(GetGachaPrefab(GachaID)) to instantiate a gameObject from GachaID.
-    /// </summary>
-    /// <param name="setIndex"></param>
-    /// <returns></returns>
-    public GachaID GetRandomGacha(int setIndex)
-    {
-        int randomIndex = Random.Range(0, masterGachaSetList[setIndex].collection.Count);
-        return new GachaID(setIndex, randomIndex);
-    }
-
-    /// <summary>
-    /// returns prefab located at given GachaID data.
-    /// </summary>
-    /// <param name="gachaID"></param>
-    /// <returns></returns>
-    public GameObject GetGachaPrefab(GachaID gachaID)
-    {
-        return masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex];
-    }
-
-    /// <summary>
-    /// return the name of the gacha prefab object of given id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    public string GetGachaName(GachaID id)
-    {
-        return masterGachaSetList[id.SetIndex].collection[id.GachaIndex].name;
-    }
-
-    /// <summary>
-    /// returns Instance of GachaUI prefab with sprite and image set if gacha has them.
-    /// </summary>
-    /// <param name="gachaID"></param>
-    /// <returns></returns>
-    public GameObject GetGachaUI(GachaID gachaID)
-    {
-        GameObject newGachaUI = Instantiate<GameObject>(gachaUIPrefab);
-        newGachaUI.GetComponent<GachaUI>().ID = gachaID;
-        Gacha gacha = masterGachaSetList[gachaID.SetIndex].collection[gachaID.GachaIndex].GetComponent<Gacha>();
-        if (gacha.gachaUI != null)
-        {
-            newGachaUI.GetComponentInChildren<Image>().sprite = gacha.gachaUI;
-        }
-        newGachaUI.name = gacha.name;
-        return newGachaUI;
-    }
-
-    public List<GachaID> GetAllGachaIds()
-    {
-        List<GachaID> result = new List<GachaID>();
-        for (int setIndex = 0; setIndex < masterGachaSetList.Count; setIndex++)
-        {
-            for (int gachaIndex = 0; gachaIndex < masterGachaSetList[setIndex].collection.Count; gachaIndex++)
-            {
-                result.Add(new GachaID(setIndex, gachaIndex));
-            }
-        }
-        return result;
-    } 
     #endregion
 
     /// <summary>

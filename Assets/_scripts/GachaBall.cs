@@ -22,14 +22,14 @@ public class GachaBall : MonoBehaviour
     private List<Material> gachaMats = new List<Material>();
     private List<Color> startColor = new List<Color>();
     private float currentTimeCanWin = 0f;
-    private float currentTimeMakeTransparent = 0f;
-    private float currentTimeSpawnGacha = 0f;
+    //private float currentTimeMakeTransparent = 0f;
+    //private float currentTimeSpawnGacha = 0f;
     private float timeToMove = 2f;
     private float timeLimitPerCapsule = 3f;
-    private bool shouldMakeTransparent = false;
-    private bool shouldSpawnGacha = false;
-    private bool growGacha = false;
-    private bool isWaiting = false;
+    //private bool shouldMakeTransparent = false;
+    //private bool shouldSpawnGacha = false;
+    //private bool growGacha = false;
+    //private bool isWaiting = false;
     private bool canWin = false;
     #endregion
     private void Start()
@@ -161,7 +161,7 @@ public class GachaBall : MonoBehaviour
 
                 if (timeElapsed > 1)
                 {
-                    shouldMakeTransparent = false;
+                    //shouldMakeTransparent = false;
                     
                     mat.color = startColor[0];
                     mat.color = startColor[1];
@@ -189,7 +189,7 @@ public class GachaBall : MonoBehaviour
     {
         newGachaID = Player.Instance.gachaCollection.Last();
         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_GACHA_PRESENT);
-        return Instantiate(GameManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
+        return Instantiate(GachaManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
     }
 
     private IEnumerator GachaLifetime(float waitTime)

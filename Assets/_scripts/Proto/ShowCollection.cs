@@ -67,7 +67,7 @@ public class ShowCollection : MonoBehaviour
         for (int i = start; i < testCondition; i++)
         {
             GachaID gachaID = player.gachaCollection[i];
-            currentPage[i - start] = GameManager.Instance.GetGachaPrefab(gachaID);
+            currentPage[i - start] = GachaManager.Instance.GetGachaPrefab(gachaID);
         }
 
     }
