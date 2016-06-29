@@ -25,16 +25,62 @@ public class Player : MonoBehaviour
         }
 
     }
+    #region Singleton lazy instantiation logic
+    protected Player() { }
+
+    private static Player _instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] Instance 'Player" +
+                    "' already destroyed on application quit." +
+                    " Won't create again - returning null.");
+                return null;
+            }
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Player>();
+
+                if (FindObjectsOfType<Player>().Length > 1)
+                {
+                    Debug.LogError("[Singleton] Something went really wrong " +
+                            " - there should never be more than 1 singleton!" +
+                            " Reopening the scene might fix it.");
+                    return _instance;
+                }
+                if (_instance == null)
+                {
+                    GameObject player = new GameObject();
+                    _instance = player.AddComponent<Player>();
+
+                    player.name = "(singleton) Player";
+
+                    DontDestroyOnLoad(player);
+
+                    Debug.Log("[Singleton] An instance of Player" +
+                            " is needed in the scene, so '" + player +
+                            "' was created with DontDestroyOnLoad.");
+                }
+                else
+                {
+                    Debug.Log("[Singleton] Using instance already created: " +
+                            _instance.gameObject.name);
+                }
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     #region public properties
-
-
     public int TotalCoins
     {
         get { return _totalCoins; }
         private set { _totalCoins = value; }
     }
-
-    public static Player Instance;
 
     public List<GachaID> gachaCollection;
 
@@ -55,14 +101,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
         LoadState();
 
        
@@ -77,9 +115,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private static bool applicationIsQuitting = false;
+    /// <summary>
+	/// When Unity quits, it destroys objects in a random order.
+	/// In principle, a Singleton is only destroyed when application quits.
+	/// If any script calls Instance after it have been destroyed, 
+	///   it will create a buggy ghost object that will stay on the Editor scene
+	///   even after stopping playing the Application. Really bad!
+	/// So, this was made to be sure we're not creating that buggy ghost object.
+	/// </summary>
     private void OnDestroy()
     {
         SaveState();
+        applicationIsQuitting = true;
     }
     #endregion
 

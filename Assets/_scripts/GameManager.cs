@@ -23,13 +23,72 @@ public class GameManager : MonoBehaviour
     {
         get { return _cameraController.IsZooming; }
     }
-    [Obsolete]
-    public List<GachaSet> masterGachaSetList = new List<GachaSet>();
-    public GameObject gachaUIPrefab;
+
+    #region Singleton lazy instantiation logic
+    protected GameManager() { }
+
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (applicationIsQuitting)
+            {
+                Debug.LogWarning("[Singleton] Instance 'GameManager" +
+                    "' already destroyed on application quit." +
+                    " Won't create again - returning null.");
+                return null;
+            }
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<GameManager>();
+
+                if (FindObjectsOfType<GameManager>().Length > 1)
+                {
+                    Debug.LogError("[Singleton] Something went really wrong " +
+                            " - there should never be more than 1 singleton!" +
+                            " Reopening the scene might fix it.");
+                    return _instance;
+                }
+                if (_instance == null)
+                {
+                    GameObject gameManager = new GameObject();
+                    gameManager.AddComponent<CameraContoller>();
+                    _instance = gameManager.AddComponent<GameManager>();
+
+                    gameManager.name = "(singleton) GameManager";
+
+                    DontDestroyOnLoad(gameManager);
+
+                    Debug.Log("[Singleton] An instance of GameManager" +
+                            " is needed in the scene, so '" + gameManager +
+                            "' was created with DontDestroyOnLoad.");
+                }
+                else
+                {
+                    Debug.Log("[Singleton] Using instance already created: " +
+                            _instance.gameObject.name);
+                }
+            }
+            return _instance;
+        }
+    }
+
+    private static bool applicationIsQuitting = false;
     /// <summary>
-    /// Accessor property for this class.
-    /// </summary>
-    public static GameManager Instance;
+	/// When Unity quits, it destroys objects in a random order.
+	/// In principle, a Singleton is only destroyed when application quits.
+	/// If any script calls Instance after it have been destroyed, 
+	///   it will create a buggy ghost object that will stay on the Editor scene
+	///   even after stopping playing the Application. Really bad!
+	/// So, this was made to be sure we're not creating that buggy ghost object.
+	/// </summary>
+	public void OnDestroy()
+    {
+        applicationIsQuitting = true;
+    }
+
+    #endregion
 
     public Scene CurrentScene { get { return _currentScene; } private set { _currentScene = value; } }
 
@@ -48,23 +107,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-        {
-            DontDestroyOnLoad(gameObject);
-            Instance = this;
-        }
-        else if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-
-        _cameraController = GetComponent<CameraContoller>();
+       _cameraController = GetComponent<CameraContoller>();
         OnZoomComplete = _cameraController.OnZoomComplete;
         OnZoomReturn = _cameraController.OnZoomReturn;
     }
-    #endregion
-
-    #region Gacha collection access
     #endregion
 
     /// <summary>

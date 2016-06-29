@@ -247,7 +247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &505492619
 Transform:
   m_ObjectHideFlags: 0
@@ -259,8 +259,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 499596045}
-  m_Father: {fileID: 2134826610}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
 --- !u!114 &505492621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,10 +467,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gachaSet: 0
+  prompt: 0
   rotationSpeed: 10
   isGachaThere: 0
   moneyTextField: {fileID: 0}
-  displayTextField: {fileID: 0}
   dialHolder: {fileID: 0}
   capsule: {fileID: 0}
   pink: {fileID: 0}
@@ -478,6 +478,15 @@ MonoBehaviour:
   green: {fileID: 0}
   blue: {fileID: 0}
   yellow: {fileID: 0}
+  displayText: {fileID: 0}
+  spooky: {fileID: 0}
+  sweets: {fileID: 0}
+  tropical: {fileID: 0}
+  city: {fileID: 0}
+  coinPrompt: {fileID: 0}
+  slotPrompt: {fileID: 0}
+  dialPrompt: {fileID: 0}
+  ball: {fileID: 0}
 --- !u!95 &818217488
 Animator:
   serializedVersion: 3
@@ -1195,7 +1204,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!1 &2126116446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1252,75 +1261,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
---- !u!1 &2134826609
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 2134826610}
-  - 114: {fileID: 2134826611}
-  - 114: {fileID: 2134826612}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2134826610
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2134826609}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 505492619}
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
---- !u!114 &2134826611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2134826609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa0b18d1f63acf942aaee99a4a3748c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  masterGachaSetList:
-  - {fileID: 11400000, guid: 73e98c33a5ad50b4085d855f24ad88be, type: 2}
-  - {fileID: 11400000, guid: b3b9eecce0950314f8740a50cb1c04ec, type: 2}
-  - {fileID: 11400000, guid: 53e86f7a1231ba64a8f339185d5d385c, type: 2}
-  - {fileID: 11400000, guid: dac711c34e268094d8b15a8f4ec405c1, type: 2}
-  gachaUIPrefab: {fileID: 194216, guid: 63d5144661fb0c94ea38f93e9e60c03f, type: 2}
-  OnZoomReturn:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
---- !u!114 &2134826612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2134826609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b480b271b53263141b27d29dca922a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentOffset: {x: 0, y: 5, z: 5}
-  OnZoomReturn:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
 --- !u!1 &2135882664
 GameObject:
   m_ObjectHideFlags: 0

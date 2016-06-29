@@ -13,7 +13,7 @@ public class GachaManager : MonoBehaviour
 
     void Awake()
     {
-        _gachaSets = new List<GachaSet>(Resources.FindObjectsOfTypeAll<GachaSet>());
+        _gachaSets = new List<GachaSet>(Resources.LoadAll<GachaSet>("gachasets"));
         if (_gachaSets.Count < 1)
         {
             Debug.LogException(new Exception("No GachaSet objects found in project."));
@@ -22,10 +22,8 @@ public class GachaManager : MonoBehaviour
         {
             Debug.Log(_gachaSets.Count + " GachaSet objects found in project");
         }
-
-        GachaUI[] list = Resources.FindObjectsOfTypeAll<GachaUI>();
-        Debug.Assert(list.Length == 1, "GachaUIPrefab count is wrong, found: " + list.Length);
-        _gachaUIPrefab = list[0].gameObject;
+        _gachaUIPrefab = Resources.Load<GameObject>("prefabs/GachaUI");
+        Debug.Assert(_gachaUIPrefab != null, "Could not find GachaUI prefab in Resources folder.");
     }
 
 
@@ -98,10 +96,6 @@ public class GachaManager : MonoBehaviour
         return new GachaID(setIndex, randomIndex);
     }
     #endregion
-    public void Foo()
-    {
-
-    }
 
     #region Singleton lazy instantiation logic
     protected GachaManager() { }
