@@ -70,8 +70,10 @@ public class Town : MonoBehaviour
         Debug.Assert(_scrollView != null, "scroll view not found.");
         Debug.Assert(backButton != null, "back button not found.");
         Debug.Assert(purgeButton != null, "purge button not found.");
+        
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
+        //change to landscape mode
 
         _maxScrollViewWidth = _scrollView.rect.width;
 
@@ -255,8 +257,6 @@ public class Town : MonoBehaviour
                 GameManager.Instance.ZoomToGacha(clickedObject.gameObject);
             }
         }
-
-        Debug.Log("size: " + clickedObject.Size);
 
     }
 

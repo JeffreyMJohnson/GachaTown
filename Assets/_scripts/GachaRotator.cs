@@ -21,7 +21,6 @@ public class GachaRotator : MonoBehaviour
     private Transform[] gachaTransforms;
     private float rotationInterval = 0;
     private int rotateStart = 15;
-    private Player playerScript;
     private int gachaCount = 0;
     private int rotateQueue = 0;
     private int dragStart;
@@ -33,17 +32,13 @@ public class GachaRotator : MonoBehaviour
 
     private void Start()
     {
-        //GameObject playerObject = Player.Instance.gameObject;
-
-        playerScript = Player.Instance;
-
         dragStart = 0;
         dragCurrent = 0;
         isSwipe = false;
 
-        selectedGacha = playerScript.Selected;
+        selectedGacha = Player.Instance.Selected;
         Debug.Assert(moneyDisplay != null, "Money text component not found, set in editor?");
-        moneyDisplay.text = playerScript.TotalCoins.ToString();
+        moneyDisplay.text = Player.Instance.TotalCoins.ToString();
 
         Debug.Assert(gachaDisplay != null, "gacha display text component not found, set in editor ?");
 
@@ -180,7 +175,7 @@ public class GachaRotator : MonoBehaviour
     /// </summary>
     public void RotateRight()
     {
-        rotateQueue++;        
+        rotateQueue++;
     }
 
     public void HandleQueue()
@@ -250,7 +245,7 @@ public class GachaRotator : MonoBehaviour
     {
         //pass selectedGacha to player
 
-        playerScript.Selected = selectedGacha;
+        Player.Instance.Selected = selectedGacha;
         GameManager.Instance.ChangeScene(GameManager.Scene.GACHA);
     }
 
@@ -264,5 +259,5 @@ public class GachaRotator : MonoBehaviour
         return toReturn;
     }
 
-    
+
 }

@@ -59,15 +59,6 @@ public class GameManager : MonoBehaviour
                     gameManager.name = "(singleton) GameManager";
 
                     DontDestroyOnLoad(gameManager);
-
-                    Debug.Log("[Singleton] An instance of GameManager" +
-                            " is needed in the scene, so '" + gameManager +
-                            "' was created with DontDestroyOnLoad.");
-                }
-                else
-                {
-                    Debug.Log("[Singleton] Using instance already created: " +
-                            _instance.gameObject.name);
                 }
             }
             return _instance;

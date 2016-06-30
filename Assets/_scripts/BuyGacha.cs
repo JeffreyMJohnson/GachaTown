@@ -29,7 +29,6 @@ public class BuyGacha : MonoBehaviour
     #endregion
 
     #region private fields
-    private Player player;
     private Animator controller;
     private CoinDrag coin;
     #endregion
@@ -38,19 +37,13 @@ public class BuyGacha : MonoBehaviour
 
     private void Start()
     {
-        player = Player.Instance;
         controller = GetComponent<Animator>();
-        gachaSet = player.Selected;
-
-        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        Debug.Assert(playerObject != null, "player gameObject not found, is GameManager instantiated via Main Menu scene?");
-
-
+        gachaSet = Player.Instance.Selected;
 
         coin = GameObject.FindGameObjectWithTag("Coin").GetComponent<CoinDrag>();
         Debug.Assert(moneyTextField != null, "Money text field not found, was it set in editor?");
 
-        moneyTextField.text = player.TotalCoins.ToString();
+        moneyTextField.text = Player.Instance.TotalCoins.ToString();
 
         GameObject frame = GameObject.FindGameObjectWithTag("Frame");
         MeshRenderer[] gachaTitles = GameObject.Find("GachaTitle").GetComponentsInChildren<MeshRenderer>(true);
@@ -133,10 +126,6 @@ public class BuyGacha : MonoBehaviour
             HandleClick(GameManager.Scene.GACHACHOOSE);
         }
         RotateDial();
-        Debug.Log("coinprompt is " + coinPrompt.isPlaying);
-        Debug.Log("slotprompt is " + slotPrompt.isPlaying);
-        Debug.Log("dialprompt is " + dialPrompt.isPlaying);
-        Debug.Log(prompt);
      
 
         switch (prompt) //0 is when coin needs to be put into slot, 1 is when coin is picked up, 2 is when coin is put down and anside the slot 3 is when player is meant to be waiting to open the gacha ball
@@ -194,13 +183,13 @@ public class BuyGacha : MonoBehaviour
     public void Buy()
     {
         //todo this magic number needs refactored out and money system implemented
-        if (player.TotalCoins >= 5)
+        if (Player.Instance.TotalCoins >= 5)
         {
-            player.DeductCoins(5);
-            moneyTextField.text = player.TotalCoins.ToString();
+            Player.Instance.DeductCoins(5);
+            moneyTextField.text = Player.Instance.TotalCoins.ToString();
             //todo remove this
             //player.AddGachaToList(GameManager.Instance.GetRandomGacha(gachaSet));
-            player.AddGachaToList(GachaManager.Instance.GetRandomGacha(gachaSet));
+            Player.Instance.AddGachaToList(GachaManager.Instance.GetRandomGacha(gachaSet));
         }
 
     }

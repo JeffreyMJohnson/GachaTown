@@ -59,15 +59,6 @@ public class Player : MonoBehaviour
                     player.name = "(singleton) Player";
 
                     DontDestroyOnLoad(player);
-
-                    Debug.Log("[Singleton] An instance of Player" +
-                            " is needed in the scene, so '" + player +
-                            "' was created with DontDestroyOnLoad.");
-                }
-                else
-                {
-                    Debug.Log("[Singleton] Using instance already created: " +
-                            _instance.gameObject.name);
                 }
             }
             return _instance;

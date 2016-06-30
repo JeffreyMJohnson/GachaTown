@@ -61,6 +61,7 @@ public class Gacha : MonoBehaviour
     private Collider _collider;
     private Animator _animator;
     private Renderer[] _renderers;
+    private bool _inTownScene = false;
     #endregion
 
     #region public API
@@ -151,14 +152,19 @@ public class Gacha : MonoBehaviour
        
 
         _renderers = GetComponentsInChildren<Renderer>();
-       Debug.Assert(_renderers != null, "could not find a renderer."); 
+       Debug.Assert(_renderers != null, "could not find a renderer.");
+
+        _inTownScene = GameManager.Instance.CurrentScene == GameManager.Scene.TOWN;
 
     }
 
     private void Update()
     {
-
-        UpdateClickEvent();
+        if (_inTownScene)
+        {
+            UpdateClickEvent();
+        }
+        
     }
     #endregion
 

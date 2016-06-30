@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.VersionControl;
 using UnityEngine.UI;
 
 public class GachaManager : MonoBehaviour
@@ -17,10 +16,6 @@ public class GachaManager : MonoBehaviour
         if (_gachaSets.Count < 1)
         {
             Debug.LogException(new Exception("No GachaSet objects found in project."));
-        }
-        else
-        {
-            Debug.Log(_gachaSets.Count + " GachaSet objects found in project");
         }
         _gachaUIPrefab = Resources.Load<GameObject>("prefabs/GachaUI");
         Debug.Assert(_gachaUIPrefab != null, "Could not find GachaUI prefab in Resources folder.");
@@ -130,15 +125,6 @@ public class GachaManager : MonoBehaviour
                     gachaManager.name = "(singleton) GachaManager";
 
                     DontDestroyOnLoad(gachaManager);
-
-                    Debug.Log("[Singleton] An instance of GachaManager" +
-                            " is needed in the scene, so '" + gachaManager +
-                            "' was created with DontDestroyOnLoad.");
-                }
-                else
-                {
-                    Debug.Log("[Singleton] Using instance already created: " +
-                            _instance.gameObject.name);
                 }
             }
             return _instance;
