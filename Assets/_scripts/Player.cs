@@ -101,6 +101,10 @@ public class Player : MonoBehaviour
     {
         if (_allGachasMode)
         {
+            if (gachaCollection == null)
+            {
+                gachaCollection = new List<GachaID>();
+            }
             gachaCollection.Clear();
             gachaCollection = GachaManager.Instance.GetAllGachaIds();
         }

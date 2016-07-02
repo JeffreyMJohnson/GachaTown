@@ -19,6 +19,13 @@ public class AudioManager : MonoBehaviour
         CAPSULE_GACHA_PRESENT
     }
 
+    private enum BackgroundAudio
+    {
+        MAIN,
+        BUY_GACHA,
+        TOWN,
+        COLLECTION
+    }
     #region Singleton lazy instantiation logic
     protected AudioManager() { }
 
@@ -135,7 +142,28 @@ public class AudioManager : MonoBehaviour
     {
         if (!BackgroundAudioMuted)
         {
-            AudioClip newBackgroundClip = _backgroundAudio[(int)scene];
+            AudioClip newBackgroundClip = null;
+
+            switch (scene)
+            {
+                case GameManager.Scene.SPLASH:
+                case GameManager.Scene.MAIN:
+                case GameManager.Scene.SETTING:
+                    newBackgroundClip = _backgroundAudio[(int)BackgroundAudio.MAIN];
+                    break;
+                case GameManager.Scene.GACHACHOOSE:
+                case GameManager.Scene.GACHA:
+                    newBackgroundClip = _backgroundAudio[(int)BackgroundAudio.BUY_GACHA];
+                    break;
+                case GameManager.Scene.TOWN:
+                    newBackgroundClip = _backgroundAudio[(int)BackgroundAudio.TOWN];
+                    break;
+                case GameManager.Scene.COLLECTION:
+                    newBackgroundClip = _backgroundAudio[(int)BackgroundAudio.COLLECTION];
+                    break;
+            }
+            Debug.Assert(newBackgroundClip != null, "didn't find backgrouns audio for scene, something went wrong.");
+
             if (_backgroundSource.clip != newBackgroundClip)
             {
                 _backgroundSource.clip = newBackgroundClip;
@@ -197,10 +225,10 @@ public class AudioManager : MonoBehaviour
     private void LoadBackgroundAudio()
     {
         _backgroundAudio = new AudioClip[4];
-        _backgroundAudio[0] = Resources.Load<AudioClip>("audio/background/Main Menu");
-        _backgroundAudio[1] = Resources.Load<AudioClip>("audio/background/Buy Gacha");
-        _backgroundAudio[2] = Resources.Load<AudioClip>("audio/background/Town");
-        _backgroundAudio[3] = Resources.Load<AudioClip>("audio/background/Collection");
+        _backgroundAudio[(int)BackgroundAudio.MAIN] = Resources.Load<AudioClip>("audio/background/Main Menu");
+        _backgroundAudio[(int)BackgroundAudio.BUY_GACHA] = Resources.Load<AudioClip>("audio/background/Buy Gacha");
+        _backgroundAudio[(int)BackgroundAudio.TOWN] = Resources.Load<AudioClip>("audio/background/Town");
+        _backgroundAudio[(int)BackgroundAudio.COLLECTION] = Resources.Load<AudioClip>("audio/background/Collection");
     }
 
     private void LoadSFX()
