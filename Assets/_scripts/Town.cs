@@ -35,6 +35,8 @@ public class Town : MonoBehaviour
 
     private void Awake()
     {
+       Application.ExternalCall("SetOrientation", 1);
+
         foreach (Canvas canvas in FindObjectsOfType<Canvas>())
         {
             if (canvas.name == "Canvas")
@@ -113,9 +115,8 @@ public class Town : MonoBehaviour
 
     private void OnDestroy()
     {
-        Screen.orientation = ScreenOrientation.Landscape;
         GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
-
+        Application.ExternalCall("SetOrientation", 2);
     }
 
     private float _gizmoRadius = 0;
