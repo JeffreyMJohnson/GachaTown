@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Security.Policy;
 using UnityEngine.UI;
 
 public class GachaManager : MonoBehaviour
@@ -9,7 +10,7 @@ public class GachaManager : MonoBehaviour
     private GameObject _gachaUIPrefab;
 
     public int SetCount { get { return _gachaSets.Count; } }
-
+    
     void Awake()
     {
         _gachaSets = new List<GachaSet>(Resources.LoadAll<GachaSet>("gachasets"));
@@ -21,9 +22,9 @@ public class GachaManager : MonoBehaviour
         Debug.Assert(_gachaUIPrefab != null, "Could not find GachaUI prefab in Resources folder.");
     }
 
-
     #region public API
-    public List<GachaID> GetAllGachaIds()
+
+    public GachaID[] GetAllGachaIds()
     {
         List<GachaID> result = new List<GachaID>();
         for (int setIndex = 0; setIndex < SetCount; setIndex++)
@@ -33,7 +34,20 @@ public class GachaManager : MonoBehaviour
                 result.Add(new GachaID(setIndex, gachaIndex));
             }
         }
-        return result;
+        return result.ToArray();
+    }
+
+    public GachaSet GetGachaSet(string setName)
+    {
+        foreach (GachaSet gachaSet in _gachaSets)
+        {
+            if (gachaSet.name == setName)
+            {
+                return gachaSet;
+            }
+        }
+        Debug.LogError("Could not fine GachaSet: " + setName);
+        return null;
     }
 
     /// <summary>

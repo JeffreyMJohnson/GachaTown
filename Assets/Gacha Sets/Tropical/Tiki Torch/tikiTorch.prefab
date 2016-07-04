@@ -72,7 +72,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 178772}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 93ca824fb4ba32a46904996e99f4cc24, type: 3}
   m_Controller: {fileID: 9100000, guid: 13f1cd6338b366847846527adcff9ee5, type: 2}
   m_CullingMode: 0
@@ -98,6 +98,8 @@ MonoBehaviour:
   ID:
     _setIndex: 0
     _gachaIndex: 0
+  HasSpecialAnimation: 0
+  SpecialAnimation: {fileID: 0}
   OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -125,7 +127,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Layer

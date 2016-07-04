@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using System.Json;
 using System.IO;
+using System.Linq.Expressions;
 
 public class Player : MonoBehaviour
 {
@@ -72,18 +73,40 @@ public class Player : MonoBehaviour
         get { return _totalCoins; }
         private set { _totalCoins = value; }
     }
+    [SerializeField]
+    public GachaID LastGachaAdded { get; private set; }
 
-    public List<GachaID> gachaCollection;
+    [SerializeField]
+    public GachaID[] GachaCollection { get { return _gachaCollection.ToArray(); } }
+
+    [SerializeField]
+    public GachaID[] UniqueGachaCollection
+    {
+        get
+        {
+            List<GachaID> result = new List<GachaID>(_gachaCollection.Count);
+            foreach (GachaID gachaId in _gachaCollection)
+            {
+                if (!result.Contains(gachaId))
+                {
+                    result.Add(gachaId);
+                }
+            }
+            return result.ToArray();
+        }
+    }
 
     //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
-    public int Selected = 0;    
+    public int Selected = 0;
     #endregion
 
     #region private fields
     [SerializeField]
     private int _totalCoins;
     [SerializeField]
-    private List<PlacedGachaData> placedInTownGachas = new List<PlacedGachaData>();
+    private List<PlacedGachaData> _placedInTownGachas = new List<PlacedGachaData>();
+    [SerializeField]
+    private List<GachaID> _gachaCollection;
     //todo THIS MUST BE FALSE FOR RELEASE!!
     private bool _allGachasMode = true;
     #endregion
@@ -94,19 +117,20 @@ public class Player : MonoBehaviour
     {
         LoadState();
 
-       
+
     }
 
     private void Start()
     {
+        if (_gachaCollection == null)
+        {
+            _gachaCollection = new List<GachaID>();
+        }
         if (_allGachasMode)
         {
-            if (gachaCollection == null)
-            {
-                gachaCollection = new List<GachaID>();
-            }
-            gachaCollection.Clear();
-            gachaCollection = GachaManager.Instance.GetAllGachaIds();
+            _gachaCollection.Clear();
+            _gachaCollection = new List<GachaID>(GachaManager.Instance.GetAllGachaIds());
+            _totalCoins = 10000;
         }
     }
 
@@ -129,27 +153,28 @@ public class Player : MonoBehaviour
     #region Public API
 
 
-    public void AddGachaToList(GachaID gachaID)
+    public void AddGachaToCollection(GachaID gachaID)
     {
-        if (gachaCollection == null)
+        if (_gachaCollection == null)
         {
-            gachaCollection = new List<GachaID>();
+            _gachaCollection = new List<GachaID>();
         }
-        gachaCollection.Add(gachaID);
+        _gachaCollection.Add(gachaID);
+        LastGachaAdded = gachaID;
     }
 
     public void ClearCollection()
     {
-        gachaCollection.Clear();
+        _gachaCollection.Clear();
     }
 
     public bool InCollection(GachaID gachaID)
     {
-        if (gachaCollection == null)
+        if (_gachaCollection == null)
         {
             return false;
         }
-        return gachaCollection.Contains(gachaID);
+        return _gachaCollection.Contains(gachaID);
     }
 
     public void AddCoins(int coins)
@@ -167,16 +192,16 @@ public class Player : MonoBehaviour
 
     public void SaveTownData(GameObject[] placedGachas)
     {
-        placedInTownGachas.Clear();
+        _placedInTownGachas.Clear();
         foreach (GameObject gacha in placedGachas)
         {
-            placedInTownGachas.Add(new PlacedGachaData(gacha));
+            _placedInTownGachas.Add(new PlacedGachaData(gacha));
         }
     }
 
     public PlacedGachaData[] GetTownData()
     {
-        return placedInTownGachas.ToArray();
+        return _placedInTownGachas.ToArray();
     }
     #endregion
 
@@ -195,6 +220,7 @@ public class Player : MonoBehaviour
         if (!File.Exists(filePath))
         {
             Debug.LogWarning("State save file: [" + filePath + "] not found.");
+            _totalCoins = 100;
             return;
         }
 

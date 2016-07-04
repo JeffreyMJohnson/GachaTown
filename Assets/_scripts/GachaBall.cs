@@ -187,7 +187,7 @@ public class GachaBall : MonoBehaviour
 
     public GameObject SpawnGacha()
     {
-        newGachaID = Player.Instance.gachaCollection.Last();
+        newGachaID = Player.Instance.LastGachaAdded;
         AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.CAPSULE_GACHA_PRESENT);
         return Instantiate(GachaManager.Instance.GetGachaPrefab(newGachaID), endPos, Quaternion.LookRotation(Vector3.left, Vector3.up)) as GameObject;
     }

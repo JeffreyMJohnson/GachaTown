@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using System;
 
 public class ShowCollection : MonoBehaviour
 {
     #region public properties
-    public Player player;
     public Vector3 gachaPosition;
     public int pageSize = 9;
     public GameObject[] totalCollection;
@@ -16,6 +12,7 @@ public class ShowCollection : MonoBehaviour
 
     #region private fields
 
+    private GachaID[] _playerGachaCollection = null;
     private int currentPageNumber;
     #endregion
 
@@ -23,10 +20,10 @@ public class ShowCollection : MonoBehaviour
 
     private void Start()
     {
-        player = Player.Instance;
         currentPageNumber = 0;
         currentPage = new GameObject[pageSize];
         SetCollection(currentPageNumber);
+        _playerGachaCollection = Player.Instance.GachaCollection;
     }
 
     private void Update()
@@ -60,13 +57,13 @@ public class ShowCollection : MonoBehaviour
 
         int start = pageSize * page;
         int testCondition = start + pageSize;
-        if (player.gachaCollection.Count < testCondition)
+        if (_playerGachaCollection.Length < testCondition)
         {
-            testCondition = player.gachaCollection.Count;
+            testCondition = _playerGachaCollection.Length;
         }
         for (int i = start; i < testCondition; i++)
         {
-            GachaID gachaID = player.gachaCollection[i];
+            GachaID gachaID = _playerGachaCollection[i];
             currentPage[i - start] = GachaManager.Instance.GetGachaPrefab(gachaID);
         }
 
@@ -84,12 +81,11 @@ public class ShowCollection : MonoBehaviour
 
     public void Next()
     {
-        if (currentPageNumber * pageSize < player.gachaCollection.Count - pageSize)
+        if (currentPageNumber * pageSize < _playerGachaCollection.Length - pageSize)
         {
             ClearGachaSpot();
             currentPageNumber += 1;
         }
-        Debug.Log("next");
     }
 
     public void ClearGachaSpot()

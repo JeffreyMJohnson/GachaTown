@@ -186,14 +186,10 @@ public class Town : MonoBehaviour
 
     private void InitMenu()
     {
-        //this linq query returns only unique entries from player collection
-        var query =
-            from gacha in _player.gachaCollection.Distinct()
-            select gacha;
         //clear the scroll view children in case this isn't the first init
         ClearScrollViewContent();
-
-        foreach (GachaID gachaId in query)
+        GachaID[] uniqueGachasInCollection = Player.Instance.UniqueGachaCollection;
+        foreach (GachaID gachaId in uniqueGachasInCollection)
         {
             if (!IsPlaced(gachaId))
             {
