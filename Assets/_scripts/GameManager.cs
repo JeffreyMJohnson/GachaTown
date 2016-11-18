@@ -9,7 +9,7 @@ using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 /// <summary>
-/// singleton class that is available from every scene (once instantiated in Main Menu scene). 
+/// singleton class that is available from every scene 
 /// Acess this class from the static Instance property, do not instantiate your own.
 /// eg GameManager.Instance.Foo();
 /// </summary>
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region Singleton lazy instantiation logic
-    protected GameManager() { }
+    //protected GameManager() { }
 
     private static GameManager _instance;
     public static GameManager Instance

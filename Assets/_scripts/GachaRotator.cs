@@ -9,7 +9,7 @@ public class GachaRotator : MonoBehaviour
     #region public properties
     public Text gachaDisplay;
     public Text moneyDisplay;
-    public int selectedGacha = 0; //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
+    public GachaManager.Set selectedGacha;
     public int rotateTime = 15; //in frames
     public int swipeLength = 200;
     #endregion
@@ -49,7 +49,7 @@ public class GachaRotator : MonoBehaviour
             spriterenderer.enabled = false;
             titleImages.Add(spriterenderer);
         }
-        titleImages[selectedGacha].enabled = true;
+        titleImages[(int)selectedGacha].enabled = true;
 
         rotateStart = rotateTime;
 
@@ -69,7 +69,7 @@ public class GachaRotator : MonoBehaviour
             gachaTransforms[i].Rotate(0, rotationInterval * i, 0);
         }
 
-        for (int i = 0; i < selectedGacha; i++)
+        for (int i = 0; i < (int)selectedGacha; i++)
         {
             transform.Rotate(0, -rotationInterval, 0);
         }
@@ -192,7 +192,7 @@ public class GachaRotator : MonoBehaviour
                 //if (selectedGacha == -1)
                 //    selectedGacha = gachaCount - 1;
                 //selectedGacha = selectedGacha % gachaCount;
-                if (selectedGacha == maxGachaSetCount)
+                if ((int)selectedGacha == maxGachaSetCount)
                 {
                     selectedGacha = 0;
                 }
@@ -201,7 +201,7 @@ public class GachaRotator : MonoBehaviour
                 {
                     titleImages[i].enabled = false;
                 }
-                titleImages[selectedGacha].enabled = true;
+                titleImages[(int)selectedGacha].enabled = true;
 
                 TextUpdate();
                 AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
@@ -219,14 +219,14 @@ public class GachaRotator : MonoBehaviour
                 //selectedGacha = selectedGacha % gachaCount;
                 if (selectedGacha < 0)
                 {
-                    selectedGacha = maxGachaSetCount - 1;
+                    selectedGacha = (GachaManager.Set)maxGachaSetCount - 1;
                 }
 
                 for (int i = 0; i < titleImages.Count; i++)
                 {
                     titleImages[i].enabled = false;
                 }
-                titleImages[selectedGacha].enabled = true;
+                titleImages[(int)selectedGacha].enabled = true;
 
                 TextUpdate();
                 AudioManager.Instance.SoundEffectsPlay(AudioManager.SoundEffect.MECHANICAL_CLICK);
@@ -251,7 +251,7 @@ public class GachaRotator : MonoBehaviour
 
     private float GetDestinationRotation()
     {
-        float toReturn = selectedGacha * rotationInterval;
+        float toReturn = (int)selectedGacha * rotationInterval;
         if (toReturn == 360 - rotationInterval && transform.eulerAngles.y <= rotationInterval)
             toReturn = -rotationInterval;
         if (toReturn == 0 && transform.eulerAngles.y >= 360 - rotationInterval)

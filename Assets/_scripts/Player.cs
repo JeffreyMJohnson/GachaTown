@@ -96,8 +96,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
-    public int Selected = 0;
+    public GachaManager.Set Selected;
     #endregion
 
     #region private fields

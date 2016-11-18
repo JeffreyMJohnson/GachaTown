@@ -4,8 +4,9 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class GachaSet : ScriptableObject
 {
-    public List<GameObject> collection;
+    public GachaManager.Set id;
     public new string name;
     public string description;
+    public List<GameObject> collection;
 
 }

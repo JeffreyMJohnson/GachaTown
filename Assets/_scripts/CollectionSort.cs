@@ -64,15 +64,6 @@ public class CollectionSort : MonoBehaviour
 
         player = Player.Instance;
         buttonPress = GetComponent<AudioSource>();
-        //title = GameObject.Find("PageTitle").GetComponent<Text>();
-
-        /*SpriteRenderer[] titleCardsToList = title.GetComponentsInChildren<SpriteRenderer>(true);
-        //getting all of the spriterenderers for the title images so we can switch between them
-        foreach (SpriteRenderer spriterenderer in titleCardsToList)
-        {
-            spriterenderer.enabled = false;
-            titleCards.Add(spriterenderer);
-        }*/
 
         collectionCamera = FindObjectOfType<Camera>();
         

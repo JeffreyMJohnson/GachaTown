@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class BuyGacha : MonoBehaviour
 {
     #region public properties   
-    public int gachaSet = 0;
+    public GachaManager.Set gachaSet;
     public int prompt = 0;
     public float rotationSpeed = 10;
     public bool isGachaThere = false;
@@ -50,7 +50,7 @@ public class BuyGacha : MonoBehaviour
         prompt = 0;
         switch (gachaSet) //0 = spooky, 1 = sweets, 2 = tropical, 3 = city
         {
-            case 0:
+            case GachaManager.Set.SPOOKY:
                 frame.GetComponent<Renderer>().material = blue;
                 displayText.sprite = spooky;
                 gachaTitles[0].enabled = true;
@@ -60,7 +60,7 @@ public class BuyGacha : MonoBehaviour
                     spriterenderer.enabled = true;
                 }
                 break;
-            case 1:
+            case GachaManager.Set.SWEETS:
                 frame.GetComponent<Renderer>().material = green;
                 displayText.sprite = sweets;
                 gachaTitles[1].enabled = true;
@@ -70,7 +70,7 @@ public class BuyGacha : MonoBehaviour
                     spriterenderer.enabled = true;
                 }
                 break;
-            case 2:
+            case GachaManager.Set.TROPICAL:
                 frame.GetComponent<Renderer>().material = pink;
                 displayText.sprite = tropical;
                 gachaTitles[2].enabled = true;
@@ -80,7 +80,7 @@ public class BuyGacha : MonoBehaviour
                     spriterenderer.enabled = true;
                 }
                 break;
-            case 3:
+            case GachaManager.Set.CITY:
                 frame.GetComponent<Renderer>().material = red;
                 displayText.sprite = city;
                 gachaTitles[3].enabled = true;

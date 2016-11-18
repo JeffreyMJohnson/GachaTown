@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GachaManager : MonoBehaviour
 {
+    public enum Set { CITY, SPOOKY, SWEETS, TROPICAL};
+
     private List<GachaSet> _gachaSets;
     private GameObject _gachaUIPrefab;
 
@@ -13,13 +15,23 @@ public class GachaManager : MonoBehaviour
     
     void Awake()
     {
-        _gachaSets = new List<GachaSet>(Resources.LoadAll<GachaSet>("gachasets"));
-        if (_gachaSets.Count < 1)
-        {
-            Debug.LogException(new Exception("No GachaSet objects found in project."));
-        }
+
+        _gachaSets = LoadGachaSets();
+
         _gachaUIPrefab = Resources.Load<GameObject>("prefabs/GachaUI");
         Debug.Assert(_gachaUIPrefab != null, "Could not find GachaUI prefab in Resources folder.");
+    }
+
+    private List<GachaSet> LoadGachaSets()
+    {
+        //should match the enum because it makes sense and easier to access set
+        List<GachaSet> result = new List<GachaSet>();
+        result.Add(Resources.Load<GachaSet>("gachasets/City"));
+        result.Add(Resources.Load<GachaSet>("gachasets/Spooky"));
+        result.Add(Resources.Load<GachaSet>("gachasets/Sweets"));
+        result.Add(Resources.Load<GachaSet>("gachasets/Tropical"));
+        Debug.Assert(!result.Contains(null), "One or more GachaSets did not load.");
+        return result;
     }
 
     #region public API
@@ -37,16 +49,16 @@ public class GachaManager : MonoBehaviour
         return result.ToArray();
     }
 
-    public GachaSet GetGachaSet(string setName)
+    public GachaSet GetGachaSet(Set set)
     {
         foreach (GachaSet gachaSet in _gachaSets)
         {
-            if (gachaSet.name == setName)
+            if (gachaSet.id == set)
             {
                 return gachaSet;
             }
         }
-        Debug.LogError("Could not fine GachaSet: " + setName);
+        Debug.LogError("Could not fine GachaSet: " + Enum.GetName(typeof(Set), set));
         return null;
     }
 
@@ -69,11 +81,15 @@ public class GachaManager : MonoBehaviour
     {
         return GetGachaSet(id.SetIndex).collection[id.GachaIndex].name;
     }
+    [Obsolete]
     public GachaSet GetGachaSet(int setIndex)
     {
         Debug.Assert(setIndex >= 0 && setIndex < _gachaSets.Count, "setIndex value of " + setIndex + " is not valid.");
         return _gachaSets[setIndex];
     }
+
+
+
 
     /// <summary>
     /// returns Instance of GachaUI prefab with sprite and image set if gacha has them.
@@ -94,15 +110,15 @@ public class GachaManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Returns a GachaID struct that points to the prefab of a random Gacha from the given set index.
+    /// Returns a GachaID struct that points to the prefab of a random Gacha from the given set.
     /// NOTE:Use unity's Instantiate<GameObject>(GetGachaPrefab(GachaID)) to instantiate a gameObject from GachaID.
     /// </summary>
-    /// <param name="setIndex"></param>
+    /// <param name="set"></param>
     /// <returns></returns>
-    public GachaID GetRandomGacha(int setIndex)
+    public GachaID GetRandomGacha(Set set)
     {
-        int randomIndex = UnityEngine.Random.Range(0, _gachaSets[setIndex].collection.Count);
-        return new GachaID(setIndex, randomIndex);
+        int randomIndex = UnityEngine.Random.Range(0, _gachaSets[(int)set].collection.Count);
+        return new GachaID((int)set, randomIndex);
     }
     #endregion
 

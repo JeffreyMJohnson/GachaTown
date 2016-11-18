@@ -10,6 +10,9 @@ using UnityEngine.EventSystems;
 
 public class Town : MonoBehaviour
 {
+    /*The Debug.Assert calls are wrapped in DEBUG defines because Unity doesn't strip them out!*/
+
+
     #region public properties
     public int CoinsPerTap = 5;
 
@@ -19,7 +22,7 @@ public class Town : MonoBehaviour
     #endregion
 
     #region private fields
-    private Canvas _canvas = null;
+    private Canvas _canvas = null;//Unity Canvas for the Gacha Placement window
     private RectTransform _scrollView = null;
     private RectTransform _scrollViewContent = null;
     private GameObject _gachaToPlace = null;
@@ -44,8 +47,10 @@ public class Town : MonoBehaviour
                 _canvas = canvas;
             }
         }
-        Debug.Assert(_canvas != null, "_canvas not found.");
 
+#if DEBUG
+        Debug.Assert(_canvas != null, "_canvas not found.");
+#endif
         Button backButton = null;
         Button purgeButton = null;
 
@@ -68,11 +73,13 @@ public class Town : MonoBehaviour
             }
 
         }
+#if DEBUG
         Debug.Assert(_scrollViewContent != null, "scroll view content not found.");
         Debug.Assert(_scrollView != null, "scroll view not found.");
         Debug.Assert(backButton != null, "back button not found.");
         Debug.Assert(purgeButton != null, "purge button not found.");
-        
+
+#endif        
         //lock to landscape mode
         Screen.orientation = ScreenOrientation.Landscape;
         //change to landscape mode
@@ -81,7 +88,10 @@ public class Town : MonoBehaviour
 
         //set handlers for expand/shrink button
         ExpandShrinkButton button = _scrollView.GetComponentInChildren<ExpandShrinkButton>();
+
+#if DEBUG
         Debug.Assert(button != null, "could not find ExpandShrinkButton script as child of scroll view.");
+#endif
         button.OnExpandClick.AddListener(HandleExpandButtonClickEvent);
         button.OnShrinkClick.AddListener(HandleShrinkButtonClickEvent);
 
@@ -115,7 +125,6 @@ public class Town : MonoBehaviour
 
     private void OnDestroy()
     {
-        GameManager.Instance.OnZoomComplete.RemoveListener(HandleCameraZoomCompleteEvent);
         Application.ExternalCall("SetOrientation", 2);
     }
 
@@ -209,8 +218,11 @@ public class Town : MonoBehaviour
 
     #region UI Handlers
 
+    /*This starts the placement process. Note that _gachaToPlace is set. This is used in the 
+     * Update loop to update the drag event per frame.*/
     private void HandleGachaUIDragEvent(GameObject draggedObject)
     {
+        //hack 
         if (GameManager.Instance.IsCameraZooming)
         {
             return;
@@ -332,7 +344,7 @@ public class Town : MonoBehaviour
     #endregion
 
     /// <summary>
-    /// moves gacha gameobject with the mouse position until the left mouse button is clicked
+    /// moves gacha gameobject (if not null) with the mouse position until the left mouse button is clicked
     /// </summary>
     private void UpdateGachaDrag()
     {
@@ -343,9 +355,11 @@ public class Town : MonoBehaviour
             Vector3 colliderSize = _gachaToPlace.GetComponent<Collider>().bounds.size;
             float radius = Mathf.Max(colliderSize.x, colliderSize.z);
             _gizmoRadius = radius;
+            //perform spherecast but only the Ground and Gachas
             RaycastHit[] hits = Physics.SphereCastAll(Camera.main.ScreenPointToRay(Input.mousePosition), radius, 1000, LayerMask.GetMask("Ground", "Gacha"));
 
             _isPlaceable = false;
+            //convert the screen position from the mouse input, and convert to world coords for scene use.
             Vector3 groundHitPoint =
                 Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, _townDistance));
             foreach (RaycastHit sphereHit in hits)
